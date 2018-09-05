@@ -1,0 +1,9 @@
+Package: mypackage
+Title: Boosting for High-Dimensional First Hitting Time Threshold Regression
+Version: 0.0.0.1
+Authors@R: person("Vegard", "Stikbakke", email = "vegarsti@uio.no", role = c("aut", "cre"))
+Description: Boosting.
+Depends: R (>= 3.4.3)
+License: MIT
+Encoding: UTF-8
+LazyData: true

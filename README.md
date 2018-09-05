@@ -1,0 +1,1 @@
+This repo will contain the R package I will use in my master thesis work.
