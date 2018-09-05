@@ -15,7 +15,7 @@
 #' @examples
 #' R code here showing how your function works
 
-rho_mu <- function(y0, mu, sigma2, t, delta) {
+loss_function_derivative_mu <- function(y0, mu, sigma2, t, delta) {
   # t is vector of times, delta is vector of observed = 1, or not = 0
   log_f <- - (y0 + mu*t)/sigma2
   log_S1 <- (t/sqrt(sigma2*t)) * dnorm((mu*t + y0)/(sqrt(sigma2*t)))
