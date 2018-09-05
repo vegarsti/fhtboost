@@ -11,3 +11,4 @@ Encoding: UTF-8
 VignetteBuilder: knitr
 Suggests: knitr, BiocStyle
 RoxygenNote: 6.1.0
+Imports: statmod
