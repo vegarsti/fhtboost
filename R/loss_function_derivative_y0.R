@@ -1,4 +1,4 @@
-#' Loss function \code{rho} differentiated wrt. \code{y0}
+#' Loss function for \code{y0}
 #'
 #' Derivative of minus log likelihood with respect to
 #' one parameter: \code{y0}

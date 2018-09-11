@@ -1,4 +1,4 @@
-#' Function taking design matrices \code{X}, \code{Z} and returns link function taking \code{beta}, \code{gamma}
+#' FHT link function
 #'
 #' Function taking design matrices \code{X}, \code{Z} and returns link function taking \code{beta}, \code{gamma}
 #'

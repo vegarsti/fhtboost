@@ -2,14 +2,14 @@
 % Please edit documentation in R/data_to_optimizable_function.R
 \name{data_to_optimizable_function}
 \alias{data_to_optimizable_function}
-\title{Function taking design matrices \code{X}, \code{Z} and data \code{t}, {delta}, and returns a function to be optimized in nlm.}
+\title{Data to optimizable function}
 \usage{
 data_to_optimizable_function(X, Z, t, delta)
 }
 \arguments{
 \item{X}{Design matrix for \code{ln y0 = beta^T * X}}
 
-\item{Z}{Design matrix for \code{mu = gamma^T * Z}}
+\item{Z}{Design matrix for \code{   mu = gamma^T * Z}}
 
 \item{t}{Survival times (possibly censored)}
 
@@ -19,7 +19,7 @@ data_to_optimizable_function(X, Z, t, delta)
 \code{optimizable_function} Function taking parameters as a vector (containing \code{beta}, \code{gamma}), to be optimized over.
 }
 \description{
-Function taking design matrices \code{X}, \code{Z} and data \code{t}, {delta}, and returns a function to be optimized in nlm.
+Takes design matrices \code{X}, \code{Z} and data \code{t}, {delta}, and returns a function to be optimized.
 }
 \examples{
 R code here showing how your function works

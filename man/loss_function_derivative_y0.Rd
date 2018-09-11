@@ -2,7 +2,7 @@
 % Please edit documentation in R/loss_function_derivative_y0.R
 \name{loss_function_derivative_y0}
 \alias{loss_function_derivative_y0}
-\title{Loss function \code{rho} differentiated wrt. \code{y0}}
+\title{Loss function for \code{y0}}
 \usage{
 loss_function_derivative_y0(y0, mu, sigma2, t, delta)
 }

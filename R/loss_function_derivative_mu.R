@@ -1,4 +1,4 @@
-#' Loss function \code{rho} differentiated wrt. \code{mu}
+#' Loss function for \code{mu}
 #'
 #' Derivative of minus log likelihood with respect to
 #' one parameter: \code{mu}

@@ -1,9 +1,9 @@
-#' Function taking design matrices \code{X}, \code{Z} and data \code{t}, {delta}, and returns a function to be optimized in nlm.
+#' Data to optimizable function
 #'
-#' Function taking design matrices \code{X}, \code{Z} and data \code{t}, {delta}, and returns a function to be optimized in nlm.
+#' Takes design matrices \code{X}, \code{Z} and data \code{t}, {delta}, and returns a function to be optimized.
 #'
 #' @param X Design matrix for \code{ln y0 = beta^T * X}
-#' @param Z Design matrix for \code{mu = gamma^T * Z}
+#' @param Z Design matrix for \code{   mu = gamma^T * Z}
 #' @param t Survival times (possibly censored)
 #' @param delta Vector of same length as \code{t}, indicating if observations are actually observed (1) or censored (0)
 #'

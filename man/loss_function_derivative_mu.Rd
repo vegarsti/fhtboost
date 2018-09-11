@@ -2,7 +2,7 @@
 % Please edit documentation in R/loss_function_derivative_mu.R
 \name{loss_function_derivative_mu}
 \alias{loss_function_derivative_mu}
-\title{Loss function \code{rho} differentiated wrt. \code{mu}}
+\title{Loss function for \code{mu}}
 \usage{
 loss_function_derivative_mu(y0, mu, sigma2, t, delta)
 }

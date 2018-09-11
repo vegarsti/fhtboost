@@ -2,7 +2,7 @@
 % Please edit documentation in R/FHT_link_function.R
 \name{FHT_link_function}
 \alias{FHT_link_function}
-\title{Function taking design matrices \code{X}, \code{Z} and returns link function taking \code{beta}, \code{gamma}}
+\title{FHT link function}
 \usage{
 FHT_link_function(X, Z)
 }
