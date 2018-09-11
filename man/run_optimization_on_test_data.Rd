@@ -7,9 +7,9 @@
 run_optimization_on_test_data()
 }
 \description{
-Some description
+Function doing the whole shebang.
 }
 \examples{
-none
+R code here showing how your function works
 }
 \keyword{keywords}

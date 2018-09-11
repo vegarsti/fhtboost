@@ -1,4 +1,4 @@
-Package: packagename
+Package: fhtboost
 Title: Boosting for High-Dimensional First Hitting Time Threshold Regression
 Version: 0.1.0
 Authors: person("Vegard", "Stikbakke", email = "vegard.stikbakke@gmail.com", role = c("aut", "cre"))
