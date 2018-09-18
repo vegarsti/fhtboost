@@ -39,7 +39,6 @@ generate_test_data <- function() {
 
   # Draw survival times and censoring times
   survival_times <- statmod::rinvgauss(N, mu_IG, lambda_IG)
-  #censoring_times <- rep(0.7, N)
   censoring_times <- statmod::rinvgauss(N, mu_IG, lambda_IG*100)
 
   observations <- censor_observations(survival_times, censoring_times)

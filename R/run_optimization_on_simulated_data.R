@@ -1,7 +1,6 @@
-#' Run optimization on test data
+#' Run optimization on simulated data
 #'
 #' Function doing the whole shebang.
-#'
 #'
 #' @keywords keywords
 #'
@@ -10,7 +9,7 @@
 #' @examples
 #' R code here showing how your function works
 
-run_optimization_on_test_data <- function() {
+run_optimization_on_simulated_data <- function() {
   # Generate test data
   result <- generate_test_data()
   observations <- result$observations
