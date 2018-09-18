@@ -4,10 +4,10 @@
 \alias{FHT_loglikelihood_with_data}
 \title{Get function for optimization}
 \usage{
-FHT_loglikelihood_with_data(t, delta)
+FHT_loglikelihood_with_data(times, delta)
 }
 \arguments{
-\item{t}{Survival times (possibly censored)}
+\item{times}{Survival times (possibly censored)}
 
 \item{delta}{Corresponding observation indicator (1 = observed, 0 = censored)}
 }

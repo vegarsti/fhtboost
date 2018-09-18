@@ -15,7 +15,7 @@ FHT_link_function(X, Z)
 \code{link_function} Function taking \code{beta}, \code{gamma} and returning \code{y0}, \code{mu}.
 }
 \description{
-Function taking design matrices \code{X}, \code{Z} and returns link function taking \code{beta}, \code{gamma}
+Given design matrices, returns the corresponding link function, taking \code{beta}, \code{gamma}. Essentially encapsulating the design matrices.
 }
 \examples{
 R code here showing how your function works
