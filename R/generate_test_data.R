@@ -19,31 +19,34 @@
 
 generate_test_data <- function() {
   library(statmod)
-  set.seed(1)
+  set.seed(2)
   N <- 1000
-  d <- 1
-  p <- 1
-  beta <- c(2, -1)
-  gamma <- c(-2, -1)
-  X <- cbind(c(rep(1, 500), rep(0, 500)))
-  Z <- cbind(c(rep(1, 200), rep(4, 300), rep(10, 500)))
-  y_intercepts <- rep(1, N)
-  X_design_matrix <- cbind(y_intercepts, X)
-  Z_design_matrix <- cbind(y_intercepts, Z)
-  y0 <- exp(X_design_matrix %*% beta)
-  mu <- Z_design_matrix %*% gamma
+  beta_ <- c(0.5, 1)
+  gamma_ <- c(-0.2, -0.2)
+  X1 <- cbind(c(rep(2, 500), rep(1, 500)))
+  X2 <- cbind(c(rep(0, 500), rep(2, 500)))
+  Z1 <- cbind(c(rep(1, 200), rep(4, 300), rep(2, 500)))
+  Z2 <- cbind(c(rep(1, 200), rep(0, 300), rep(1, 500)))
+  X_design_matrix <- cbind(X1, X2)
+  Z_design_matrix <- cbind(Z1, Z2)
+  y0 <- exp(X_design_matrix %*% beta_)
+  mu <- Z_design_matrix %*% gamma_
   sigma_2 <- 1 ## NB
-  mu_IG <- - y0/mu
+
+  # Transform parameters
+  mu_IG <- y0/abs(mu)
   lambda_IG <- (y0/sigma_2)^2
-  survival_times <- rinvgauss(N, mu_IG, lambda_IG)
-  #censoring_times <- rinvgauss(N, mu_IG, 10*lambda_IG)
-  censoring_times <- rep(0.7, N)
-  censored_survival_times <- survival_times
-  censored_survival_times[is.na(survival_times)] <- censoring_times # censor!
-  observed <- ifelse(censored_survival_times < censoring_times, 1, 0)
-  times <- pmin(survival_times, censoring_times)
+
+  # Draw survival times and censoring times
+  survival_times <- statmod::rinvgauss(N, mu_IG, lambda_IG)
+  #censoring_times <- rep(0.7, N)
+  censoring_times <- statmod::rinvgauss(N, mu_IG, lambda_IG*100)
+
+  observations <- censor_observations(survival_times, censoring_times)
+  censored_survival_times <- observations$t
+  observed <- observations$delta
   observations <- list(survival_times=censored_survival_times, delta=observed)
-  true_parameters <- list(beta=beta, gamma=gamma)
+  true_parameters <- list(beta=beta_, gamma=gamma_)
   design_matrices <- list(X_design_matrix=X_design_matrix, Z_design_matrix=Z_design_matrix)
   return(list(
     observations=observations,

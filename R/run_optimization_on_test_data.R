@@ -11,21 +11,44 @@
 #' R code here showing how your function works
 
 run_optimization_on_test_data <- function() {
+  # Generate test data
   result <- generate_test_data()
   observations <- result$observations
-  t <- observations$survival_times
+  times <- observations$survival_times
   delta <- observations$delta
   X <- result$design_matrices$X
   Z <- result$design_matrices$Z
-  optimizable_function <- data_to_optimizable_function(X, Z, t, delta)
-  initial_parameters <- runif(4, min=1, max=2)
-  optimized_parameters <- nlm(optimizable_function, initial_parameters)$estimate
-  beta_hat <- optimized_parameters[1:2]
-  gamma_hat <- optimized_parameters[3:4]
-  beta <- result$true_parameters$beta
-  gamma <- result$true_parameters$gamma
-  print(beta_hat)
-  print(beta)
-  print(gamma_hat)
-  print(gamma)
+  minus_FHT_loglikelihood <- data_to_optimizable_function(X, Z, times, delta)
+
+  p <- dim(X)[2]
+  d <- dim(Z)[2]
+
+  # Run optimization
+  initial_parameters <- runif(p+d, min=1, max=2)
+
+  # Approach: Functional
+  #print(minus_FHT_loglikelihood(initial_parameters))
+  nlm_result <- nlm(minus_FHT_loglikelihood, initial_parameters)
+
+  # Approach: Put everything into one function
+  #print(FHT_minus_loglikelihood_with_all_parameters(initial_parameters, X, Z, times, delta))
+  #nlm_result <- nlm(FHT_minus_loglikelihood_with_all_parameters, initial_parameters, X, Z, times, delta)
+
+  optimized_parameters <- nlm_result$estimate
+
+  # Checking etc.
+  parameter_list <- parameter_vector_to_list(optimized_parameters, p, d)
+  beta_hat <- parameter_list$beta
+  gamma_hat <- parameter_list$gamma
+  beta_ <- result$true_parameters$beta
+  gamma_ <- result$true_parameters$gamma
+  return(list(
+    t=times,
+    delta=delta,
+    initial_parameters=initial_parameters,
+    beta_hat=beta_hat,
+    beta=beta_,
+    gamma_hat=gamma_hat,
+    gamma=gamma_
+  ))
 }
