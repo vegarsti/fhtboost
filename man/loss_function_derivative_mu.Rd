@@ -4,7 +4,7 @@
 \alias{loss_function_derivative_mu}
 \title{Loss function for \code{mu}}
 \usage{
-loss_function_derivative_mu(y0, mu, sigma2, t, delta)
+loss_function_derivative_mu(y0, mu, sigma2, times, delta)
 }
 \arguments{
 \item{y0}{Initial level of underlying Wiener process \code{y0}}
