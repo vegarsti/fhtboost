@@ -30,8 +30,6 @@ run_optimization_on_simulated_data <- function() {
   nlm_result <- nlm(minus_FHT_loglikelihood, initial_parameters)
 
   # Approach: Put everything into one function
-  #print(FHT_minus_loglikelihood_with_all_parameters(initial_parameters, X, Z, times, delta))
-  #nlm_result <- nlm(FHT_minus_loglikelihood_with_all_parameters, initial_parameters, X, Z, times, delta)
 
   optimized_parameters <- nlm_result$estimate
 

@@ -23,5 +23,5 @@ loss_function_derivative_mu <- function(y0, mu, sigma2, times, delta) {
   log_S3 <- -times/sqrt(sigma2*times) * exp(-2*y0*mu/sigma2)*dnorm((mu*times - y0)/sqrt(sigma2*times))
   log_S <- log_S1 + log_S2 + log_S3
   total <- delta*log_f + (1-delta)*log_S
-  return(sum(total))
+  return(total)
 }
