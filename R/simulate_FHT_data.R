@@ -1,6 +1,6 @@
-#' Generate test data
+#' Simulate FHT data
 #'
-#' Generate simulated test data: Survival times and observations
+#' Simulate FHT data
 #'
 #' @return \code{list} A list of lots of things
 #' @return \code{list} A list of lots of things
@@ -17,7 +17,7 @@
 #' delta <- observations$delta
 #' # make
 
-generate_test_data <- function() {
+simulate_FHT_data <- function() {
   library(statmod)
   set.seed(2)
   N <- 1000
@@ -28,7 +28,9 @@ generate_test_data <- function() {
   Z1 <- cbind(c(rep(1, 200), rep(4, 300), rep(2, 500)))
   Z2 <- cbind(c(rep(1, 200), rep(0, 300), rep(1, 500)))
   X_design_matrix <- cbind(X1, X2)
+  X_design_matrix <- X_design_matrix + rnorm(prod(dim(X_design_matrix)), sd = 0.5)
   Z_design_matrix <- cbind(Z1, Z2)
+  Z_design_matrix <- Z_design_matrix + rnorm(prod(dim(Z_design_matrix)), sd = 0.5)
   y0 <- exp(X_design_matrix %*% beta_)
   mu <- Z_design_matrix %*% gamma_
   sigma_2 <- 1 ## NB
