@@ -2,9 +2,9 @@
 #'
 #' Simulate FHT data
 #'
-#' @return \code{list} A list of lots of things
-#' @return \code{list} A list of lots of things
-#' among others this and this
+#' @return \code{observations} A list of \code{survival_times} and corresponding \code{delta}
+#' @return \code{true_parameters} A list of \code{beta} and \code{gamma}
+#' @return \code{design_matrices} A list of \code{X} and \code{Z}
 #'
 #' @keywords keywords
 #'
@@ -22,15 +22,23 @@ simulate_FHT_data <- function() {
   set.seed(2)
   N <- 1000
   beta_ <- c(0.5, 1)
+  #gamma_ <- c(-0.2, -0.1, -0.1)
   gamma_ <- c(-0.2, -0.2)
   X1 <- cbind(c(rep(2, 500), rep(1, 500)))
-  X2 <- cbind(c(rep(0, 500), rep(2, 500)))
+  X2 <- cbind(c(rep(0, 500), rep(1, 500)))
   Z1 <- cbind(c(rep(1, 200), rep(4, 300), rep(2, 500)))
   Z2 <- cbind(c(rep(1, 200), rep(0, 300), rep(1, 500)))
   X_design_matrix <- cbind(X1, X2)
   X_design_matrix <- X_design_matrix + rnorm(prod(dim(X_design_matrix)), sd = 0.5)
   Z_design_matrix <- cbind(Z1, Z2)
   Z_design_matrix <- Z_design_matrix + rnorm(prod(dim(Z_design_matrix)), sd = 0.5)
+
+  # scale
+  #Z_design_matrix <- scale(Z_design_matrix, center=T, scale=T)
+
+  # add intercept
+  #Z_design_matrix <- cbind(rep(1, N), Z_design_matrix)
+
   y0 <- exp(X_design_matrix %*% beta_)
   mu <- Z_design_matrix %*% gamma_
   sigma_2 <- 1 ## NB
