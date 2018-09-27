@@ -1,4 +1,4 @@
-run_normal_boosting <- function() {
+run_L2Boost <- function() {
   simulated_data <- simulate_normal_data()
   y <- simulated_data$y
   X <- simulated_data$X
