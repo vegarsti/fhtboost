@@ -1,5 +1,5 @@
 run_boosting <- function() {
-  boost_mu <- FALSE # boost y0 instead
+  boost_mu <- TRUE # if FALSE, boost y0 instead
   simulated_data <- simulate_FHT_data()
   times <- simulated_data$observations$survival_times
   delta <- simulated_data$observations$delta
@@ -57,9 +57,8 @@ run_boosting <- function() {
 
 
   negative_gradient <- matrix(NA, nrow=m_stop, ncol=N)
-  #parameter_list <- list(beta=beta_from_nlm, gamma=gamma_hat[1, ])
-  parameter_list <- list(beta=beta_hat[1, ], gamma=gamma_from_nlm)
-  negative_gradient[1, ] <- FHT_componentwise_loss_function_derivative_mu(parameter_list, X, Z, times, delta)
+  negative_gradient[1, ] <- FHT_componentwise_loss_function_derivative_mu(beta_from_nlm, gamma_hat[1, ], X, Z, times, delta)
+  #negative_gradient[1, ] <- FHT_componentwise_loss_function_derivative_mu(beta_hat[1, ], gamma_from_nlm, X, Z, times, delta)
   loss <- rep(NA, m_stop)
   #loss[1] <- minus_FHT_loglikelihood(parameter_list)
 
@@ -94,10 +93,10 @@ run_boosting <- function() {
       gamma_hat[m, best_p] <- nu*gamma_hats[best_p]
       gamma_hat[m, -best_p] <- 0
       gamma_hat_cumsum[m, ] <- gamma_hat_cumsum[m-1, ] + gamma_hat[m, ]
-      parameter_list <- list(beta=beta_from_nlm, gamma=gamma_hat_cumsum[m, ])
       negative_gradient[m, ] <- FHT_componentwise_loss_function_derivative_mu(
         beta_from_nlm,
         gamma_hat_cumsum[m, ],
+        X,
         Z,
         times,
         delta
@@ -111,6 +110,7 @@ run_boosting <- function() {
       negative_gradient[m, ] <- FHT_componentwise_loss_function_derivative_y0(
         beta_hat_cumsum[m, ],
         gamma_from_nlm,
+        X,
         Z,
         times,
         delta
