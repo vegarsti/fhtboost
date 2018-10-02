@@ -1,5 +1,5 @@
 run_boosting <- function() {
-  boost_mu <- TRUE # if FALSE, boost y0 instead
+  boost_mu <- FALSE # if FALSE, boost y0 instead
   simulated_data <- simulate_FHT_data()
   times <- simulated_data$observations$survival_times
   delta <- simulated_data$observations$delta
@@ -27,7 +27,7 @@ run_boosting <- function() {
   # Run optimization
   initial_parameters <- runif(p+d, min=0.1, max=0.5)
   nlm_result <- nlm(minus_FHT_loglikelihood_nlm, initial_parameters)
-  sum(abs(nlm_result$estimate - c(beta_true, gamma_true)))
+  #sum(abs(nlm_result$estimate - c(beta_true, gamma_true)))
   ### END SANITY CHECK ###
 
 
@@ -45,7 +45,17 @@ run_boosting <- function() {
   beta_from_nlm <- nlm_parameter_list$beta
   gamma_from_nlm <- nlm_parameter_list$gamma
 
-  # Standardize X & Z -- use scale instead!
+  # Scaling X and Z -- should rewrite! or hide in function
+  X_scale_factors <- as.numeric(apply(X, 2, sd))
+  Z_scale_factors <- as.numeric(apply(Z, 2, sd))
+  X_scale_factors[1] <- 1
+  Z_scale_factors[1] <- 1
+  for (j in 2:d) {
+    X[, j] <- X[, j]/X_scale_factors[j]
+  }
+  for (j in 2:p) {
+    Z[, j] <- Z[, j]/Z_scale_factors[j]
+  }
 
   # "make" loss function after scaling Z
   minus_FHT_loglikelihood <- data_to_FHT_loss_function(X, Z, times, delta)
@@ -61,10 +71,10 @@ run_boosting <- function() {
 
   # INITIALIZE
   if (mu_has_intercept) {
-    gamma_hat[1, 1] <- -1.0 # true value -- must estimate better (unseen)
+    gamma_hat[1, 1] <- gamma_from_nlm[1] # true value -- must estimate better (unseen)
   }
   if (y0_has_intercept) {
-    beta_hat[1, 1] <- 1.5 # true value -- must estimate better (unseen)
+    beta_hat[1, 1] <- beta_from_nlm[1] # true value -- must estimate better (unseen)
   }
   gamma_hat_cumsum[1, ] <- gamma_hat[1, ]
   beta_hat_cumsum[1, ] <- beta_hat[1, ]
@@ -143,6 +153,7 @@ run_boosting <- function() {
     }
     loss[m] <- minus_FHT_loglikelihood(parameter_list)
   }
+  gamma_hat_final <- gamma_hat_cumsum[m, ] * Z_scale_factors
   gradient_sums <- rowSums(abs(negative_gradient))
   plot(gradient_sums, typ='l')
 }
