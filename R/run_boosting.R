@@ -6,20 +6,23 @@ run_boosting <- function() {
   X <- simulated_data$design_matrices$X
   Z <- simulated_data$design_matrices$Z
 
+  mu_has_intercept <- TRUE
+  y0_has_intercept <- TRUE
+
   # center Z for correct boosting
   #Z <- scale(Z, center=T, scale=F)
 
   # Our loss function
   # usage: minus_FHT_loglikelihood(list(beta=beta, gamma=gamma))
 
-  beta_true <- c(0.5, 1)       # the true beta!
-  gamma_true <- c(-0.2, -0.2)
+  beta_true <- simulated_data$true_parameters$beta
+  gamma_true <- simulated_data$true_parameters$gamma
 
   ### SANITY CHECK -> does nlm recover the parameters? ###
   minus_FHT_loglikelihood_nlm <- data_to_optimizable_function(X, Z, times, delta)
 
-  p <- dim(X)[2]
-  d <- dim(Z)[2]
+  d <- dim(X)[2]
+  p <- dim(Z)[2]
 
   # Run optimization
   initial_parameters <- runif(p+d, min=0.1, max=0.5)
@@ -27,17 +30,20 @@ run_boosting <- function() {
   sum(abs(nlm_result$estimate - c(beta_true, gamma_true)))
   ### END SANITY CHECK ###
 
-  beta_from_nlm <- nlm_result$estimate[1:2]
-  gamma_from_nlm <- nlm_result$estimate[3:4]
 
   m_stop <- 100
 
   N <- dim(X)[1]
 
   nu <- 0.1
-
-  N <- dim(Z)[1]
+  d <- dim(X)[2]
   p <- dim(Z)[2]
+  N <- dim(Z)[1]
+  # check dim(Z)[1] == dim(X)[1]
+
+  nlm_parameter_list <- parameter_vector_to_list(nlm_result$estimate, d, p)
+  beta_from_nlm <- nlm_parameter_list$beta
+  gamma_from_nlm <- nlm_parameter_list$gamma
 
   # Standardize X & Z -- use scale instead!
 
@@ -46,14 +52,22 @@ run_boosting <- function() {
   #minus_FHT_loglikelihood(list(beta=beta_true, gamma=gamma_true))
 
   gamma_hat <- matrix(NA, nrow=m_stop, ncol=p)
-  gamma_hat[1, ] <- c(0, 0)
+  gamma_hat[1, ] <- rep(0, p)
   gamma_hat_cumsum <- matrix(NA, nrow=m_stop, ncol=p)
-  gamma_hat_cumsum[1, ] <- c(0, 0)
 
-  beta_hat <- matrix(NA, nrow=m_stop, ncol=p)
-  beta_hat[1, ] <- c(0, 0)
-  beta_hat_cumsum <- matrix(NA, nrow=m_stop, ncol=p)
-  beta_hat_cumsum[1, ] <- c(0, 0)
+  beta_hat <- matrix(NA, nrow=m_stop, ncol=d)
+  beta_hat[1, ] <- rep(0, d)
+  beta_hat_cumsum <- matrix(NA, nrow=m_stop, ncol=d)
+
+  # INITIALIZE
+  if (mu_has_intercept) {
+    gamma_hat[1, 1] <- -1.0 # true value -- must estimate better (unseen)
+  }
+  if (y0_has_intercept) {
+    beta_hat[1, 1] <- 1.5 # true value -- must estimate better (unseen)
+  }
+  gamma_hat_cumsum[1, ] <- gamma_hat[1, ]
+  beta_hat_cumsum[1, ] <- beta_hat[1, ]
 
 
   negative_gradient <- matrix(NA, nrow=m_stop, ncol=N)
@@ -65,30 +79,30 @@ run_boosting <- function() {
   u_hats_rss <- rep(NA, p)
   u_hats <- matrix(NA, nrow=p, ncol=N)
   gamma_hats <- rep(NA, p)
-  beta_hats <- rep(NA, p)
+  beta_hats <- rep(NA, d)
+  if (mu_has_intercept) {
+    ps <- 2:p
+  } else {
+    ps <- 1:p
+  }
+  if (y0_has_intercept) {
+    ds <- 2:d
+  } else {
+    ds <- 1:p
+  }
   for (m in 2:m_stop) {
     u <- negative_gradient[(m-1), ]
-    for (j in 1:p) {
 
-      ## BOOST MU
-      if (boost_mu == TRUE) {
-        Z_j <- Z[,j]
-        gamma_hats[j] <- solve(t(Z_j) %*% Z_j) %*% t(Z_j) %*% u
-        u_hats[j, ] <- Z_j * gamma_hats[j]
-        u_hats_rss[j] <- sum((u_hats[j, ] - u)^2) / N
-      }
+    ## BOOST MU
+    if (boost_mu) {
+      for (j in ps) { # rewrite this to an apply call!
+          Z_j <- Z[,j]
+          gamma_hats[j] <- solve(t(Z_j) %*% Z_j) %*% t(Z_j) %*% u
+          u_hats[j, ] <- Z_j * gamma_hats[j]
+          u_hats_rss[j] <- sum((u_hats[j, ] - u)^2) / N
+        }
+      best_p <- which.min(u_hats_rss)
 
-      ## BOOST y0
-      else {
-        X_j <- X[,j]
-        beta_hats[j] <- solve(t(X_j) %*% X_j) %*% t(X_j) %*% u
-        u_hats[j, ] <- X_j * beta_hats[j]
-        u_hats_rss[j] <- sum((u_hats[j, ] - u)^2) / N
-      }
-    }
-    best_p <- which.min(u_hats_rss)
-
-    if (boost_mu == TRUE) {
       # BOOST MU
       gamma_hat[m, best_p] <- nu*gamma_hats[best_p]
       gamma_hat[m, -best_p] <- 0
@@ -101,9 +115,19 @@ run_boosting <- function() {
         times,
         delta
       )
+      parameter_list <- list(beta=beta_from_nlm, gamma=gamma_hat_cumsum[m, ])
     }
-    # BOOST y0
+
+    ## BOOST y0
     else {
+      for (j in ds) {
+        X_j <- X[,j]
+        beta_hats[j] <- solve(t(X_j) %*% X_j) %*% t(X_j) %*% u
+        u_hats[j, ] <- X_j * beta_hats[j]
+        u_hats_rss[j] <- sum((u_hats[j, ] - u)^2) / N
+      }
+      best_p <- which.min(u_hats_rss)
+
       beta_hat[m, best_p] <- nu*beta_hats[best_p]
       beta_hat[m, -best_p] <- 0
       beta_hat_cumsum[m, ] <- beta_hat_cumsum[m-1, ] + beta_hat[m, ]
@@ -115,8 +139,9 @@ run_boosting <- function() {
         times,
         delta
       )
+      parameter_list <- list(beta=beta_hat_cumsum[m, ], gamma=gamma_from_nlm)
     }
-    #loss[m] <- minus_FHT_loglikelihood(parameter_list)
+    loss[m] <- minus_FHT_loglikelihood(parameter_list)
   }
   gradient_sums <- rowSums(abs(negative_gradient))
   plot(gradient_sums, typ='l')

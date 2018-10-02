@@ -21,16 +21,25 @@ simulate_FHT_data <- function() {
   library(statmod)
   set.seed(2)
   N <- 1000
-  beta_ <- c(0.5, 1)
-  #gamma_ <- c(-0.2, -0.1, -0.1)
-  gamma_ <- c(-0.2, -0.2)
-  X1 <- cbind(c(rep(2, 500), rep(1, 500)))
-  X2 <- cbind(c(rep(0, 500), rep(1, 500)))
-  Z1 <- cbind(c(rep(1, 200), rep(4, 300), rep(2, 500)))
-  Z2 <- cbind(c(rep(1, 200), rep(0, 300), rep(1, 500)))
-  X_design_matrix <- cbind(X1, X2)
+
+
+  # y0, beta, X
+  beta_ <- c(1.5, 0.1, 0.2)
+  X0 <- rep(1, N)
+  X1 <- cbind(c(rep(1, 300), rep(2, 300), rep(-0.5, 400)))
+  X1 <- scale(X1)
+  X2 <- rnorm(N)
+  X_design_matrix <- cbind(X0, X1, X2)
   X_design_matrix <- X_design_matrix + rnorm(prod(dim(X_design_matrix)), sd = 0.5)
-  Z_design_matrix <- cbind(Z1, Z2)
+
+  # mu, gamma, Z
+  # with intercept and normalization
+  gamma_ <- c(-1.0, -0.2, 0.1)
+  Z0 <- rep(1, N)
+  Z1 <- cbind(c(rep(1, 500), rep(-1, 500)))
+  Z2 <- rnorm(N)
+  Z_design_matrix <- cbind(Z0, Z1, Z2)
+  # add noise
   Z_design_matrix <- Z_design_matrix + rnorm(prod(dim(Z_design_matrix)), sd = 0.5)
 
   # scale
