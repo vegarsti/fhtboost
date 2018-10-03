@@ -86,10 +86,16 @@ run_boosting <- function() {
   loss <- rep(NA, m_stop)
   #loss[1] <- minus_FHT_loglikelihood(parameter_list)
 
+  gamma_hats <- rep(NA, p)
   u_hats_rss <- rep(NA, p)
   u_hats <- matrix(NA, nrow=p, ncol=N)
-  gamma_hats <- rep(NA, p)
   beta_hats <- rep(NA, d)
+
+
+  # DIVIDE INTO K FOLDS
+  K <- 5
+  folds <- create_folds(N, K)
+
   if (mu_has_intercept) {
     ps <- 2:p
   } else {
@@ -100,22 +106,12 @@ run_boosting <- function() {
   } else {
     ds <- 1:p
   }
+  CV_means <- rep(0, m_stop)
   for (m in 2:m_stop) {
     u <- negative_gradient[(m-1), ]
-
     ## BOOST MU
     if (boost_mu) {
-      for (j in ps) { # rewrite this to an apply call!
-          Z_j <- Z[,j]
-          gamma_hats[j] <- solve(t(Z_j) %*% Z_j) %*% t(Z_j) %*% u
-          u_hats[j, ] <- Z_j * gamma_hats[j]
-          u_hats_rss[j] <- sum((u_hats[j, ] - u)^2) / N
-        }
-      best_p <- which.min(u_hats_rss)
-
-      # BOOST MU
-      gamma_hat[m, best_p] <- nu*gamma_hats[best_p]
-      gamma_hat[m, -best_p] <- 0
+      gamma_hat[m, ] <- nu*best_least_squares_update(Z, u, p, ps)
       gamma_hat_cumsum[m, ] <- gamma_hat_cumsum[m-1, ] + gamma_hat[m, ]
       negative_gradient[m, ] <- FHT_componentwise_loss_function_derivative_mu(
         beta_from_nlm,
@@ -126,20 +122,25 @@ run_boosting <- function() {
         delta
       )
       parameter_list <- list(beta=beta_from_nlm, gamma=gamma_hat_cumsum[m, ])
-    }
 
-    ## BOOST y0
-    else {
-      for (j in ds) {
-        X_j <- X[,j]
-        beta_hats[j] <- solve(t(X_j) %*% X_j) %*% t(X_j) %*% u
-        u_hats[j, ] <- X_j * beta_hats[j]
-        u_hats_rss[j] <- sum((u_hats[j, ] - u)^2) / N
-      }
-      best_p <- which.min(u_hats_rss)
+      # # CV
+      # for (k in 1:K) {
+      #   X_k <- X[-folds[k], ]
+      #   Z_k <- Z[-folds[k, ]]
+      #   times_k <- times(-folds[k])
+      #   delta_k <- delta(-folds[k])
+      #   FHT_componentwise_minus_loglikelihood_with_parameters(
+      #     beta_,
+      #     gamma_,
+      #     X,
+      #     Z,
+      #     times,
+      #     delta
+      #   )
+      # }
 
-      beta_hat[m, best_p] <- nu*beta_hats[best_p]
-      beta_hat[m, -best_p] <- 0
+    } else {
+      beta_hat[m, ] <- nu*best_least_squares_update(X, u, d, ds)
       beta_hat_cumsum[m, ] <- beta_hat_cumsum[m-1, ] + beta_hat[m, ]
       negative_gradient[m, ] <- FHT_componentwise_loss_function_derivative_y0(
         beta_hat_cumsum[m, ],
@@ -153,7 +154,8 @@ run_boosting <- function() {
     }
     loss[m] <- minus_FHT_loglikelihood(parameter_list)
   }
-  gamma_hat_final <- gamma_hat_cumsum[m, ] * Z_scale_factors
+  #gamma_hat_final <- gamma_hat_cumsum[m, ] * Z_scale_factors
+  beta_hat_final <- beta_hat_cumsum[m, ] * X_scale_factors
   gradient_sums <- rowSums(abs(negative_gradient))
   plot(gradient_sums, typ='l')
 }
