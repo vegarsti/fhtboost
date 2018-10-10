@@ -1,5 +1,5 @@
 create_folds <- function(N, K) {
   indices <- sample(1:N)
-  folds <- matrix(indices, ncol = K)
+  folds <- matrix(indices, nrow = K)
   return(folds)
 }
