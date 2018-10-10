@@ -7,10 +7,11 @@
 simulate_FHT_data()
 }
 \value{
-\code{list} A list of lots of things
+\code{observations} A list of \code{survival_times} and corresponding \code{delta}
 
-\code{list} A list of lots of things
-among others this and this
+\code{true_parameters} A list of \code{beta} and \code{gamma}
+
+\code{design_matrices} A list of \code{X} and \code{Z}
 }
 \description{
 Simulate FHT data

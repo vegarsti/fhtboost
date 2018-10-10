@@ -31,7 +31,7 @@ simulate_FHT_data <- function() {
   X1 <- scale(X1)
   X2 <- rnorm(N)
   X_design_matrix <- cbind(X0, X1, X2)
-  X_design_matrix[, 2:d] <- X_design_matrix[, 2:d] + rnorm(prod(dim(X_design_matrix[, 2:d])), sd = 0.5)
+  X_design_matrix[, 2:d] <- X_design_matrix[, 2:d] + rnorm(prod(dim(X_design_matrix[, 2:d])))
 
   # mu, gamma, Z
   # with intercept and normalization
@@ -42,7 +42,7 @@ simulate_FHT_data <- function() {
   Z2 <- rnorm(N)
   Z_design_matrix <- cbind(Z0, Z1, Z2)
   # add noise
-  Z_design_matrix[, 2:p] <- Z_design_matrix[, 2:p] + rnorm(prod(dim(Z_design_matrix[, 2:p])), sd = 0.5)
+  Z_design_matrix[, 2:p] <- Z_design_matrix[, 2:p] + rnorm(prod(dim(Z_design_matrix[, 2:p])))
 
   # scale
   #Z_design_matrix <- scale(Z_design_matrix, center=T, scale=T)
