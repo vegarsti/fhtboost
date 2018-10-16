@@ -17,39 +17,45 @@
 #' delta <- observations$delta
 #' # make
 
-simulate_FHT_data <- function() {
+simulate_FHT_data <- function(dense=TRUE) {
   library(statmod)
   set.seed(2)
   N <- 1000
 
+  if (dense) {
+    # y0, beta, X
+    beta_ <- c(2, 0.1, 0.2)
+    d <- length(beta_)
+    X0 <- rep(1, N)
+    X1 <- cbind(c(rep(1, 300), rep(2, 300), rep(-0.5, 400)))
+    X1 <- scale(X1)
+    X2 <- rnorm(N)
+    X_design_matrix <- cbind(X0, X1, X2)
+    X_design_matrix[, 2:d] <- X_design_matrix[, 2:d] + rnorm(prod(dim(X_design_matrix[, 2:d])))
 
-  # y0, beta, X
-  beta_ <- c(2, 0.1, 0.2)
-  d <- length(beta_)
-  X0 <- rep(1, N)
-  X1 <- cbind(c(rep(1, 300), rep(2, 300), rep(-0.5, 400)))
-  X1 <- scale(X1)
-  X2 <- rnorm(N)
-  X_design_matrix <- cbind(X0, X1, X2)
-  X_design_matrix[, 2:d] <- X_design_matrix[, 2:d] + rnorm(prod(dim(X_design_matrix[, 2:d])))
+    # mu, gamma, Z
+    # with intercept and normalization
+    gamma_ <- c(-3.0, -0.2, 0.1)
+    p <- length(gamma_)
+    Z0 <- rep(1, N)
+    Z1 <- cbind(c(rep(1, 500), rep(-1, 500)))
+    Z2 <- rnorm(N)
+    Z_design_matrix <- cbind(Z0, Z1, Z2)
+    # add noise
+    Z_design_matrix[, 2:p] <- Z_design_matrix[, 2:p] + rnorm(prod(dim(Z_design_matrix[, 2:p])))
+  } else {
+    beta_ <- c(3, rep(0.1, 10), rep(0, 10))
+    d <- length(beta_)
+    X0 <- rep(1, N)
+    Xrest <- matrix(rnorm((d-1)*N), ncol=(d-1))
+    X_design_matrix <- cbind(X0, Xrest)
 
-  # mu, gamma, Z
-  # with intercept and normalization
-  gamma_ <- c(-3.0, -0.2, 0.1)
-  p <- length(gamma_)
-  Z0 <- rep(1, N)
-  Z1 <- cbind(c(rep(1, 500), rep(-1, 500)))
-  Z2 <- rnorm(N)
-  Z_design_matrix <- cbind(Z0, Z1, Z2)
-  # add noise
-  Z_design_matrix[, 2:p] <- Z_design_matrix[, 2:p] + rnorm(prod(dim(Z_design_matrix[, 2:p])))
-
-  # scale
-  #Z_design_matrix <- scale(Z_design_matrix, center=T, scale=T)
-
-  # add intercept
-  #Z_design_matrix <- cbind(rep(1, N), Z_design_matrix)
-
+    gamma_ <- c(-2.0, rep(0, 10), rep(1, 10))
+    p <- length(beta_)
+    Z0 <- rep(1, N)
+    Zrest <- matrix(rnorm((p-1)*N), ncol=(p-1))
+    Z_design_matrix <- cbind(Z0, Zrest)
+  }
   y0 <- exp(X_design_matrix %*% beta_)
   mu <- Z_design_matrix %*% gamma_
   sigma_2 <- 1 ## NB
