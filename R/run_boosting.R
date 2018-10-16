@@ -1,8 +1,10 @@
 run_boosting <- function() {
   # Extract simulated data
-  simulated_data <- simulate_FHT_data()
+  simulated_data <- simulate_FHT_data(FALSE)
   times <- simulated_data$observations$survival_times
   delta <- simulated_data$observations$delta
+  non_para <- non_parametric_estimates(times, delta, continuous = TRUE)
+  plot(non_para$times_sequence, non_para$kaplan_meiers, typ='s')
   X <- simulated_data$design_matrices$X
   Z <- simulated_data$design_matrices$Z
 
@@ -25,9 +27,6 @@ run_boosting <- function() {
   print("Difference between true and nlm:")
   print(sum(abs(nlm_result$estimate - c(beta_true, gamma_true))))
 
-
-  m_stop <- 100
-
   nlm_parameter_list <- parameter_vector_to_list(nlm_result$estimate, d, p)
   beta_from_nlm <- nlm_parameter_list$beta
   beta_0_from_nlm <- beta_from_nlm[1]
@@ -37,13 +36,15 @@ run_boosting <- function() {
   # DIVIDE INTO K FOLDS
   K <- 5
   K_fold_repetitions <- 10
-  folds <- create_folds(N, K)
-  M <- 100
+  M <- m_stop <- 100 ### M STOP
   CV_errors_mu_K <- matrix(NA, nrow=m_stop, ncol=K_fold_repetitions)
   CV_errors_y0_K <- matrix(NA, nrow=m_stop, ncol=K_fold_repetitions)
+  loss_K <- matrix(NA, nrow=m_stop, ncol=K_fold_repetitions)
   for (repeated_K_fold_iteration in 1:K_fold_repetitions) {
+    folds <- create_folds(N, K)
     CV_error_matrix_mu <- matrix(NA, nrow=m_stop, ncol=K)
     CV_error_matrix_y0 <- matrix(NA, nrow=m_stop, ncol=K)
+    loss <- matrix(NA, nrow=M, ncol=K)
     for (k in 1:K) {
       subset_without_k <- folds[-k, ]
       subset_k <- folds[k, ]
@@ -56,7 +57,7 @@ run_boosting <- function() {
       times_k <- times[subset_k]
       delta_k <- times[subset_k]
       result <- boosting_run(
-        times_without_k, delta_without_k, X_without_k, Z_without_k, M, M, beta_0_from_nlm, gamma_0_from_nlm
+        times_without_k, delta_without_k, X_without_k, Z_without_k, M, M, beta_0_from_nlm, gamma_0_from_nlm, use_nlm=TRUE
       )
       beta_hats <- result$parameters$beta_hats
       gamma_hats <- result$parameters$gamma_hats
@@ -75,12 +76,15 @@ run_boosting <- function() {
       # ???
       CV_error_matrix_mu[1, k] <- CV_error_matrix_mu[2, k]
       CV_error_matrix_y0[1, k] <- CV_error_matrix_y0[2, k]
+      loss[, k] <- result$loss / length(times_k)
     }
     CV_errors_mu_K[, repeated_K_fold_iteration] <- rowSums(CV_error_matrix_mu) / N
     CV_errors_y0_K[, repeated_K_fold_iteration] <- rowSums(CV_error_matrix_y0) / N
+    loss_K[, repeated_K_fold_iteration] <- rowMeans(loss)
   }
-  CV_errors_mu <- rowSums(CV_errors_mu_K) / K_fold_repetitions
-  CV_errors_y0 <- rowSums(CV_errors_y0_K) / K_fold_repetitions
+  CV_errors_mu <- rowSums(CV_errors_mu_K)
+  CV_errors_y0 <- rowSums(CV_errors_y0_K)
+  loss <- rowMeans(loss_K)
   plot(CV_errors_mu, typ='l')
   lines(CV_errors_y0, typ='l', col='red')
 
@@ -89,5 +93,6 @@ run_boosting <- function() {
 
   m_stop_mu <- which.min(CV_errors_mu)
   m_stop_y0 <- which.min(CV_errors_y0)
-  result <- boosting_run(times, delta, X, Z, m_stop_mu, m_stop_y0, beta_0_from_nlm, gamma_0_from_nlm, use_nlm=FALSE)
+  result_wo_nlm <- boosting_run(times, delta, X, Z, m_stop_mu, m_stop_y0, beta_0_from_nlm, gamma_0_from_nlm, use_nlm=FALSE)
+  result_w_nlm <- boosting_run(times, delta, X, Z, m_stop_mu, m_stop_y0, beta_0_from_nlm, gamma_0_from_nlm, use_nlm=TRUE)
 }

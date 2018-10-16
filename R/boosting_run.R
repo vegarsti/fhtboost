@@ -26,14 +26,9 @@ boosting_run <- function(times, delta, X, Z, m_stop_mu, m_stop_y0, beta_0_from_n
   ds <- 2:d
 
   m_stop <- max(m_stop_mu, m_stop_y0)
-  print(m_stop)
 
   # Nuisance parameter: shrinkage factor
   nu <- 0.1
-
-
-  print("use nlm")
-  print(use_nlm)
 
   # Scaling X and Z -- should rewrite! or hide in function
   X_original <- X
@@ -99,6 +94,8 @@ boosting_run <- function(times, delta, X, Z, m_stop_mu, m_stop_y0, beta_0_from_n
   beta_hats <- rep(NA, d)
   u_hats <- matrix(NA, nrow=p, ncol=N)
   u_hats_rss <- rep(NA, p)
+  loss <- rep(0, m_stop)
+  loss[1] <- FHT_minus_loglikelihood_with_all_parameters(beta_hat[1, ], gamma_hat[1, ], X, Z, times, delta)
 
   for (m in 2:m_stop) {
     # gamma
@@ -127,6 +124,7 @@ boosting_run <- function(times, delta, X, Z, m_stop_mu, m_stop_y0, beta_0_from_n
       beta_hat[m, ] <- 0
       beta_hat_cumsum[m, ] <- beta_hat_cumsum[m-1, ]
     }
+    loss[m] <- FHT_minus_loglikelihood_with_all_parameters(beta_hat[m, ], gamma_hat[m, ], X, Z, times, delta)
   }
   # Scale back
   scale_matrix_back <- function(matrix_to_scale, column_wise_weights) {
@@ -140,6 +138,6 @@ boosting_run <- function(times, delta, X, Z, m_stop_mu, m_stop_y0, beta_0_from_n
     gamma_hats=gamma_hat_cumsum_scaled_back, beta_hats=beta_hat_cumsum_scaled_back
   )
   final_value <- FHT_minus_loglikelihood_with_all_parameters(beta_hat_final, gamma_hat_final, X_original, Z_original, times, delta)
-  final_parameters <- list(gamma_hat_final=gamma_hat_final,beta_hat_final=beta_hat_final, final_value=final_value)
-  return(list(final_parameters=final_parameters, parameters=parameters))
+  final_parameters <- list(gamma_hat_final=gamma_hat_final,beta_hat_final=beta_hat_final)
+  return(list(final_parameters=final_parameters, parameters=parameters, final_value=final_value, loss=loss))
 }
