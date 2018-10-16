@@ -9,11 +9,15 @@
 #' @examples
 #' R code here showing how your function works
 
-non_parametric_estimates <- function(survival_times, observed) {
+non_parametric_estimates <- function(survival_times, observed, continuous=FALSE) {
   sorted_t_vector <- sort(survival_times)
   diffs <- diff(sorted_t_vector)
   step_size <- 0.9*min(diffs[diffs > 0])
-  times_sequence <- seq(0, max(survival_times), by=step_size)
+  if (!continuous) {
+    times_sequence <- seq(0, max(survival_times), by=step_size)
+  } else {
+    times_sequence <- sorted_t_vector
+  }
   at_risk <- calculate_at_risk(times_sequence, sorted_t_vector)
   sorted_observed <- observed[order(survival_times)]
   N <- length(times_sequence)
