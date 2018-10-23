@@ -1,6 +1,6 @@
 run_boosting <- function() {
   # Extract simulated data
-  simulated_data <- simulate_FHT_data(dense=FALSE)
+  simulated_data <- simulate_FHT_data(dense=TRUE)
   times <- simulated_data$observations$survival_times
   delta <- simulated_data$observations$delta
   non_para <- non_parametric_estimates(times, delta, continuous = TRUE)
@@ -47,9 +47,9 @@ run_boosting <- function() {
   gamma_0_from_nlm <- gamma_from_nlm[1]
 
   # DIVIDE INTO K FOLDS
-  K <- 5
+  K <- 10
   K_fold_repetitions <- 10
-  M <- m_stop <- 50 ### M STOP
+  M <- m_stop <- 30 ### M STOP
   CV_errors_mu_K <- matrix(NA, nrow=m_stop, ncol=K_fold_repetitions)
   CV_errors_y0_K <- matrix(NA, nrow=m_stop, ncol=K_fold_repetitions)
   loss_K <- matrix(NA, nrow=m_stop, ncol=K_fold_repetitions)
@@ -98,9 +98,13 @@ run_boosting <- function() {
   CV_errors_mu <- rowSums(CV_errors_mu_K)
   CV_errors_y0 <- rowSums(CV_errors_y0_K)
   loss <- rowMeans(loss_K)
-  plot(CV_errors_mu, typ='l')
-  lines(CV_errors_y0, typ='l', col='red')
-
+  if (min(CV_errors_mu) < min(CV_errors_y0)) {
+    plot(CV_errors_mu, typ='l')
+    lines(CV_errors_y0, typ='l', col='red')
+  } else {
+    plot(CV_errors_y0, typ='l', col='red')
+    lines(CV_errors_mu, typ='l')
+  }
   # lines(CV_error_matrix[, 1] / length(folds[1, ]),
   #   col=rgb(red = 0, green = 0, blue = 0, alpha = 0.5))
 

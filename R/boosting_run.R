@@ -98,8 +98,10 @@ boosting_run <- function(times, delta, X, Z, m_stop_mu, m_stop_y0, beta_0_from_n
   loss[1] <- FHT_minus_loglikelihood_with_all_parameters(beta_hat[1, ], gamma_hat[1, ], X, Z, times, delta)
 
   for (m in 2:m_stop) {
-    # gamma
+    #print(m)
+    # gamma/mu
     if (m <= m_stop_mu) {
+      #print("mu")
       u <- negative_gradient_mu[(m-1), ]
       result <- boosting_iteration_mu(
         nu, X, Z, u, beta_hat_cumsum[m-1, ], gamma_hat_cumsum[m-1, ], p, ps, times, delta
@@ -111,11 +113,12 @@ boosting_run <- function(times, delta, X, Z, m_stop_mu, m_stop_y0, beta_0_from_n
       gamma_hat[m, ] <- 0
       gamma_hat_cumsum[m, ] <- gamma_hat_cumsum[m-1, ]
     }
-    # beta
+    # beta/y0
     if (m <= m_stop_y0) {
+      #print("y0")
       u <- negative_gradient_y0[(m-1), ]
       result <- boosting_iteration_y0(
-        nu, X, Z, u, beta_hat_cumsum[m-1, ], gamma_hat_cumsum[m-1, ], d, ds, times, delta
+        nu, X, Z, u, beta_hat_cumsum[m-1, ], gamma_hat_cumsum[m, ], d, ds, times, delta
       )
       beta_hat[m, ] <- result$beta_hat_addition
       beta_hat_cumsum[m, ] <- result$beta_hat_m
@@ -124,6 +127,7 @@ boosting_run <- function(times, delta, X, Z, m_stop_mu, m_stop_y0, beta_0_from_n
       beta_hat[m, ] <- 0
       beta_hat_cumsum[m, ] <- beta_hat_cumsum[m-1, ]
     }
+    #print("loss")
     loss[m] <- FHT_minus_loglikelihood_with_all_parameters(beta_hat[m, ], gamma_hat[m, ], X, Z, times, delta)
   }
   # Scale back
