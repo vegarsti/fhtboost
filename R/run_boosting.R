@@ -54,13 +54,13 @@ run_boosting <- function() {
   CV_errors_y0_K <- matrix(NA, nrow=m_stop, ncol=K_fold_repetitions)
   loss_K <- matrix(NA, nrow=m_stop, ncol=K_fold_repetitions)
   for (repeated_K_fold_iteration in 1:K_fold_repetitions) {
-    folds <- create_folds(N, K)
+    folds <- create_folds_stratified(delta, K)
     CV_error_matrix_mu <- matrix(NA, nrow=m_stop, ncol=K)
     CV_error_matrix_y0 <- matrix(NA, nrow=m_stop, ncol=K)
     loss <- matrix(NA, nrow=M, ncol=K)
     for (k in 1:K) {
-      subset_without_k <- folds[-k, ]
-      subset_k <- folds[k, ]
+      subset_without_k <- get_all_but_kth_fold(folds, k, K)
+      subset_k <- get_kth_fold(folds, k)
       X_without_k <- X[subset_without_k, ]
       Z_without_k <- Z[subset_without_k, ]
       X_k <- X[subset_k, ]
