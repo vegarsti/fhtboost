@@ -1,4 +1,4 @@
-boosting_run <- function(times, delta, X, Z, m_stop_mu, m_stop_y0, beta_0_from_nlm, gamma_0_from_nlm, use_nlm=TRUE) {
+boosting_run <- function(times, delta, X, Z, m_stop_mu, m_stop_y0, beta_0_from_nlm, gamma_0_from_nlm, give_intercepts=TRUE) {
   N_X <- dim(X)[1]
   N_Z <- dim(Z)[1]
   N_t <- length(times)
@@ -58,6 +58,17 @@ boosting_run <- function(times, delta, X, Z, m_stop_mu, m_stop_y0, beta_0_from_n
       c(beta_0), c(gamma_0), X_0, Z_0, times, delta
     ))
   }
+
+  optimize_beta_0 <- function(beta0, beta_, gamma_, X, Z, times, delta) {
+    beta_[1] <- beta0
+    return(FHT_minus_loglikelihood_with_all_parameters(beta_, gamma_, X, Z, times, delta))
+  }
+
+  optimize_gamma_0 <- function(gamma0, beta_, gamma_, X, Z, times, delta) {
+    gamma_[1] <- gamma0
+    return(FHT_minus_loglikelihood_with_all_parameters(beta_, gamma_, X, Z, times, delta))
+  }
+
   nlm_result <- nlm(function_to_optimize, c(0.5, -2))
 
   gamma_hat <- matrix(NA, nrow=m_stop, ncol=p)
@@ -68,7 +79,7 @@ boosting_run <- function(times, delta, X, Z, m_stop_mu, m_stop_y0, beta_0_from_n
   beta_hat[1, ] <- rep(0, d)
   beta_hat_cumsum <- matrix(NA, nrow=m_stop, ncol=d)
 
-  if (use_nlm) {
+  if (give_intercepts) {
     gamma_0 <- gamma_0_from_nlm
     beta_0 <- beta_0_from_nlm
   } else {
@@ -113,6 +124,8 @@ boosting_run <- function(times, delta, X, Z, m_stop_mu, m_stop_y0, beta_0_from_n
       gamma_hat[m, ] <- 0
       gamma_hat_cumsum[m, ] <- gamma_hat_cumsum[m-1, ]
     }
+    gamma0 <- nlm(optimize_gamma_0, 0, beta_hat_cumsum[m-1, ], gamma_hat_cumsum[m, ], X, Z, times, delta)$estimate
+    gamma_hat_cumsum[m, 1] <- gamma0
     # beta/y0
     if (m <= m_stop_y0) {
       #print("y0")
@@ -127,6 +140,8 @@ boosting_run <- function(times, delta, X, Z, m_stop_mu, m_stop_y0, beta_0_from_n
       beta_hat[m, ] <- 0
       beta_hat_cumsum[m, ] <- beta_hat_cumsum[m-1, ]
     }
+    beta0 <- nlm(optimize_beta_0, 0, beta_hat_cumsum[m, ], gamma_hat_cumsum[m, ], X, Z, times, delta)$estimate
+    beta_hat_cumsum[m, 1] <- beta0
     #print("loss")
     loss[m] <- FHT_minus_loglikelihood_with_all_parameters(beta_hat[m, ], gamma_hat[m, ], X, Z, times, delta)
   }

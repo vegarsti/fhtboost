@@ -70,7 +70,7 @@ run_boosting <- function() {
       times_k <- times[subset_k]
       delta_k <- times[subset_k]
       result <- boosting_run(
-        times_without_k, delta_without_k, X_without_k, Z_without_k, M, M, beta_0_from_nlm, gamma_0_from_nlm, use_nlm=TRUE
+        times_without_k, delta_without_k, X_without_k, Z_without_k, M, M, beta_0_from_nlm, gamma_0_from_nlm, give_intercepts=FALSE
       )
       beta_hats <- result$parameters$beta_hats
       gamma_hats <- result$parameters$gamma_hats
@@ -110,6 +110,7 @@ run_boosting <- function() {
 
   m_stop_mu <- which.min(CV_errors_mu)
   m_stop_y0 <- which.min(CV_errors_y0)
-  result_wo_nlm <- boosting_run(times, delta, X, Z, m_stop_mu, m_stop_y0, beta_0_from_nlm, gamma_0_from_nlm, use_nlm=FALSE)
-  result_w_nlm <- boosting_run(times, delta, X, Z, m_stop_mu, m_stop_y0, beta_0_from_nlm, gamma_0_from_nlm, use_nlm=TRUE)
+  #result_wo_nlm <- boosting_run(times, delta, X, Z, m_stop_mu, m_stop_y0, beta_0_from_nlm, gamma_0_from_nlm, give_intercepts=FALSE)
+  result_wo_nlm <- boosting_run(times, delta, X, Z, m_stop_mu+30, m_stop_y0+30, beta_0_from_nlm, gamma_0_from_nlm, give_intercepts=FALSE)
+  #result_w_nlm <- boosting_run(times, delta, X, Z, m_stop_mu, m_stop_y0, beta_0_from_nlm, gamma_0_from_nlm, give_intercepts=TRUE)
 }
