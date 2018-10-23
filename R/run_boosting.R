@@ -1,6 +1,6 @@
 run_boosting <- function() {
   # Extract simulated data
-  simulated_data <- simulate_FHT_data(FALSE)
+  simulated_data <- simulate_FHT_data(dense=FALSE)
   times <- simulated_data$observations$survival_times
   delta <- simulated_data$observations$delta
   non_para <- non_parametric_estimates(times, delta, continuous = TRUE)
@@ -23,6 +23,19 @@ run_boosting <- function() {
   initial_parameters <- runif(p+d, min=0.1, max=0.5)
   nlm_result <- nlm(minus_FHT_loglikelihood_nlm, initial_parameters)
   print(nlm_result$estimate)
+
+  # y0 <- exp(nlm_result$estimate[1])
+  # mu <- nlm_result$estimate[d+1]
+  # parametric_times <- seq(0.8, max(times), by=0.01)
+  # parametric_S <- FHT_parametric_survival(parametric_times, mu, y0)
+  # plot(non_para$times_sequence, non_para$kaplan_meiers, typ='s', ylim=c(0, 1))
+  # lines(parametric_times, parametric_S, col='red')
+  #
+  # parametric_A <- FHT_parametric_cumulative_hazard(parametric_times, mu, y0)
+  # plot(non_para$times_sequence, non_para$nelson_aalens, typ='s')
+  # lines(parametric_times, parametric_A, col='red')
+  # abline(-0.7, 0.5)
+
   print(c(beta_true, gamma_true))
   print("Difference between true and nlm:")
   print(sum(abs(nlm_result$estimate - c(beta_true, gamma_true))))
@@ -36,7 +49,7 @@ run_boosting <- function() {
   # DIVIDE INTO K FOLDS
   K <- 5
   K_fold_repetitions <- 10
-  M <- m_stop <- 100 ### M STOP
+  M <- m_stop <- 50 ### M STOP
   CV_errors_mu_K <- matrix(NA, nrow=m_stop, ncol=K_fold_repetitions)
   CV_errors_y0_K <- matrix(NA, nrow=m_stop, ncol=K_fold_repetitions)
   loss_K <- matrix(NA, nrow=m_stop, ncol=K_fold_repetitions)
