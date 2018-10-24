@@ -21,5 +21,5 @@ censor_observations <- function(uncensored_survival_times, censoring_times) {
   censored_survival_times <- ifelse(censored_survival_times < censoring_times, censored_survival_times, censoring_times)
   observed <- ifelse(censored_survival_times < censoring_times, 1, 0)
   times <- pmin(censored_survival_times, censoring_times)
-  return(list(t=times, delta=observed))
+  return(list(times=times, delta=observed))
 }
