@@ -44,20 +44,33 @@ simulate_FHT_data <- function(dense=TRUE) {
     # add noise
     Z_design_matrix[, 2:p] <- Z_design_matrix[, 2:p] + rnorm(prod(dim(Z_design_matrix[, 2:p])))
   } else {
-    beta_ <- c(3, rep(0.1, 10), rep(0, 10))
+    beta_ <- c(3, rep(0, 10), rep(0.5, 10))
+    gamma_ <- c(-1, rep(0.5, 10), rep(0, 10))
+
+    # beta0 <- 0.1
+    # beta_ <- c(beta0, rep(0, 10), rep(0.1, 10))
+    # gamma0 <- 0.1
+    # gamma_ <- c(-gamma0, rep(-0.05, 10), rep(0, 10))
+
     d <- length(beta_)
     X0 <- rep(1, N)
-    Xrest <- matrix(rnorm((d-1)*N), ncol=(d-1))
+    #Xrest <- matrix(rnorm((d-1)*N), ncol=(d-1))
+    # rbinom(100, 1, 0.5) -- bernoulli
+    Xrest <- matrix(rbeta((d-1)*N, shape1=1, shape2=1), ncol=(d-1))
     X_design_matrix <- cbind(X0, Xrest)
 
-    gamma_ <- c(-2.0, rep(0, 10), rep(1, 10))
     p <- length(beta_)
     Z0 <- rep(1, N)
-    Zrest <- matrix(rnorm((p-1)*N), ncol=(p-1))
+    #Zrest <- matrix(rnorm((p-1)*N), ncol=(p-1))
+    Zrest <- matrix(rbeta((p-1)*N, shape1=1, shape2=1), ncol=(p-1))
     Z_design_matrix <- cbind(Z0, Zrest)
   }
   y0 <- exp(X_design_matrix %*% beta_)
+  print("y0")
+  print(y0)
   mu <- Z_design_matrix %*% gamma_
+  print("mu")
+  print(mu)
   sigma_2 <- 1 ## NB
 
   # Transform parameters
@@ -73,7 +86,7 @@ simulate_FHT_data <- function(dense=TRUE) {
   #points(censoring_times, col='red')
 
   observations <- censor_observations(survival_times, censoring_times)
-  censored_survival_times <- observations$t
+  censored_survival_times <- observations$times
   observed <- observations$delta
   observations <- list(survival_times=censored_survival_times, delta=observed)
   true_parameters <- list(beta=beta_, gamma=gamma_)
