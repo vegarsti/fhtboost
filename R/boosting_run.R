@@ -35,13 +35,17 @@ boosting_run <- function(times, delta, X, Z, m_stop_mu, m_stop_y0, beta_0_from_n
   Z_original <- Z
   X_scale_factors <- as.numeric(apply(X, 2, sd))
   Z_scale_factors <- as.numeric(apply(Z, 2, sd))
+  X_means <- as.numeric(apply, X, 2, mean)
+  Z_means <- as.numeric(apply, Z, 2, mean)
   X_scale_factors[1] <- 1
   Z_scale_factors[1] <- 1
+  X_means[1] <- 0
+  Z_means[1] <- 0
   for (j in 2:d) {
-    X[, j] <- X[, j]/X_scale_factors[j]
+    X[, j] <- X[, j]/X_scale_factors[j] - X_means[j]
   }
   for (j in 2:p) {
-    Z[, j] <- Z[, j]/Z_scale_factors[j]
+    Z[, j] <- Z[, j]/Z_scale_factors[j] - Z_means[j]
   }
 
   # "make" loss function after scaling Z
@@ -138,8 +142,8 @@ boosting_run <- function(times, delta, X, Z, m_stop_mu, m_stop_y0, beta_0_from_n
     beta_hat_cumsum[m, 1] <- beta0
   }
   # Scale back
-  gamma_hat_cumsum_scaled_back <- scale_matrix_back(gamma_hat_cumsum, Z_scale_factors)
-  beta_hat_cumsum_scaled_back <- scale_matrix_back(beta_hat_cumsum, X_scale_factors)
+  gamma_hat_cumsum_scaled_back <- destandardize(gamma_hat_cumsum, Z_scale_factors, Z_means)
+  beta_hat_cumsum_scaled_back <- destandardize(beta_hat_cumsum, X_scale_factors, X_means)
 
   gamma_hat_final <- gamma_hat_cumsum[m, ] * Z_scale_factors
   beta_hat_final <- beta_hat_cumsum[m, ] * X_scale_factors
