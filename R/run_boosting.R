@@ -1,6 +1,7 @@
 run_boosting <- function() {
   # Extract simulated data
-  simulated_data <- simulate_FHT_data(dense=TRUE)
+  dense <- FALSE
+  simulated_data <- simulate_FHT_data(dense=dense)
   times <- simulated_data$observations$survival_times
   delta <- simulated_data$observations$delta
   non_para <- non_parametric_estimates(times, delta, continuous = TRUE)
@@ -36,10 +37,6 @@ run_boosting <- function() {
   # lines(parametric_times, parametric_A, col='red')
   # abline(-0.7, 0.5)
 
-  print(c(beta_true, gamma_true))
-  print("Difference between true and nlm:")
-  print(sum(abs(nlm_result$estimate - c(beta_true, gamma_true))))
-
   nlm_parameter_list <- parameter_vector_to_list(nlm_result$estimate, d, p)
   beta_from_nlm <- nlm_parameter_list$beta
   beta_0_from_nlm <- beta_from_nlm[1]
@@ -49,7 +46,11 @@ run_boosting <- function() {
   # DIVIDE INTO K FOLDS
   K <- 10
   K_fold_repetitions <- 10
-  M <- m_stop <- 30 ### M STOP
+  if (dense) {
+    M <- m_stop <- 30 ### M STOP
+  } else {
+    M <- m_stop <- 10 ### M STOP
+  }
   CV_errors_mu_K <- matrix(NA, nrow=m_stop, ncol=K_fold_repetitions)
   CV_errors_y0_K <- matrix(NA, nrow=m_stop, ncol=K_fold_repetitions)
   loss_K <- matrix(NA, nrow=m_stop, ncol=K_fold_repetitions)
@@ -89,15 +90,15 @@ run_boosting <- function() {
       # ???
       CV_error_matrix_mu[1, k] <- CV_error_matrix_mu[2, k]
       CV_error_matrix_y0[1, k] <- CV_error_matrix_y0[2, k]
-      loss[, k] <- result$loss / length(times_k)
+      loss[, k] <- result$loss
     }
-    CV_errors_mu_K[, repeated_K_fold_iteration] <- rowSums(CV_error_matrix_mu) / N
-    CV_errors_y0_K[, repeated_K_fold_iteration] <- rowSums(CV_error_matrix_y0) / N
-    loss_K[, repeated_K_fold_iteration] <- rowMeans(loss)
+    CV_errors_mu_K[, repeated_K_fold_iteration] <- rowSums(CV_error_matrix_mu)
+    CV_errors_y0_K[, repeated_K_fold_iteration] <- rowSums(CV_error_matrix_y0)
+    loss_K[, repeated_K_fold_iteration] <- rowSums(loss)
   }
   CV_errors_mu <- rowSums(CV_errors_mu_K)
   CV_errors_y0 <- rowSums(CV_errors_y0_K)
-  loss <- rowMeans(loss_K)
+  loss <- rowSums(loss_K)
   if (min(CV_errors_mu) < min(CV_errors_y0)) {
     plot(CV_errors_mu, typ='l')
     lines(CV_errors_y0, typ='l', col='red')

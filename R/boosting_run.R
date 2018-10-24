@@ -50,13 +50,9 @@ boosting_run <- function(times, delta, X, Z, m_stop_mu, m_stop_y0, beta_0_from_n
 
   # initialize with nlm
   function_to_optimize <- function(parameters) {
-    beta_0 <- parameters[1]
-    gamma_0 <- parameters[2]
-    X_0 <- matrix(X[, 1])
-    Z_0 <- matrix(Z[, 1])
-    return(FHT_minus_loglikelihood_with_all_parameters(
-      c(beta_0), c(gamma_0), X_0, Z_0, times, delta
-    ))
+    y0_baseline <- exp(parameters[1])
+    mu_baseline <- parameters[2]
+    return(-sum(FHT_loglikelihood_with_y0_mu(y0_baseline, mu_baseline, times, delta)))
   }
 
   optimize_beta_0 <- function(beta0, beta_, gamma_, X, Z, times, delta) {
@@ -69,7 +65,7 @@ boosting_run <- function(times, delta, X, Z, m_stop_mu, m_stop_y0, beta_0_from_n
     return(FHT_minus_loglikelihood_with_all_parameters(beta_, gamma_, X, Z, times, delta))
   }
 
-  nlm_result <- nlm(function_to_optimize, c(0.5, -2))
+  nlm_result <- nlm(function_to_optimize, c(0.1, 0.1))
 
   gamma_hat <- matrix(NA, nrow=m_stop, ncol=p)
   gamma_hat[1, ] <- rep(0, p)
@@ -123,11 +119,10 @@ boosting_run <- function(times, delta, X, Z, m_stop_mu, m_stop_y0, beta_0_from_n
       gamma_hat[m, ] <- 0
       gamma_hat_cumsum[m, ] <- gamma_hat_cumsum[m-1, ]
     }
-    gamma0 <- nlm(optimize_gamma_0, 0, beta_hat_cumsum[m-1, ], gamma_hat_cumsum[m, ], X, Z, times, delta)$estimate
+    gamma0 <- nlm(optimize_gamma_0, gamma_hat_cumsum[m-1, 1], beta_hat_cumsum[m-1, ], gamma_hat_cumsum[m, ], X, Z, times, delta)$estimate
     gamma_hat_cumsum[m, 1] <- gamma0
     # beta/y0
     if (m <= m_stop_y0) {
-      #print("y0")
       u <- negative_gradient_y0[(m-1), ]
       result <- boosting_iteration_y0(
         nu, X, Z, u, beta_hat_cumsum[m-1, ], gamma_hat_cumsum[m, ], d, ds, times, delta
@@ -139,31 +134,27 @@ boosting_run <- function(times, delta, X, Z, m_stop_mu, m_stop_y0, beta_0_from_n
       beta_hat[m, ] <- 0
       beta_hat_cumsum[m, ] <- beta_hat_cumsum[m-1, ]
     }
-    beta0 <- nlm(optimize_beta_0, 0, beta_hat_cumsum[m, ], gamma_hat_cumsum[m, ], X, Z, times, delta)$estimate
+    beta0 <- nlm(optimize_beta_0, beta_hat_cumsum[m-1, 1], beta_hat_cumsum[m, ], gamma_hat_cumsum[m, ], X, Z, times, delta)$estimate
     beta_hat_cumsum[m, 1] <- beta0
-    #print("loss")
   }
   # Scale back
-  scale_matrix_back <- function(matrix_to_scale, column_wise_weights) {
-    t(t(matrix_to_scale) * column_wise_weights)
-  }
   gamma_hat_cumsum_scaled_back <- scale_matrix_back(gamma_hat_cumsum, Z_scale_factors)
   beta_hat_cumsum_scaled_back <- scale_matrix_back(beta_hat_cumsum, X_scale_factors)
-
-  for (m in 1:m_stop) {
-    loss[m] <- FHT_minus_loglikelihood_with_all_parameters(
-      beta=beta_hat_cumsum_scaled_back[m, ],
-      gamma=gamma_hat_cumsum_scaled_back[m, ],
-      X, Z, times, delta
-    )
-  }
 
   gamma_hat_final <- gamma_hat_cumsum[m, ] * Z_scale_factors
   beta_hat_final <- beta_hat_cumsum[m, ] * X_scale_factors
   parameters <- list(
     gamma_hats=gamma_hat_cumsum_scaled_back, beta_hats=beta_hat_cumsum_scaled_back
   )
-  final_value <- FHT_minus_loglikelihood_with_all_parameters(beta_hat_final, gamma_hat_final, X_original, Z_original, times, delta)
-  final_parameters <- list(gamma_hat_final=gamma_hat_final,beta_hat_final=beta_hat_final)
-  return(list(final_parameters=final_parameters, parameters=parameters, final_value=final_value, loss=loss))
+
+  for (m in 1:m_stop) {
+    loss[m] <- FHT_minus_loglikelihood_with_all_parameters(
+      beta=beta_hat_cumsum_scaled_back[m, ],
+      gamma=gamma_hat_cumsum_scaled_back[m, ],
+      X_original, Z_original, times, delta
+    )
+  }
+
+  final_parameters <- list(gamma_hat_final=gamma_hat_final, beta_hat_final=beta_hat_final)
+  return(list(final_parameters=final_parameters, parameters=parameters, loss=loss))
 }
