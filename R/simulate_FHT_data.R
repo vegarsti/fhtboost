@@ -32,6 +32,7 @@ simulate_FHT_data <- function(dense=TRUE) {
     X2 <- rnorm(N)
     X_design_matrix <- cbind(X0, X1, X2)
     X_design_matrix[, 2:d] <- X_design_matrix[, 2:d] + rnorm(prod(dim(X_design_matrix[, 2:d])))
+    X_design_matrix[, 2:d] <- X_design_matrix[, 2:d] - apply(X_design_matrix[, 2:d], 2, mean)
 
     # mu, gamma, Z
     # with intercept and normalization
@@ -43,9 +44,12 @@ simulate_FHT_data <- function(dense=TRUE) {
     Z_design_matrix <- cbind(Z0, Z1, Z2)
     # add noise
     Z_design_matrix[, 2:p] <- Z_design_matrix[, 2:p] + rnorm(prod(dim(Z_design_matrix[, 2:p])))
+    Z_design_matrix[, 2:p] <- Z_design_matrix[, 2:p] - apply(Z_design_matrix[, 2:p], 2, mean)
   } else {
     beta_ <- c(3, rep(0, 10), rep(0.5, 10))
     gamma_ <- c(-1, rep(0.5, 10), rep(0, 10))
+
+    #sample(c(1, 2, -0.5))
 
     # beta0 <- 0.1
     # beta_ <- c(beta0, rep(0, 10), rep(0.1, 10))
@@ -66,20 +70,16 @@ simulate_FHT_data <- function(dense=TRUE) {
     Z_design_matrix <- cbind(Z0, Zrest)
   }
   y0 <- exp(X_design_matrix %*% beta_)
-  print("y0")
-  print(y0)
   mu <- Z_design_matrix %*% gamma_
-  print("mu")
-  print(mu)
   sigma_2 <- 1 ## NB
 
   # Transform parameters
-  mu_IG <- y0/abs(mu)
-  lambda_IG <- (y0/sigma_2)^2
+  mu_IG <- y0/(-mu)
+  lambda_IG <- y0^2/sigma_2
 
   # Draw survival times and censoring times
-  survival_times <- statmod::rinvgauss(N, mu_IG, lambda_IG)
-  censoring_times <- statmod::rinvgauss(N, mu_IG, 100*lambda_IG)
+  survival_times <- statmod::rinvgauss(N, mean=mu_IG, shape=lambda_IG)
+  censoring_times <- statmod::rinvgauss(N, mean=mu_IG, shape=100*lambda_IG)
   #censoring_times <- statmod::rinvgauss(N, 2*mu_IG, lambda_IG)
 
   #plot(survival_times)
