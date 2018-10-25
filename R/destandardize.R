@@ -7,7 +7,7 @@ destandardize <- function(matrix_to_scale, column_wise_weights, means) {
     stop('Dimensions of matrix and vector of means do not match!')
   }
   for (j in 1:p) {
-    matrix_to_scale[, j] <- matrix_to_scale[, j]*column_wise_weights[j] + means[j]
+    matrix_to_scale[, j] <- (matrix_to_scale[, j] + means[j])*column_wise_weights[j]
   }
   return(matrix_to_scale)
 }

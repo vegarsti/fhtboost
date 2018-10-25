@@ -1,7 +1,6 @@
 create_folds <- function(to_divide, K) {
   N <- length(to_divide)
-  indices <- to_divide
-  #indices <- sample(to_divide)
+  indices <- sample(to_divide)
   whole <- N %/% K
   rest <- N %% K
   folds <- list()

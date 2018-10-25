@@ -1,29 +1,35 @@
 run_boosting <- function() {
   # Extract simulated data
-  dense <- FALSE
+  dense <- TRUE
   simulated_data <- simulate_FHT_data(dense=dense)
   times <- simulated_data$observations$survival_times
   delta <- simulated_data$observations$delta
-  non_para <- non_parametric_estimates(times, delta, continuous = TRUE)
-  plot(non_para$times_sequence, non_para$kaplan_meiers, typ='s')
   X <- simulated_data$design_matrices$X
   Z <- simulated_data$design_matrices$Z
+  beta_true <- simulated_data$true_parameters$beta
+  gamma_true <- simulated_data$true_parameters$gamma
+
+
+  # delta <- as.numeric(read.csv('../lymphstatus.txt', header=FALSE)[, 1])
+  # times <- as.numeric(read.csv('../lymphtim.txt', header=FALSE)[, 1])
+  # X <- as.numeric(read.csv('../lymphx.txt', sep=' ', header=FALSE))[1:10, ]
+  # Z <- X
+
+  non_para <- non_parametric_estimates(times, delta, continuous = TRUE)
+  plot(non_para$times_sequence, non_para$kaplan_meiers, typ='s')
 
   # dimensions
   d <- dim(X)[2]
   p <- dim(Z)[2]
   N <- dim(X)[1]
 
-  beta_true <- simulated_data$true_parameters$beta
-  gamma_true <- simulated_data$true_parameters$gamma
-
   ### SANITY CHECK -> does nlm recover the parameters? ###
-  minus_FHT_loglikelihood_nlm <- data_to_optimizable_function(X, Z, times, delta)
+  # minus_FHT_loglikelihood_nlm <- data_to_optimizable_function(X, Z, times, delta)
 
   # Run optimization
-  initial_parameters <- runif(p+d, min=0.1, max=0.5)
-  nlm_result <- nlm(minus_FHT_loglikelihood_nlm, initial_parameters)
-  print(nlm_result$estimate)
+  #initial_parameters <- runif(p+d, min=0.1, max=0.5)
+  #nlm_result <- nlm(minus_FHT_loglikelihood_nlm, initial_parameters)
+  #print(nlm_result$estimate)
 
   # y0 <- exp(nlm_result$estimate[1])
   # mu <- nlm_result$estimate[d+1]
@@ -37,11 +43,11 @@ run_boosting <- function() {
   # lines(parametric_times, parametric_A, col='red')
   # abline(-0.7, 0.5)
 
-  nlm_parameter_list <- parameter_vector_to_list(nlm_result$estimate, d, p)
-  beta_from_nlm <- nlm_parameter_list$beta
-  beta_0_from_nlm <- beta_from_nlm[1]
-  gamma_from_nlm <- nlm_parameter_list$gamma
-  gamma_0_from_nlm <- gamma_from_nlm[1]
+  # nlm_parameter_list <- parameter_vector_to_list(nlm_result$estimate, d, p)
+  # beta_from_nlm <- nlm_parameter_list$beta
+  # beta_0_from_nlm <- beta_from_nlm[1]
+  # gamma_from_nlm <- nlm_parameter_list$gamma
+  # gamma_0_from_nlm <- gamma_from_nlm[1]
 
   # DIVIDE INTO K FOLDS
   K <- 10
@@ -71,7 +77,8 @@ run_boosting <- function() {
       times_k <- times[subset_k]
       delta_k <- times[subset_k]
       result <- boosting_run(
-        times_without_k, delta_without_k, X_without_k, Z_without_k, M, M, beta_0_from_nlm, gamma_0_from_nlm, give_intercepts=FALSE
+        times_without_k, delta_without_k, X_without_k, Z_without_k, M, M, beta_0_from_nlm, gamma_0_from_nlm,
+        give_intercepts=FALSE, optimize_intercepts=TRUE
       )
       beta_hats <- result$parameters$beta_hats
       gamma_hats <- result$parameters$gamma_hats
@@ -111,7 +118,6 @@ run_boosting <- function() {
 
   m_stop_mu <- which.min(CV_errors_mu)
   m_stop_y0 <- which.min(CV_errors_y0)
-  #result_wo_nlm <- boosting_run(times, delta, X, Z, m_stop_mu, m_stop_y0, beta_0_from_nlm, gamma_0_from_nlm, give_intercepts=FALSE)
-  result_wo_nlm <- boosting_run(times, delta, X, Z, m_stop_mu+30, m_stop_y0+30, beta_0_from_nlm, gamma_0_from_nlm, give_intercepts=FALSE)
-  #result_w_nlm <- boosting_run(times, delta, X, Z, m_stop_mu, m_stop_y0, beta_0_from_nlm, gamma_0_from_nlm, give_intercepts=TRUE)
+  result_wo_nlm <- boosting_run(times, delta, X, Z, m_stop_mu, m_stop_y0, beta_0_from_nlm, gamma_0_from_nlm, give_intercepts=FALSE, optimize_intercepts=TRUE)
+
 }
