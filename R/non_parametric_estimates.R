@@ -40,7 +40,7 @@ non_parametric_estimates <- function(survival_times, observed, continuous=FALSE)
   nelson_aalens <- cumsum(jumps)
   kaplan_meiers <- cumprod(jump_prods)
   sigma_2_hat <- cumsum(sigma_2_hat_jumps)
-  tau_hat <- nelson_aalens * sqrt(sigma_2_hat)
+  tau_hat <- kaplan_meiers * sqrt(sigma_2_hat)
   alpha2 <- 0.5
   kaplan_meier_lower <- kaplan_meiers^exp(-alpha2*tau_hat/(kaplan_meiers * log(kaplan_meiers)))
   kaplan_meier_upper <- kaplan_meiers^exp(alpha2*tau_hat/(kaplan_meiers * log(kaplan_meiers)))
