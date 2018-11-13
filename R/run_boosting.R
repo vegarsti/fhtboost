@@ -117,10 +117,12 @@ run_boosting <- function() {
   result_w_nlm <- boosting_run(times, delta, X, Z, m_stop_mu+20, m_stop_y0+20, beta_0_from_nlm, gamma_0_from_nlm, give_intercepts=TRUE, optimize_intercepts=FALSE)
   result_w_nlm_w_boost <- boosting_run(times, delta, X, Z, m_stop_mu+20, m_stop_y0+20, beta_0_from_nlm, gamma_0_from_nlm, give_intercepts=TRUE, optimize_intercepts=TRUE)
   result_wo_nlm <- boosting_run(times, delta, X, Z, m_stop+20, m_stop+20, beta_0_from_nlm, gamma_0_from_nlm, give_intercepts=FALSE, optimize_intercepts=TRUE)
+  result_wo_nlm_2 <- boosting_run(times, delta, X, Z, m_stop+20, m_stop+20, beta_0_from_nlm, gamma_0_from_nlm, give_intercepts=FALSE, optimize_intercepts=TRUE)
   result2 <- boosting_run(times, delta, X, Z, m_stop_mu+20, m_stop_y0+20, beta_0_from_nlm, gamma_0_from_nlm, give_intercepts=FALSE, optimize_intercepts=FALSE)
 
   # Plot loss functions
   plot(result_wo_nlm$loss, typ='l', lty=2, main='Loss with/without changing intercept while boosting', ylim=c(1200, 1500))
+  lines(result_wo_nlm_2$loss, col='blue')
   lines(result2$loss, col='red')
   lines(result_w_nlm$loss, col='black', lty=3)
   abline(h=nlm_loss, col='blue')
