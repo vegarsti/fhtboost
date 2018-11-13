@@ -20,7 +20,7 @@
 simulate_FHT_data <- function(dense=TRUE) {
   library(statmod)
   set.seed(2)
-  N <- 10000
+  N <- 1000
 
   if (dense) {
     # y0, beta, X

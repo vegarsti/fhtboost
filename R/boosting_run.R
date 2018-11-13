@@ -100,7 +100,7 @@ boosting_run <- function(times, delta, X, Z, m_stop_mu, m_stop_y0, beta_0_from_n
   negative_gradient_mu <- matrix(NA, nrow=m_stop, ncol=N)
   negative_gradient_y0 <- matrix(NA, nrow=m_stop, ncol=N)
   negative_gradient_mu[1, ] <- FHT_componentwise_loss_function_derivative_mu(beta_hat[1, ], gamma_hat[1, ], X, Z, times, delta)
-  negative_gradient_y0[1, ] <- FHT_componentwise_loss_function_derivative_mu(beta_hat[1, ], gamma_hat[1, ], X, Z, times, delta)
+  negative_gradient_y0[1, ] <- FHT_componentwise_loss_function_derivative_y0(beta_hat[1, ], gamma_hat[1, ], X, Z, times, delta)
   loss <- rep(NA, m_stop)
   parameter_list <- list(beta=beta_hat[1, ], gamma_hat[1, ])
 
@@ -112,43 +112,31 @@ boosting_run <- function(times, delta, X, Z, m_stop_mu, m_stop_y0, beta_0_from_n
 
   for (m in 2:m_stop) {
     # gamma/mu
-    if (m <= m_stop_mu) {
-      u <- negative_gradient_mu[(m-1), ]
-      result <- boosting_iteration_mu(
-        nu, X, Z, u, beta_hat_cumsum[m-1, ], gamma_hat_cumsum[m-1, ], p, ps, times, delta
-      )
-      gamma_hat[m, ] <- result$gamma_hat_addition
-      gamma_hat_cumsum[m, ] <- result$gamma_hat_m
-      negative_gradient_mu[m, ] <- result$u_m
-    } else {
-      gamma_hat[m, ] <- 0
-      gamma_hat_cumsum[m, ] <- gamma_hat_cumsum[m-1, ]
-    }
+    u_y0 <- negative_gradient_y0[(m-1), ]
+    u_mu <- negative_gradient_mu[(m-1), ]
+    result <- boosting_iteration_both(
+      nu, X, Z, u_y0, u_mu, beta_hat_cumsum[m-1, ], gamma_hat_cumsum[m-1, ], d, ds, p, ps, times, delta
+    )
+    gamma_hat[m, ] <- result$gamma_hat_addition
+    gamma_hat_cumsum[m, ] <- result$gamma_hat_m
+    beta_hat[m, ] <- result$beta_hat_addition
+    beta_hat_cumsum[m, ] <- result$beta_hat_m
     if (optimize_intercepts) {
-      gamma0 <- nlm(optimize_gamma_0, gamma_hat_cumsum[m-1, 1], beta_hat_cumsum[m-1, ], gamma_hat_cumsum[m, ], X, Z, times, delta)$estimate
-    } else {
-      gamma0 <- gamma_hat_cumsum[m-1, 1]
-    }
-    gamma_hat_cumsum[m, 1] <- gamma0
-    # beta/y0
-    if (m <= m_stop_y0) {
-      u <- negative_gradient_y0[(m-1), ]
-      result <- boosting_iteration_y0(
-        nu, X, Z, u, beta_hat_cumsum[m-1, ], gamma_hat_cumsum[m, ], d, ds, times, delta
-      )
-      beta_hat[m, ] <- result$beta_hat_addition
-      beta_hat_cumsum[m, ] <- result$beta_hat_m
-      negative_gradient_y0[m, ] <- result$u_m
-    } else {
-      beta_hat[m, ] <- 0
-      beta_hat_cumsum[m, ] <- beta_hat_cumsum[m-1, ]
-    }
-    if (optimize_intercepts) {
+      gamma0 <- nlm(optimize_gamma_0, gamma_hat_cumsum[m, 1], beta_hat_cumsum[m, ], gamma_hat_cumsum[m, ], X, Z, times, delta)$estimate
       beta0 <- nlm(optimize_beta_0, beta_hat_cumsum[m-1, 1], beta_hat_cumsum[m, ], gamma_hat_cumsum[m, ], X, Z, times, delta)$estimate
     } else {
+      gamma0 <- gamma_hat_cumsum[m-1, 1]
       beta0 <- beta_hat_cumsum[m-1, 1]
     }
+    gamma_hat_cumsum[m, 1] <- gamma0
     beta_hat_cumsum[m, 1] <- beta0
+    negative_gradient_mu[m, ] <- FHT_componentwise_loss_function_derivative_mu(
+      beta_hat_cumsum[m, ], gamma_hat_cumsum[m, ], X, Z, times, delta
+    )
+    negative_gradient_y0[m, ] <- FHT_componentwise_loss_function_derivative_y0(
+      beta_hat_cumsum[m, ], gamma_hat_cumsum[m, ], X, Z, times, delta
+    )
+
   }
   # Scale back
   gamma_hat_cumsum_scaled_back <- destandardize(gamma_hat_cumsum, Z_scale_factors, Z_means)

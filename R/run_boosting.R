@@ -1,6 +1,6 @@
 run_boosting <- function() {
   # Extract simulated data
-  dense <- FALSE
+  dense <- TRUE
   simulated_data <- simulate_FHT_data(dense=dense)
   times <- simulated_data$observations$survival_times
   delta <- simulated_data$observations$delta
@@ -15,8 +15,8 @@ run_boosting <- function() {
   # X <- as.numeric(read.csv('../lymphx.txt', sep=' ', header=FALSE))[1:10, ]
   # Z <- X
 
-  non_para <- non_parametric_estimates(times, delta, continuous = TRUE)
-  plot(non_para$times_sequence, non_para$kaplan_meiers, typ='s')
+  # non_para <- non_parametric_estimates(times, delta, continuous = TRUE)
+  # plot(non_para$times_sequence, non_para$kaplan_meiers, typ='s')
 
   # dimensions
   d <- dim(X)[2]
@@ -25,20 +25,20 @@ run_boosting <- function() {
 
   ### SANITY CHECK -> does nlm recover the parameters? ###
   minus_FHT_loglikelihood_nlm <- data_to_optimizable_function(X, Z, times, delta)
-
-  # Run optimization
+  #
+  # # Run optimization
   initial_parameters <- runif(p+d, min=0.1, max=0.5)
   nlm_result <- nlm(minus_FHT_loglikelihood_nlm, initial_parameters)
-  beta_nlm <- nlm_result$estimate[1:d]
-  gamma_nlm <- nlm_result$estimate[(d+1):(d+p)]
-  nlm_loss <- FHT_minus_loglikelihood_with_all_parameters(beta_nlm, gamma_nlm, X, Z, times, delta)
-  y0 <- exp(nlm_result$estimate[1])
-  mu <- nlm_result$estimate[d+1]
-  parametric_times <- seq(0.8, max(times), by=0.01)
-  parametric_S <- FHT_parametric_survival(parametric_times, mu, y0)
-  plot(non_para$times_sequence, non_para$kaplan_meiers, typ='s', ylim=c(0, 1))
-  lines(parametric_times, parametric_S, col='red')
-  plot(parametric_times, parametric_S, col='red')
+  # beta_nlm <- nlm_result$estimate[1:d]
+  # gamma_nlm <- nlm_result$estimate[(d+1):(d+p)]
+  # nlm_loss <- FHT_minus_loglikelihood_with_all_parameters(beta_nlm, gamma_nlm, X, Z, times, delta)
+  # y0 <- exp(nlm_result$estimate[1])
+  # mu <- nlm_result$estimate[d+1]
+  # parametric_times <- seq(0.8, max(times), by=0.01)
+  # parametric_S <- FHT_parametric_survival(parametric_times, mu, y0)
+  # plot(non_para$times_sequence, non_para$kaplan_meiers, typ='s', ylim=c(0, 1))
+  # lines(parametric_times, parametric_S, col='red')
+  # plot(parametric_times, parametric_S, col='red')
   #
   # parametric_A <- FHT_parametric_cumulative_hazard(parametric_times, mu, y0)
   # plot(non_para$times_sequence, non_para$nelson_aalens, typ='s')
@@ -51,6 +51,11 @@ run_boosting <- function() {
   gamma_from_nlm <- nlm_parameter_list$gamma
   gamma_0_from_nlm <- gamma_from_nlm[1]
 
+  result <- boosting_run(
+    times, delta, X, Z, m_stop_mu=100, m_stop_y0=100, beta_0_from_nlm, gamma_0_from_nlm,
+    give_intercepts=FALSE, optimize_intercepts=TRUE
+  )
+
   # DIVIDE INTO K FOLDS
   K <- 10
   K_fold_repetitions <- 10
@@ -59,13 +64,12 @@ run_boosting <- function() {
   } else {
     M <- m_stop <- 10 ### M STOP
   }
-  CV_errors_mu_K <- matrix(NA, nrow=m_stop, ncol=K_fold_repetitions)
-  CV_errors_y0_K <- matrix(NA, nrow=m_stop, ncol=K_fold_repetitions)
+  CV_errors_K <- matrix(NA, nrow=m_stop, ncol=K_fold_repetitions)
+  CV_errors_K <- matrix(NA, nrow=m_stop, ncol=K_fold_repetitions)
   loss_K <- matrix(NA, nrow=m_stop, ncol=K_fold_repetitions)
   for (repeated_K_fold_iteration in 1:K_fold_repetitions) {
     folds <- create_folds_stratified(delta, K)
-    CV_error_matrix_mu <- matrix(NA, nrow=m_stop, ncol=K)
-    CV_error_matrix_y0 <- matrix(NA, nrow=m_stop, ncol=K)
+    CV_error_matrix <- matrix(NA, nrow=m_stop, ncol=K)
     loss <- matrix(NA, nrow=M, ncol=K)
     for (k in 1:K) {
       subset_without_k <- get_all_but_kth_fold(folds, k, K)
@@ -89,40 +93,30 @@ run_boosting <- function() {
         gamma_m1 <- gamma_hats[m-1, ]
         beta_m <- beta_hats[m, ]
         beta_m1 <- beta_hats[m-1, ]
-        CV_error_matrix_mu[m, k] <- FHT_minus_loglikelihood_with_all_parameters(
+        CV_error_matrix[m, k] <- FHT_minus_loglikelihood_with_all_parameters(
           beta_m1, gamma_m, X_k, Z_k, times_k, delta_k
-        )
-        CV_error_matrix_y0[m, k] <- FHT_minus_loglikelihood_with_all_parameters(
-          beta_m, gamma_m1, X_k, Z_k, times_k, delta_k
         )
       }
       # ???
-      CV_error_matrix_mu[1, k] <- CV_error_matrix_mu[2, k]
-      CV_error_matrix_y0[1, k] <- CV_error_matrix_y0[2, k]
+      CV_error_matrix[1, k] <- CV_error_matrix[2, k]
       loss[, k] <- result$loss
     }
-    CV_errors_mu_K[, repeated_K_fold_iteration] <- rowSums(CV_error_matrix_mu)
-    CV_errors_y0_K[, repeated_K_fold_iteration] <- rowSums(CV_error_matrix_y0)
+    CV_errors_K[, repeated_K_fold_iteration] <- rowSums(CV_error_matrix)
     loss_K[, repeated_K_fold_iteration] <- rowSums(loss)
   }
-  CV_errors_mu <- rowSums(CV_errors_mu_K)
-  CV_errors_y0 <- rowSums(CV_errors_y0_K)
+  CV_errors <- rowSums(CV_errors_K)
   loss <- rowSums(loss_K)
-  if (min(CV_errors_mu) < min(CV_errors_y0)) {
-    plot(CV_errors_mu, typ='l')
-    lines(CV_errors_y0, typ='l', col='red')
-  } else {
-    plot(CV_errors_y0, typ='l', col='red')
-    lines(CV_errors_mu, typ='l')
-  }
+  plot(CV_errors, typ='l')
   # lines(CV_error_matrix[, 1] / length(folds[1, ]),
   #   col=rgb(red = 0, green = 0, blue = 0, alpha = 0.5))
 
-  m_stop_mu <- which.min(CV_errors_mu)
-  m_stop_y0 <- which.min(CV_errors_y0)
+  m_stop <- which.min(CV_errors)
+  m_stop_mu <- m_stop
+  m_stop_y0 <- m_stop
+
   result_w_nlm <- boosting_run(times, delta, X, Z, m_stop_mu+20, m_stop_y0+20, beta_0_from_nlm, gamma_0_from_nlm, give_intercepts=TRUE, optimize_intercepts=FALSE)
   result_w_nlm_w_boost <- boosting_run(times, delta, X, Z, m_stop_mu+20, m_stop_y0+20, beta_0_from_nlm, gamma_0_from_nlm, give_intercepts=TRUE, optimize_intercepts=TRUE)
-  result_wo_nlm <- boosting_run(times, delta, X, Z, m_stop_mu+20, m_stop_y0+20, beta_0_from_nlm, gamma_0_from_nlm, give_intercepts=FALSE, optimize_intercepts=TRUE)
+  result_wo_nlm <- boosting_run(times, delta, X, Z, m_stop+20, m_stop+20, beta_0_from_nlm, gamma_0_from_nlm, give_intercepts=FALSE, optimize_intercepts=TRUE)
   result2 <- boosting_run(times, delta, X, Z, m_stop_mu+20, m_stop_y0+20, beta_0_from_nlm, gamma_0_from_nlm, give_intercepts=FALSE, optimize_intercepts=FALSE)
 
   # Plot loss functions
