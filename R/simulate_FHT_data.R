@@ -20,11 +20,12 @@
 simulate_FHT_data <- function(dense=TRUE) {
   library(statmod)
   set.seed(2)
-  N <- 1000
+  N <- 10000
 
   if (dense) {
     # y0, beta, X
     beta_ <- c(1.5, 0.1, 0.2)
+    #beta_ <- c(5.2, 0.1, 0.05)
     d <- length(beta_)
     X0 <- rep(1, N)
     X1 <- cbind(c(rep(1, 300), rep(2, 300), rep(-0.5, 400)))
@@ -36,7 +37,7 @@ simulate_FHT_data <- function(dense=TRUE) {
 
     # mu, gamma, Z
     # with intercept and normalization
-    gamma_ <- c(-1.0, -0.2, 0.1)
+    gamma_ <- c(-1.0, -0.1, 0.1)
     p <- length(gamma_)
     Z0 <- rep(1, N)
     Z1 <- cbind(c(rep(1, 500), rep(-1, 500)))
