@@ -1,4 +1,5 @@
-boosting_run <- function(times, delta, X, Z, m_stop_mu, m_stop_y0, beta_0_from_nlm, gamma_0_from_nlm, give_intercepts=FALSE, optimize_intercepts=TRUE) {
+boosting_run <- function(times, delta, X, Z, m_stop) {
+  boost_intercepts_continually <- TRUE
   N_X <- dim(X)[1]
   N_Z <- dim(Z)[1]
   N_t <- length(times)
@@ -24,8 +25,6 @@ boosting_run <- function(times, delta, X, Z, m_stop_mu, m_stop_y0, beta_0_from_n
 
   ps <- 2:p
   ds <- 2:d
-
-  m_stop <- max(m_stop_mu, m_stop_y0)
 
   # Nuisance parameter: shrinkage factor
   nu <- 0.1
@@ -83,13 +82,8 @@ boosting_run <- function(times, delta, X, Z, m_stop_mu, m_stop_y0, beta_0_from_n
   beta_hat[1, ] <- rep(0, d)
   beta_hat_cumsum <- matrix(NA, nrow=m_stop, ncol=d)
 
-  if (give_intercepts) {
-    gamma_0 <- gamma_0_from_nlm
-    beta_0 <- beta_0_from_nlm
-  } else {
-    beta_0 <- nlm_result$estimate[1]
-    gamma_0 <- nlm_result$estimate[2]
-  }
+  beta_0 <- nlm_result$estimate[1]
+  gamma_0 <- nlm_result$estimate[2]
 
   # INITIALIZE
   gamma_hat[1, 1] <- gamma_0
@@ -121,7 +115,7 @@ boosting_run <- function(times, delta, X, Z, m_stop_mu, m_stop_y0, beta_0_from_n
     gamma_hat_cumsum[m, ] <- result$gamma_hat_m
     beta_hat[m, ] <- result$beta_hat_addition
     beta_hat_cumsum[m, ] <- result$beta_hat_m
-    if (optimize_intercepts) {
+    if (boost_intercepts_continually) {
       gamma0 <- nlm(optimize_gamma_0, gamma_hat_cumsum[m, 1], beta_hat_cumsum[m, ], gamma_hat_cumsum[m, ], X, Z, times, delta)$estimate
       beta0 <- nlm(optimize_beta_0, beta_hat_cumsum[m-1, 1], beta_hat_cumsum[m, ], gamma_hat_cumsum[m, ], X, Z, times, delta)$estimate
     } else {

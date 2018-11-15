@@ -3,6 +3,7 @@ FHT_componentwise_minus_loglikelihood_with_parameters <- function(beta_, gamma_,
   d <- dim(Z)[2]
   y0 <- exp(X %*% beta_)
   mu <- Z %*% gamma_
+  sigma2 <- 1
   loglikelihood_vector <- FHT_loglikelihood_with_y0_mu(y0, mu, times, delta)
   return(-loglikelihood_vector)
 }

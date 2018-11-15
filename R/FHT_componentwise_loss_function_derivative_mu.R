@@ -2,7 +2,7 @@ FHT_componentwise_loss_function_derivative_mu <- function(beta_, gamma_, X, Z, t
   p <- dim(X)[2]
   d <- dim(Z)[2]
   y0 <- exp(X %*% beta_)
-  #y0 <- exp(X %*% beta_) / (exp(X %*% beta_) + 1) <-- logistic
+  #y0 <- exp(X %*% beta_) / (exp(X %*% beta_) + 1) #<-- logistic
   mu <- Z %*% gamma_
   sigma2 <- 1
   negative_gradient <- loss_function_derivative_mu(y0, mu, sigma2, times, delta)

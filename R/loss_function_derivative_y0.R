@@ -17,7 +17,7 @@
 
 loss_function_derivative_y0 <- function(y0, mu, sigma2, times, delta) {
   # t is vector of times, delta is vector of observed = 1, or not = 0
-  log_f <- 1/y0 - (y0 + mu*times)/sigma2
+  log_f <- 1/y0 - (y0 + mu*times)/(sigma2)#*times)
   log_S1 <- (1/sqrt(sigma2*times)) * dnorm((mu*times + y0)/(sqrt(sigma2*times)))
   log_S2 <- (2*mu/sigma2) * exp(-2*y0*mu/sigma2) * pnorm((mu*times-y0)/sqrt(sigma2*times))
   log_S3 <- 1/sqrt(sigma2*times) * exp(-2*y0*mu/sigma2)*dnorm((mu*times - y0)/sqrt(sigma2*times))

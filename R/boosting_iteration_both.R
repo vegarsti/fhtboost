@@ -1,10 +1,13 @@
 boosting_iteration_both <- function(nu, X, Z, u_y0, u_mu, beta_hat_m1, gamma_hat_m1, d, ds, p, ps, times, delta) {
   # d corresponds to X, p to Z
-  result_y0 <- best_least_squares_update(X, u_y0, d, ds)
-  result_mu <- best_least_squares_update(Z, u_mu, p, ps)
-  rsses <- c(result_mu$rss, result_y0$rss)
+  y0 <- exp(X %*% beta_hat_m1)
+  result_y0 <- best_least_squares_update(X, u_y0, d, ds)#, is_y0=TRUE, y0=y0)
+  result_mu <- best_least_squares_update(Z, u_mu, p, ps)#, is_y0=FALSE, y0=y0)
+  rsses <- c(result_y0$rss, result_mu$rss)
+  print("y0 rss: cbind(c(0,rsses)
+  #print("")
   best_rss <- which.min(rsses)
-  boosted_mu <- best_rss == 1
+  boosted_mu <- best_rss == 2
   if (boosted_mu) {
     # mu; gamma
     gamma_hat_addition <- nu*result_mu$parameter_updates
