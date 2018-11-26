@@ -4,7 +4,6 @@ boosting_iteration_both <- function(nu, X, Z, u_y0, u_mu, beta_hat_m1, gamma_hat
   result_y0 <- best_least_squares_update(X, u_y0, d, ds)
   result_mu <- best_least_squares_update(Z, u_mu, p, ps)
   rsses <- c(result_y0$rss, result_mu$rss)
-  print(rsses)
   best_rss <- which.min(rsses)
   boosted_mu <- best_rss == 2
   if (boosted_mu) {
