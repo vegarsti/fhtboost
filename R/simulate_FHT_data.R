@@ -37,6 +37,7 @@ simulate_FHT_data <- function(dense=TRUE) {
     # mu, gamma, Z
     # with intercept and normalization
     gamma_ <- c(-1.0, -0.1, 0.1)
+    #gamma_ <- c(-1, 0, 0)
     p <- length(gamma_)
     Z0 <- rep(1, N)
     Z1 <- cbind(c(rep(1, 500), rep(-1, 500)))
