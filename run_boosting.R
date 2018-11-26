@@ -6,8 +6,8 @@ Z <- simulated_data$design_matrices$Z
 beta_true <- simulated_data$true_parameters$beta
 gamma_true <- simulated_data$true_parameters$gamma
 
-# non_para <- non_parametric_estimates(times, delta, continuous = TRUE)
-# plot(non_para$times_sequence, non_para$kaplan_meiers, typ='s')
+non_para <- non_parametric_estimates(times, delta, continuous = TRUE)
+plot(non_para$times_sequence, non_para$kaplan_meiers, typ='s')
 
 # dimensions
 d <- dim(X)[2]
@@ -29,15 +29,21 @@ gamma_0_from_nlm <- gamma_from_nlm[1]
 K <- 10
 K_fold_repetitions <- 10
 M <- 50 ### M STOP
-CV_errors <- run_CV(M, K_fold_repetitions, K, X, Z, times, delta)
-loss <- rowSums(loss_K)
-plot(CV_errors, typ='l')
-m_stop <- which.min(CV_errors)
+
+do_CV <- FALSE
+
+if (do_CV) {
+  CV_errors <- run_CV(M, K_fold_repetitions, K, X, Z, times, delta)
+  loss <- rowSums(loss_K)
+  plot(CV_errors, typ='l')
+  m_stop <- which.min(CV_errors)
+} else {
+  m_stop <- 15
+}
 
 result <- boosting_run(times, delta, X, Z, m_stop)
-result_more_steps <- boosting_run(times, delta, X, Z, m_stop+30)
+result_more_steps <- boosting_run(times, delta, X, Z, m_stop+50)
 
-# Plot loss functions
 plot(result$loss, typ='l', lty=2, main='Different loss function results', ylim=c(1200, 1500), xlab='Iteration', ylab='Loss function')
 plot(result_more_steps$loss, typ='l', lty=2, main='Different loss function results', ylim=c(1200, 1500), xlab='Iteration', ylab='Loss function')
 abline(h=nlm_loss, col='blue')

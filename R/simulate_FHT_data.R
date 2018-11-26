@@ -21,11 +21,10 @@ simulate_FHT_data <- function(dense=TRUE) {
   library(statmod)
   set.seed(2)
   N <- 1000
-
   if (dense) {
     # y0, beta, X
     beta_ <- c(1.5, 0.1, 0.2)
-    #beta_ <- c(5.2, 0.1, 0.05)
+    #beta_ <- c(4.6, 0.1, 0.05)
     d <- length(beta_)
     X0 <- rep(1, N)
     X1 <- cbind(c(rep(1, 300), rep(2, 300), rep(-0.5, 400)))
@@ -78,15 +77,19 @@ simulate_FHT_data <- function(dense=TRUE) {
   mu_IG <- y0/(-mu)
   lambda_IG <- y0^2/sigma_2
 
+
   # Draw survival times and censoring times
-  survival_times <- statmod::rinvgauss(N, mean=mu_IG, shape=lambda_IG)
+  set.seed(2)
+  survival_times_not_censored <- statmod::rinvgauss(N, mean=mu_IG, shape=lambda_IG)
+  survival_times <- draw_IG_data(y0, mu, N)
+  survival_times2 <- survival_times$survival_times
   censoring_times <- statmod::rinvgauss(N, mean=mu_IG, shape=100*lambda_IG)
   #censoring_times <- statmod::rinvgauss(N, 2*mu_IG, lambda_IG)
 
   #plot(survival_times)
   #points(censoring_times, col='red')
 
-  observations <- censor_observations(survival_times, censoring_times)
+  observations <- censor_observations(survival_times_not_censored, censoring_times)
   censored_survival_times <- observations$times
   observed <- observations$delta
   observations <- list(survival_times=censored_survival_times, delta=observed)
