@@ -56,12 +56,6 @@ boosting_run <- function(times, delta, X, Z, m_stop) {
   #minus_FHT_loglikelihood(list(beta=beta_true, gamma=gamma_true))
 
   # initialize with nlm
-  function_to_optimize <- function(parameters) {
-    y0_baseline <- exp(parameters[1])
-    mu_baseline <- parameters[2]
-    return(-sum(FHT_loglikelihood_with_y0_mu(y0_baseline, mu_baseline, times, delta)))
-  }
-
   optimize_beta_0 <- function(beta0, beta_, gamma_, X, Z, times, delta) {
     beta_[1] <- beta0
     return(FHT_minus_loglikelihood_with_all_parameters(beta_, gamma_, X, Z, times, delta))
@@ -72,7 +66,7 @@ boosting_run <- function(times, delta, X, Z, m_stop) {
     return(FHT_minus_loglikelihood_with_all_parameters(beta_, gamma_, X, Z, times, delta))
   }
 
-  nlm_result <- nlm(function_to_optimize, c(0.1, 0.1))
+  nlm_result_estimate <- maximum_likelihood_intercepts(times, delta)
 
   gamma_hat <- matrix(NA, nrow=m_stop, ncol=p)
   gamma_hat[1, ] <- rep(0, p)
@@ -82,8 +76,8 @@ boosting_run <- function(times, delta, X, Z, m_stop) {
   beta_hat[1, ] <- rep(0, d)
   beta_hat_cumsum <- matrix(NA, nrow=m_stop, ncol=d)
 
-  beta_0 <- nlm_result$estimate[1]
-  gamma_0 <- nlm_result$estimate[2]
+  beta_0 <- nlm_result_estimate[1]
+  gamma_0 <- nlm_result_estimate[2]
 
   # INITIALIZE
   gamma_hat[1, 1] <- gamma_0
@@ -109,7 +103,7 @@ boosting_run <- function(times, delta, X, Z, m_stop) {
     u_y0 <- negative_gradient_y0[(m-1), ]
     u_mu <- negative_gradient_mu[(m-1), ]
     result <- boosting_iteration_both(
-      nu, X, Z, u_y0, u_mu, beta_hat_cumsum[m-1, ], gamma_hat_cumsum[m-1, ], d, ds, p, ps, times, delta
+      nu, X, Z, u_y0, u_mu, beta_hat_cumsum[m-1, ], gamma_hat_cumsum[m-1, ], d, ds, p, ps, times, delta, X_scale_factors, Z_scale_factors, X_means, Z_means
     )
     gamma_hat[m, ] <- result$gamma_hat_addition
     gamma_hat_cumsum[m, ] <- result$gamma_hat_m
@@ -135,13 +129,12 @@ boosting_run <- function(times, delta, X, Z, m_stop) {
   # Scale back
   gamma_hat_cumsum_scaled_back <- destandardize(gamma_hat_cumsum, Z_scale_factors, Z_means)
   beta_hat_cumsum_scaled_back <- destandardize(beta_hat_cumsum, X_scale_factors, X_means)
-
-  gamma_hat_final <- gamma_hat_cumsum[m, ] * Z_scale_factors
-  beta_hat_final <- beta_hat_cumsum[m, ] * X_scale_factors
   parameters <- list(
     gamma_hats=gamma_hat_cumsum_scaled_back, beta_hats=beta_hat_cumsum_scaled_back
   )
-
+  gamma_hat_final <- gamma_hat_cumsum_scaled_back[m, ]
+  beta_hat_final <- beta_hat_cumsum_scaled_back[m, ]
+  final_parameters <- list(gamma_hat_final=gamma_hat_final, beta_hat_final=beta_hat_final)
   for (m in 1:m_stop) {
     loss[m] <- FHT_minus_loglikelihood_with_all_parameters(
       beta=beta_hat_cumsum_scaled_back[m, ],
@@ -149,7 +142,5 @@ boosting_run <- function(times, delta, X, Z, m_stop) {
       X_original, Z_original, times, delta
     )
   }
-
-  final_parameters <- list(gamma_hat_final=gamma_hat_final, beta_hat_final=beta_hat_final)
   return(list(final_parameters=final_parameters, parameters=parameters, loss=loss))
 }

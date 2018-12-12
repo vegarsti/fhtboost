@@ -17,10 +17,14 @@
 #' delta <- observations$delta
 #' # make
 
-simulate_FHT_data <- function(dense=TRUE) {
+simulate_FHT_data <- function(dense=TRUE, kind='uniform') {
   library(statmod)
   set.seed(2)
   N <- 1000
+
+  kind <- 'normal'
+  kind <- 'uniform'
+
   if (dense) {
     # y0, beta, X
     beta_ <- c(1.5, 0.1, 0.2)
@@ -31,7 +35,15 @@ simulate_FHT_data <- function(dense=TRUE) {
     X1 <- scale(X1)
     X2 <- rnorm(N)
     X_design_matrix <- cbind(X0, X1, X2)
-    X_design_matrix[, 2:d] <- X_design_matrix[, 2:d] + rnorm(prod(dim(X_design_matrix[, 2:d])))
+    number_of_elements_in_X <- prod(dim(X_design_matrix[, 2:d]))
+    if (kind == 'normal') {
+      noise <- rnorm(number_of_elements_in_X)
+    } else if (kind == 'uniform') {
+      noise <- runif(number_of_elements_in_X, min=-1, max=1)
+    } else {
+      stop('Kind parameter is invalid. Must be uniform or normal.')
+    }
+    X_design_matrix[, 2:d] <- X_design_matrix[, 2:d] + noise
     X_design_matrix[, 2:d] <- X_design_matrix[, 2:d] - apply(X_design_matrix[, 2:d], 2, mean)
 
     # mu, gamma, Z
@@ -43,12 +55,20 @@ simulate_FHT_data <- function(dense=TRUE) {
     Z1 <- cbind(c(rep(1, 500), rep(-1, 500)))
     Z2 <- rnorm(N)
     Z_design_matrix <- cbind(Z0, Z1, Z2)
+    number_of_elements_in_Z <- prod(dim(Z_design_matrix[, 2:p]))
     # add noise
-    Z_design_matrix[, 2:p] <- Z_design_matrix[, 2:p] + rnorm(prod(dim(Z_design_matrix[, 2:p])))
+    if (kind == 'normal') {
+      noise <- rnorm(number_of_elements_in_Z)
+    } else if (kind == 'uniform') {
+      noise <- runif(number_of_elements_in_Z, min=-1, max=1)
+    } else {
+      stop('Kind parameter is invalid. Must be uniform or normal.')
+    }
+    Z_design_matrix[, 2:p] <- Z_design_matrix[, 2:p] + noise
     Z_design_matrix[, 2:p] <- Z_design_matrix[, 2:p] - apply(Z_design_matrix[, 2:p], 2, mean)
   } else {
-    beta_ <- c(3, rep(0, 10), rep(0.5, 10))
-    gamma_ <- c(-1, rep(0.5, 10), rep(0, 10))
+    beta_ <- c(0.5, rep(0, 10), rep(0.1, 10))
+    gamma_ <- c(-1, rep(-0.1, 10), rep(0, 10))
 
     #sample(c(1, 2, -0.5))
 
@@ -64,12 +84,37 @@ simulate_FHT_data <- function(dense=TRUE) {
     Xrest <- matrix(rbeta((d-1)*N, shape1=1, shape2=1), ncol=(d-1))
     X_design_matrix <- cbind(X0, Xrest)
 
+    number_of_elements_in_X <- prod(dim(X_design_matrix[, 2:d]))
+    if (kind == 'normal') {
+      noise <- rnorm(number_of_elements_in_X)
+    } else if (kind == 'uniform') {
+      noise <- runif(number_of_elements_in_X, min=-1, max=1)
+    } else {
+      stop('Kind parameter is invalid. Must be uniform or normal.')
+    }
+    X_design_matrix[, 2:d] <- X_design_matrix[, 2:d] + noise
+    X_design_matrix[, 2:d] <- X_design_matrix[, 2:d] - apply(X_design_matrix[, 2:d], 2, mean)
+
+
     p <- length(beta_)
     Z0 <- rep(1, N)
     #Zrest <- matrix(rnorm((p-1)*N), ncol=(p-1))
     Zrest <- matrix(rbeta((p-1)*N, shape1=1, shape2=1), ncol=(p-1))
     Z_design_matrix <- cbind(Z0, Zrest)
+
+    number_of_elements_in_Z <- prod(dim(Z_design_matrix[, 2:p]))
+    # add noise
+    if (kind == 'normal') {
+      noise <- rnorm(number_of_elements_in_Z)
+    } else if (kind == 'uniform') {
+      noise <- runif(number_of_elements_in_Z, min=-1, max=1)
+    } else {
+      stop('Kind parameter is invalid. Must be uniform or normal.')
+    }
+    Z_design_matrix[, 2:p] <- Z_design_matrix[, 2:p] + noise
+    Z_design_matrix[, 2:p] <- Z_design_matrix[, 2:p] - apply(Z_design_matrix[, 2:p], 2, mean)
   }
+
   y0 <- exp(X_design_matrix %*% beta_)
   mu <- Z_design_matrix %*% gamma_
   sigma_2 <- 1 ## NB
@@ -82,10 +127,7 @@ simulate_FHT_data <- function(dense=TRUE) {
   # Draw survival times and censoring times
   set.seed(2)
   survival_times_not_censored <- statmod::rinvgauss(N, mean=mu_IG, shape=lambda_IG)
-  survival_times <- draw_IG_data(y0, mu, N)
-  survival_times2 <- survival_times$survival_times
-  censoring_times <- statmod::rinvgauss(N, mean=mu_IG, shape=100*lambda_IG)
-  #censoring_times <- statmod::rinvgauss(N, 2*mu_IG, lambda_IG)
+  censoring_times <- statmod::rinvgauss(N, mean=mu_IG*2, shape=lambda_IG)
 
   #plot(survival_times)
   #points(censoring_times, col='red')
