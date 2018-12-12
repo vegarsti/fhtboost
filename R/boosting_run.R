@@ -1,5 +1,4 @@
-boosting_run <- function(times, delta, X, Z, m_stop) {
-  boost_intercepts_continually <- TRUE
+boosting_run <- function(times, delta, X, Z, m_stop, boost_intercepts_continually) {
   N_X <- dim(X)[1]
   N_Z <- dim(Z)[1]
   N_t <- length(times)

@@ -16,7 +16,7 @@ run_CV <- function(M, K_fold_repetitions, K, X, Z, times, delta) {
       delta_without_k <- delta[subset_without_k]
       times_k <- times[subset_k]
       delta_k <- delta[subset_k]
-      result <- boosting_run(times_without_k, delta_without_k, X_without_k, Z_without_k, M)
+      result <- boosting_run(times_without_k, delta_without_k, X_without_k, Z_without_k, M, boost_intercepts_continually=TRUE)
       beta_hats <- result$parameters$beta_hats
       gamma_hats <- result$parameters$gamma_hats
       for (m in 1:M) {

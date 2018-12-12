@@ -64,8 +64,9 @@ optimized_parameters <- nlm_result$estimate
 maximum_likelihood <- nlm_result$minimum
 
 # DO BOOSTING
-result <- boosting_run(times, delta, X, Z, m_stop)
-result_more_steps <- boosting_run(times, delta, X, Z, m_stop+50)
+result <- boosting_run(times, delta, X, Z, m_stop, boost_intercepts_continually=TRUE)
+result_more_steps <- boosting_run(times, delta, X, Z, m_stop+50, boost_intercepts_continually=TRUE)
+result_no_intercept_boosting <- boosting_run(times, delta, X, Z, m_stop+50, boost_intercepts_continually=FALSE)
 
 ### PLOTTING ###
 
@@ -78,5 +79,6 @@ ylabel <- 'Loss function'
 plot(result$loss, typ='l', lty=2, main=plot_title, xlab=xlabel, ylab=ylabel, ylim=ylim_vector)
 abline(h=maximum_likelihood, col='red')
 plot(result_more_steps$loss, typ='l', lty=2, main=plot_title, xlab=xlabel, ylab=ylabel, ylim=ylim_vector)
+lines(result_no_intercept_boosting$loss, lty=3)
 abline(v=m_stop, col='red', lwd=2)
 abline(h=maximum_likelihood, col='red')
