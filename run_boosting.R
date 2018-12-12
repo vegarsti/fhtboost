@@ -4,7 +4,7 @@ library(devtools)
 load_all()
 
 # Get simulated data
-simulated_data <- simulate_FHT_data(dense=FALSE) # kind = 'normal' or 'uniform'
+simulated_data <- simulate_FHT_data(dense=TRUE) # kind = 'normal' or 'uniform'
 times <- simulated_data$observations$survival_times
 delta <- simulated_data$observations$delta
 X <- simulated_data$design_matrices$X
@@ -45,8 +45,10 @@ for (k in 1:K_fold_repetitions) {
 }
 
 # Loglikelihood of the null model:
-null_model_loglikelihood <- FHT_minus_loglikelihood_with_all_parameters(beta_=rep(0, d), gamma_=rep(0, p), X, Z, times, delta)
-# not really ^ ; need intercept
+best_intercepts <- maximum_likelihood_intercepts(times, delta)
+y0 <- best_intercepts[1]
+mu <- best_intercepts[2]
+null_model_loglikelihood <- - sum(FHT_loglikelihood_with_y0_mu(y0, mu, times, delta))
 
 ### FIND MAX ###
 minus_FHT_loglikelihood <- data_to_optimizable_function(X, Z, times, delta)
@@ -63,11 +65,18 @@ maximum_likelihood <- nlm_result$minimum
 
 # DO BOOSTING
 result <- boosting_run(times, delta, X, Z, m_stop)
-result_more_steps <- boosting_run(times, delta, X, Z, 200)
+result_more_steps <- boosting_run(times, delta, X, Z, m_stop+50)
 
-# Plot
-plot(result$loss, typ='l', lty=2, main='Different loss function results', xlab='Iteration', ylab='Loss function')#, ylim=c(1000, 1500))
+### PLOTTING ###
+
+# settings / meta data
+ylim_vector <- c(1400, 2000)
+plot_title <- 'Different loss function results'
+xlabel <- 'Iteration'
+ylabel <- 'Loss function'
+
+plot(result$loss, typ='l', lty=2, main=plot_title, xlab=xlabel, ylab=ylabel, ylim=ylim_vector)
 abline(h=maximum_likelihood, col='red')
-plot(result_more_steps$loss, typ='l', lty=2, main='Different loss function results', ylim=c(1000, 1500), xlab='Iteration', ylab='Loss function')
+plot(result_more_steps$loss, typ='l', lty=2, main=plot_title, xlab=xlabel, ylab=ylabel, ylim=ylim_vector)
 abline(v=m_stop, col='red', lwd=2)
 abline(h=maximum_likelihood, col='red')

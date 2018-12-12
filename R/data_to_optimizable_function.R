@@ -16,9 +16,9 @@
 #' @examples
 #' R code here showing how your function works
 
-data_to_optimizable_function <- function(X, Z, t, delta) {
+data_to_optimizable_function <- function(X, Z, times, delta) {
   link_function <- FHT_link_function(X, Z)
-  FHT_loglikelihood <- FHT_loglikelihood_with_data(t, delta)
+  FHT_loglikelihood <- FHT_loglikelihood_with_data(times, delta)
   p <- dim(X)[2]
   d <- dim(Z)[2]
 
