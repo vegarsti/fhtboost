@@ -4,7 +4,7 @@ library(devtools)
 load_all()
 
 # Get simulated data
-simulated_data <- simulate_FHT_data(dense=FALSE, add_noise=FALSE)
+simulated_data <- simulate_FHT_data(dense=FALSE, add_noise=TRUE)
 times <- simulated_data$observations$survival_times
 delta <- simulated_data$observations$delta
 X <- simulated_data$design_matrices$X
@@ -28,7 +28,7 @@ if (do_CV) {
   # DIVIDE INTO K FOLDS
   K <- 10
   K_fold_repetitions <- 1 # or 10
-  M <- 100 # should be guaranteed in over fitting space
+  M <- 200 # should be guaranteed in over fitting space
   CV_result <- run_CV(M, K_fold_repetitions, K, X, Z, times, delta)
   CV_errors <- CV_result$CV_errors
   CV_errors_k <- CV_result$CV_errors_k
@@ -93,3 +93,12 @@ legend(
   lty = ltypes,
   lwd = lwd
 )
+
+# Plot parameters
+plot(abs(result$final_parameters$gamma_hat_final), ylim=c(0, 0.2))
+abline(h=0.1)
+abline(v=11)
+
+plot(abs(result$final_parameters$beta_hat_final), ylim=c(0, 0.2))
+abline(h=0.1)
+abline(v=11)
