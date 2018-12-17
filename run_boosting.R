@@ -4,7 +4,7 @@ library(devtools)
 load_all()
 
 # Get simulated data
-simulated_data <- simulate_FHT_data(dense=TRUE) # kind = 'normal' or 'uniform'
+simulated_data <- simulate_FHT_data(dense=FALSE)
 times <- simulated_data$observations$survival_times
 delta <- simulated_data$observations$delta
 X <- simulated_data$design_matrices$X
@@ -27,7 +27,7 @@ do_CV <- TRUE
 if (do_CV) {
   # DIVIDE INTO K FOLDS
   K <- 10
-  K_fold_repetitions <- 5 # or 10
+  K_fold_repetitions <- 1 # or 10
   M <- 100 # should be guaranteed in over fitting space
   CV_result <- run_CV(M, K_fold_repetitions, K, X, Z, times, delta)
   CV_errors <- CV_result$CV_errors
@@ -39,10 +39,10 @@ if (do_CV) {
 }
 
 # plot CV results
-plot(CV_errors, typ='l', lty=3)
-for (k in 1:K_fold_repetitions) {
-  lines(CV_errors_k[, k], lty=3)
-}
+# plot(CV_errors, typ='l', lty=3)
+# for (k in 1:K_fold_repetitions) {
+#   lines(CV_errors_k[, k], lty=3)
+# }
 
 # Loglikelihood of the null model:
 best_intercepts <- maximum_likelihood_intercepts(times, delta)
@@ -71,14 +71,25 @@ result_no_intercept_boosting <- boosting_run(times, delta, X, Z, m_stop+50, boos
 ### PLOTTING ###
 
 # settings / meta data
-ylim_vector <- c(1400, 2000)
+ylim_vector <- c(maximum_likelihood - 100, result$loss[1] + 100)
 plot_title <- 'Different loss function results'
 xlabel <- 'Iteration'
 ylabel <- 'Loss function'
 
 plot(result$loss, typ='l', lty=2, main=plot_title, xlab=xlabel, ylab=ylabel, ylim=ylim_vector)
 abline(h=maximum_likelihood, col='red')
+
+colors <- c('black', 'black', 'red', 'red')
+ltypes <- c(2, 3, 1, 1)
+lwd <- c(1, 1, 1, 3)
 plot(result_more_steps$loss, typ='l', lty=2, main=plot_title, xlab=xlabel, ylab=ylabel, ylim=ylim_vector)
 lines(result_no_intercept_boosting$loss, lty=3)
-abline(v=m_stop, col='red', lwd=2)
 abline(h=maximum_likelihood, col='red')
+abline(v=m_stop, col='red', lwd=3)
+legend(
+  x='topright',
+  legend=c('Boosting with changing the intercept', 'Boosting without changing the intercept', 'm_stop', 'Maximum likelihood value'),
+  col=colors,
+  lty = ltypes,
+  lwd = lwd
+)
