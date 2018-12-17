@@ -17,7 +17,8 @@
 
 censor_observations <- function(uncensored_survival_times, censoring_times) {
   censored_survival_times <- uncensored_survival_times
-  censored_survival_times[is.na(uncensored_survival_times)] <- censoring_times # fill is.na with censoring time
+  na_indexes <- which(is.na(censored_survival_times))
+  censored_survival_times[na_indexes] <- censoring_times[na_indexes] # fill is.na with censoring time
   censored_survival_times <- ifelse(censored_survival_times < censoring_times, censored_survival_times, censoring_times)
   observed <- ifelse(censored_survival_times < censoring_times, 1, 0)
   times <- pmin(censored_survival_times, censoring_times)
