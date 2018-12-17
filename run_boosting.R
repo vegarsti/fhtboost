@@ -4,7 +4,7 @@ library(devtools)
 load_all()
 
 # Get simulated data
-simulated_data <- simulate_FHT_data(dense=FALSE)
+simulated_data <- simulate_FHT_data(dense=FALSE, add_noise=FALSE)
 times <- simulated_data$observations$survival_times
 delta <- simulated_data$observations$delta
 X <- simulated_data$design_matrices$X

@@ -17,13 +17,10 @@
 #' delta <- observations$delta
 #' # make
 
-simulate_FHT_data <- function(dense=TRUE, kind='uniform') {
+simulate_FHT_data <- function(dense=TRUE, add_noise=FALSE) {
   library(statmod)
   set.seed(2)
   N <- 1000
-
-  kind <- 'normal'
-  kind <- 'uniform'
 
   if (dense) {
     # y0, beta, X
@@ -33,24 +30,18 @@ simulate_FHT_data <- function(dense=TRUE, kind='uniform') {
     X0 <- rep(1, N)
     X1 <- cbind(c(rep(1, 300), rep(2, 300), rep(-0.5, 400)))
     X1 <- scale(X1)
-    X2 <- rnorm(N)
+    X2 <- scale(rnorm(N))
     X_design_matrix <- cbind(X0, X1, X2)
-    number_of_elements_in_X <- prod(dim(X_design_matrix[, 2:d]))
-
-    # center
-    X_design_matrix[, 2:d] <- X_design_matrix[, 2:d] - apply(X_design_matrix[, 2:d], 2, mean)
 
     # mu, gamma, Z
     # with intercept and normalization
     gamma_ <- c(-1, -0.1, 0.1)
     p <- length(gamma_)
     Z0 <- rep(1, N)
-    Z1 <- cbind(c(rep(1, 500), rep(1, 500)))
+    Z1 <- rnorm(N)
     Z2 <- rnorm(N)
+    Zrest <- scale(cbind(Z1, Z2))
     Z_design_matrix <- cbind(Z0, Z1, Z2)
-    number_of_elements_in_Z <- prod(dim(Z_design_matrix[, 2:p]))
-    # center
-    Z_design_matrix[, 2:p] <- Z_design_matrix[, 2:p] - apply(Z_design_matrix[, 2:p], 2, mean)
   } else {
     beta_ <- c(2, rep(0, 10), rep(0.1, 10))
     gamma_ <- c(-1, rep(-0.1, 10), rep(0, 10))
@@ -59,27 +50,28 @@ simulate_FHT_data <- function(dense=TRUE, kind='uniform') {
     #Xrest <- matrix(rnorm((d-1)*N), ncol=(d-1))
     # rbinom(100, 1, 0.5) -- bernoulli
     Xrest <- 4*matrix(rbeta((d-1)*N, shape1=1, shape2=1), ncol=(d-1))
-    # need to scale X!
+    # center and scale
+    Xrest <- scale(Xrest)
     X_design_matrix <- cbind(X0, Xrest)
-    # center
-    X_design_matrix[, 2:d] <- X_design_matrix[, 2:d] - apply(X_design_matrix[, 2:d], 2, mean)
 
     p <- length(beta_)
     Z0 <- rep(1, N)
-    #Zrest <- matrix(rnorm((p-1)*N), ncol=(p-1))
     Zrest <- 4*matrix(rbeta((p-1)*N, shape1=1, shape2=1), ncol=(p-1))
-    # need to scale Z!
+    # center and scale
+    Zrest <- scale(Zrest)
     Z_design_matrix <- cbind(Z0, Zrest)
-    # center
-    Z_design_matrix[, 2:p] <- Z_design_matrix[, 2:p] - apply(Z_design_matrix[, 2:p], 2, mean)
   }
 
   noise1 <- rep(0, N)
   noise2 <- rep(0, N)
-  # noise1 <- rnorm(N, mean=0, sd=0.1)
-  # noise2 <- rnorm(N, mean=0, sd=0.3)
-  y0 <- exp(X_design_matrix %*% beta_ + noise1)
-  mu <- Z_design_matrix %*% gamma_ + noise2
+  if (add_noise) {
+    noise1 <- rnorm(N, mean=0, sd=0.05)
+    noise2 <- rnorm(N, mean=0, sd=0.1)
+  }
+  y0_pre_noise <- exp(X_design_matrix %*% beta_)
+  y0 <- y0_pre_noise * exp(noise1)
+  mu_pre_noise <- Z_design_matrix %*% gamma_
+  mu <- mu_pre_noise + noise2
   sigma_2 <- 1 ## NB
 
   # Transform parameters
