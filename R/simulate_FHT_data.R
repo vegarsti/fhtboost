@@ -17,12 +17,12 @@
 #' delta <- observations$delta
 #' # make
 
-simulate_FHT_data <- function(dense=TRUE, add_noise=FALSE) {
+simulate_FHT_data <- function(setup_type='small_dense', add_noise=FALSE) {
   library(statmod)
   set.seed(2)
   N <- 1000
 
-  if (dense) {
+  if (setup_type == 'small_dense') {
     # y0, beta, X
     beta_ <- c(2, 0.1, 0.2)
     #beta_ <- c(4.6, 0.1, 0.05)
@@ -42,19 +42,41 @@ simulate_FHT_data <- function(dense=TRUE, add_noise=FALSE) {
     Z2 <- rnorm(N)
     Zrest <- scale(cbind(Z1, Z2))
     Z_design_matrix <- cbind(Z0, Z1, Z2)
-  } else {
+  } else if (setup_type == 'small_sparse') {
     beta_ <- c(2, rep(0, 10), rep(0.1, 10))
-    gamma_ <- c(-1, rep(-0.1, 10), rep(0, 10))
     d <- length(beta_)
     X0 <- rep(1, N)
-    #Xrest <- matrix(rnorm((d-1)*N), ncol=(d-1))
     # rbinom(100, 1, 0.5) -- bernoulli
     Xrest <- 4*matrix(rbeta((d-1)*N, shape1=1, shape2=1), ncol=(d-1))
     # center and scale
     Xrest <- scale(Xrest)
     X_design_matrix <- cbind(X0, Xrest)
 
-    p <- length(beta_)
+    gamma_ <- c(-1, rep(-0.1, 10), rep(0, 10))
+    p <- length(gamma_)
+    Z0 <- rep(1, N)
+    Zrest <- 4*matrix(rbeta((p-1)*N, shape1=1, shape2=1), ncol=(p-1))
+    # center and scale
+    Zrest <- scale(Zrest)
+    Z_design_matrix <- cbind(Z0, Zrest)
+  }
+
+  if (setup_type == 'huge') {
+    huge_d <- 1000
+    informative_d <- 35
+    beta_ <- c(2, rep(0.1, informative_d), rep(0, huge_d-informative_d))
+    d <- length(beta_)
+    X0 <- rep(1, N)
+    # rbinom(100, 1, 0.5) -- bernoulli
+    Xrest <- 4*matrix(rbeta((d-1)*N, shape1=1, shape2=1), ncol=(d-1))
+    # center and scale
+    Xrest <- scale(Xrest)
+    X_design_matrix <- cbind(X0, Xrest)
+
+    informative_p <- 5
+    total_p <- 15
+    gamma_ <- c(-1, rep(-0.1, informative_p), rep(0, total_p-informative_p))
+    p <- length(gamma_)
     Z0 <- rep(1, N)
     Zrest <- 4*matrix(rbeta((p-1)*N, shape1=1, shape2=1), ncol=(p-1))
     # center and scale
