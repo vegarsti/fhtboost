@@ -1,6 +1,6 @@
 boosting_iteration_both <- function(
   nu, X, Z, u_y0, u_mu, beta_hat_m1, gamma_hat_m1, d, ds, p, ps, times, delta,
-  X_scale_factors, Z_scale_factors, X_means, Z_means, should_print=FALSE, should_destandardize=TRUE, run_in_parallel=FALSE
+  X_scale_factors, Z_scale_factors, X_means, Z_means, should_print=FALSE, should_destandardize=TRUE, run_in_parallel=FALSE,iteration_number=1000
 ) {
   # d corresponds to X, p to Z
   y0 <- exp(X %*% beta_hat_m1)
@@ -90,6 +90,15 @@ boosting_iteration_both <- function(
   }
 
   ### OUTER
+
+  if (is.null(boosted_mu) || length(boosted_mu) == 0 || iteration_number == 49) {
+    # print() should print some diagnostic message
+    cat("beta ", beta_loss, "\n")
+    cat("gamma ", gamma_loss, "\n")
+    print(iteration_number)
+    stop('boosted mu is NULL. something went wrong')
+  }
+
   if (boosted_mu) {
     # mu; gamma
     gamma_hat_addition <- nu*result_mu$parameter_updates

@@ -3,12 +3,12 @@ rm(list=ls())
 library(devtools)
 library(profvis) # pause
 library(foreach)
-library(doParallel)
+#library(doParallel)
 load_all()
 
 # Get simulated data
-# setup_type is one of 'small_dense', 'small_sparse', 'huge'
-simulated_data <- simulate_FHT_data(setup_type='huge', add_noise=FALSE)
+# setup_type is one of 'small_dense', 'small_sparse', 'huge', 'huge_clinical', 'correlated'
+simulated_data <- simulate_FHT_data(N=500, setup_type='correlated', add_noise=FALSE)
 times <- simulated_data$observations$survival_times
 delta <- simulated_data$observations$delta
 X <- simulated_data$design_matrices$X
@@ -20,7 +20,7 @@ find_joint_maximum <- FALSE
 
 # Kaplan-Meier plot
 non_para <- non_parametric_estimates(times, delta, continuous = TRUE)
-plot(non_para$times_sequence, non_para$kaplan_meiers, typ='s')
+plot(non_para$times_sequence, non_para$kaplan_meiers, typ='s', xlab="Time", ylab="Kaplan-Meier estimated survival probability")
 
 # Dimensions
 d <- dim(X)[2]
@@ -32,9 +32,9 @@ do_CV <- FALSE
 
 if (do_CV) {
   # DIVIDE INTO K FOLDS
-  K <- 10
+  K <- 5
   K_fold_repetitions <- 1 # or 10
-  M <- 500 # should be guaranteed in over fitting space
+  M <- 100 # should be guaranteed in over fitting space
   CV_result <- run_CV(M, K_fold_repetitions, K, X, Z, times, delta)
   CV_errors <- CV_result$CV_errors
   CV_errors_k <- CV_result$CV_errors_k
@@ -46,7 +46,7 @@ if (do_CV) {
     lines(CV_errors_k[, k], lty=3)
   }
 } else {
-  m_stop <- 140 # or some other value; needs to be the minimizer (somewhat)
+  m_stop <- 60 # or some other value; needs to be the minimizer (somewhat)
 }
 
 # Loglikelihood of the null model:
@@ -76,26 +76,32 @@ if (find_joint_maximum) {
 tt <- Sys.time()
 result <- boosting_run(times, delta, X, Z, m_stop, boost_intercepts_continually=TRUE, should_print=FALSE, run_in_parallel=FALSE)
 cat('time: ', Sys.time() - tt)
-#result_no_intercept_boosting <- boosting_run(times, delta, X, Z, m_stop, boost_intercepts_continually=FALSE, should_print=FALSE)
 
-#result_more_steps <- boosting_run(times, delta, X, Z, m_stop+50, boost_intercepts_continually=TRUE)
+#result_no_intercept_boosting <- boosting_run(times, delta, X, Z, m_stop, boost_intercepts_continually=FALSE, should_print=FALSE)
+#result_more_steps <- boosting_run(times, delta, X, Z, m_stop+100, boost_intercepts_continually=TRUE)
 #result_no_intercept_boosting <- boosting_run(times, delta, X, Z, m_stop+50, boost_intercepts_continually=FALSE)
 
 ### PLOTTING ###
 
 # settings / meta data
 ylim_vector <- c(min(result$loss, maximum_likelihood - 100), result$loss[1] + 100)
-plot_title <- 'Likelihood loss'
+plot_title <- ''
 xlabel <- 'Iteration'
-ylabel <- 'Loss function'
+ylabel <- 'Negative log likelihood'
 
-plot(result$loss, typ='l', lty=2, main=plot_title, xlab=xlabel, ylab=ylabel)#, ylim=ylim_vector)
+plot(result$loss, typ='l', lty=1, main=plot_title, xlab=xlabel, ylab=ylabel)#, ylim=ylim_vector)
 #lines(result_no_intercept_boosting$loss, lty=3)
 #abline(h=maximum_likelihood, col='red')
+
+y0_post <- exp(result$final_parameters$gamma_hat_final[1])
+mu_post <- result$final_parameters$beta_hat_final[1]
+#null_model_loglikelihood_post <- - sum(FHT_loglikelihood_with_y0_mu(y0_post, mu, times, delta))
+# doesn't work because NaNs produced?
 
 colors <- c('black', 'black', 'red', 'red')
 ltypes <- c(2, 3, 1, 1)
 lwd <- c(1, 1, 1, 3)
+ylim_vector <- c(min(result_more_steps$loss, maximum_likelihood - 100), result$loss[1] + 100)
 plot(result_more_steps$loss, typ='l', lty=2, main=plot_title, xlab=xlabel, ylab=ylabel, ylim=ylim_vector)
 lines(result_no_intercept_boosting$loss, lty=3)
 abline(h=maximum_likelihood, col='red')

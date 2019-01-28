@@ -17,10 +17,9 @@
 #' delta <- observations$delta
 #' # make
 
-simulate_FHT_data <- function(setup_type='small_dense', add_noise=FALSE) {
+simulate_FHT_data <- function(N=1000, setup_type='small_dense', add_noise=FALSE) {
   library(statmod)
   set.seed(2)
-  N <- 1000
 
   if (setup_type == 'small_dense') {
     # y0, beta, X
@@ -42,6 +41,8 @@ simulate_FHT_data <- function(setup_type='small_dense', add_noise=FALSE) {
     Z2 <- rnorm(N)
     Zrest <- scale(cbind(Z1, Z2))
     Z_design_matrix <- cbind(Z0, Z1, Z2)
+
+    exponential_rate <- 0.1
   } else if (setup_type == 'small_sparse') {
     beta_ <- c(2, rep(0, 10), rep(0.1, 10))
     d <- length(beta_)
@@ -59,10 +60,9 @@ simulate_FHT_data <- function(setup_type='small_dense', add_noise=FALSE) {
     # center and scale
     Zrest <- scale(Zrest)
     Z_design_matrix <- cbind(Z0, Zrest)
-  }
-
-  if (setup_type == 'huge') {
-    huge_d <- 1000
+    exponential_rate <- 0.1
+  } else if (setup_type == 'huge') {
+    huge_d <- 10000
     informative_d <- 35
     beta_ <- c(2, rep(0.1, informative_d), rep(0, huge_d-informative_d))
     d <- length(beta_)
@@ -82,6 +82,51 @@ simulate_FHT_data <- function(setup_type='small_dense', add_noise=FALSE) {
     # center and scale
     Zrest <- scale(Zrest)
     Z_design_matrix <- cbind(Z0, Zrest)
+    exponential_rate <- 0.01
+  } else if (setup_type == 'huge_clinical') {
+    huge_d <- 10000
+    informative_d <- 35
+    beta_ <- c(2, rep(0.1, informative_d), rep(0, huge_d-informative_d))
+    d <- length(beta_)
+    X0 <- rep(1, N)
+
+    informative_p <- 5
+    total_p <- 15
+    gamma_ <- c(-1, rep(-0.1, informative_p), rep(0, total_p-informative_p))
+    p <- length(gamma_)
+    Z0 <- rep(1, N)
+
+    correlated <- generate_clinical(n.obs=N, n.clin=total_p)
+
+    Xrest <- scale(correlated$gene)
+    X_design_matrix <- cbind(X0, Xrest)
+
+    Zrest <- scale(correlated$clin)
+    Z_design_matrix <- cbind(Z0, Zrest)
+    exponential_rate <- 0.01
+  } else if (setup_type == 'correlated') {
+    huge_d <- 10000
+    informative_d <- 35
+    beta_ <- c(2, rep(0.1, informative_d), rep(0, huge_d-informative_d))
+    d <- length(beta_)
+    X0 <- rep(1, N)
+
+    informative_p <- 5
+    total_p <- 15
+    gamma_ <- c(-1, rep(-0.1, informative_p), rep(0, total_p-informative_p))
+    p <- length(gamma_)
+    Z0 <- rep(1, N)
+
+    num_groups <- 100
+    correlation_between_clinical_and_molecular <- rep(0.2, num_groups)
+    correlated <- generate_clinical(n.obs=N, n.clin=total_p, n.groups=num_groups, rho.g=0.2, rho.b = correlation_between_clinical_and_molecular)
+
+    Xrest <- scale(correlated$gene)
+    X_design_matrix <- cbind(X0, Xrest)
+
+    Zrest <- scale(correlated$clin)
+    Z_design_matrix <- cbind(Z0, Zrest)
+    exponential_rate <- 0.01
   }
 
   noise1 <- rep(0, N)
@@ -103,7 +148,9 @@ simulate_FHT_data <- function(setup_type='small_dense', add_noise=FALSE) {
   # Draw survival times and censoring times
   set.seed(2)
   survival_times_not_censored <- statmod::rinvgauss(N, mean=mu_IG, shape=lambda_IG)
+
   censoring_times <- statmod::rinvgauss(N, mean=abs(mu_IG*2), shape=lambda_IG)
+  #censoring_times <- rexp(1, rate=exponential_rate) # 1 or N times?
 
   # plot(survival_times_not_censored)
   # points(censoring_times, col='red')
