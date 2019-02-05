@@ -1,11 +1,11 @@
 boosting_iteration_both <- function(
   nu, X, Z, u_y0, u_mu, beta_hat_m1, gamma_hat_m1, d, ds, p, ps, times, delta,
-  X_scale_factors, Z_scale_factors, X_means, Z_means, should_print=FALSE, should_destandardize=TRUE, run_in_parallel=FALSE,iteration_number=1000
+  X_scale_factors, Z_scale_factors, X_means, Z_means, should_print=FALSE, should_destandardize=TRUE, iteration_number=1000
 ) {
   # d corresponds to X, p to Z
   y0 <- exp(X %*% beta_hat_m1)
-  result_y0 <- best_least_squares_update(X, u_y0, d, ds, run_in_parallel=run_in_parallel)
-  result_mu <- best_least_squares_update(Z, u_mu, p, ps, run_in_parallel=run_in_parallel)
+  result_y0 <- best_least_squares_update(X, u_y0, d, ds)
+  result_mu <- best_least_squares_update(Z, u_mu, p, ps)
 
   method <- 'inner' # or 'outer'
   method <- 'outer'
@@ -91,7 +91,7 @@ boosting_iteration_both <- function(
 
   ### OUTER
 
-  if (is.null(boosted_mu) || length(boosted_mu) == 0 || iteration_number == 49) {
+  if (is.null(boosted_mu) || length(boosted_mu) == 0) {
     # print() should print some diagnostic message
     cat("beta ", beta_loss, "\n")
     cat("gamma ", gamma_loss, "\n")

@@ -104,7 +104,7 @@ boosting_run <- function(times, delta, X, Z, m_stop, boost_intercepts_continuall
     u_mu <- negative_gradient_mu[m-1, ]
     result <- boosting_iteration_both(
       nu, X, Z, u_y0, u_mu, beta_hat_cumsum[m-1, ], gamma_hat_cumsum[m-1, ], d, ds, p, ps, times, delta, X_scale_factors, Z_scale_factors, X_means, Z_means, should_print=should_print, should_destandardize=FALSE,
-      run_in_parallel=run_in_parallel, iteration_number=m
+      iteration_number=m
     )
     gamma_hat[m, ] <- result$gamma_hat_addition
     gamma_hat_cumsum[m, ] <- result$gamma_hat_m
