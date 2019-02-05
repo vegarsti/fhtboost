@@ -8,15 +8,13 @@ load_all()
 
 # Get simulated data
 # setup_type is one of 'small_dense', 'small_sparse', 'huge', 'huge_clinical', 'correlated'
-simulated_data <- simulate_FHT_data(N=500, setup_type='correlated', add_noise=FALSE)
+simulated_data <- simulate_FHT_data(N=500, setup_type='huge_clinical', add_noise=FALSE, seed=1)
 times <- simulated_data$observations$survival_times
 delta <- simulated_data$observations$delta
 X <- simulated_data$design_matrices$X
 Z <- simulated_data$design_matrices$Z
 beta_true <- simulated_data$true_parameters$beta
 gamma_true <- simulated_data$true_parameters$gamma
-
-find_joint_maximum <- FALSE
 
 # Kaplan-Meier plot
 non_para <- non_parametric_estimates(times, delta, continuous = TRUE)
@@ -28,7 +26,7 @@ p <- dim(Z)[2]
 N <- dim(X)[1]
 
 # Cross validation
-do_CV <- FALSE
+do_CV <- TRUE
 
 if (do_CV) {
   # DIVIDE INTO K FOLDS
@@ -41,7 +39,7 @@ if (do_CV) {
   plot(CV_errors, typ='l')
   m_stop <- which.min(CV_errors)
   # plot CV results
-  plot(CV_errors, typ='l', lty=3)
+  plot(CV_errors, typ='l', lty=1)
   for (k in 1:K_fold_repetitions) {
     lines(CV_errors_k[, k], lty=3)
   }
@@ -53,7 +51,11 @@ if (do_CV) {
 best_intercepts <- maximum_likelihood_intercepts(times, delta)
 y0 <- best_intercepts[1]
 mu <- best_intercepts[2]
+null_y0 <- y0
+null_mu <- mu
 null_model_loglikelihood <- - sum(FHT_loglikelihood_with_y0_mu(y0, mu, times, delta))
+
+find_joint_maximum <- FALSE
 
 if (find_joint_maximum) {
   ### FIND MAX ###
@@ -77,9 +79,23 @@ tt <- Sys.time()
 result <- boosting_run(times, delta, X, Z, m_stop, boost_intercepts_continually=TRUE, should_print=FALSE, run_in_parallel=FALSE)
 cat('time: ', Sys.time() - tt)
 
-#result_no_intercept_boosting <- boosting_run(times, delta, X, Z, m_stop, boost_intercepts_continually=FALSE, should_print=FALSE)
-#result_more_steps <- boosting_run(times, delta, X, Z, m_stop+100, boost_intercepts_continually=TRUE)
-#result_no_intercept_boosting <- boosting_run(times, delta, X, Z, m_stop+50, boost_intercepts_continually=FALSE)
+
+estimated_y0s <- exp(X %*% result$final_parameters$beta_hat_final)
+estimated_mus <- Z %*% result$final_parameters$gamma_hat_final
+#estimated_survival <- FHT_parametric_survival(times, mu, y0)
+
+# Plot Brier scores
+tt <- Sys.time()
+brier_result <- brier_score_on_censored_data(times, delta, estimated_y0s, estimated_mus)
+cat('time: ', Sys.time() - tt)
+plot(brier_result$brier_times, brier_result$brier_scores, typ='l')
+
+# Plot Brier R2
+tt <- Sys.time()
+r2_result <- brier_r2(times, delta, estimated_y0s, estimated_mus, null_y0 = y0, null_mu = mu)
+cat('time: ', Sys.time() - tt)
+plot(r2_result$r2_times, r2_result$r2, typ='l', ylim=c(0, 1))
+
 
 ### PLOTTING ###
 
@@ -113,6 +129,16 @@ legend(
   lty = ltypes,
   lwd = lwd
 )
+
+# write.table(Z, file="../dataset/hei.txt", row.names=FALSE, col.names=FALSE)
+# formatC(2, width=3, flag="0")
+
+# Write to file
+# directory <- "../dataset/"
+# filename <- paste("Z", 1, sep="_")
+# full_filename <- paste(directory, filename, sep='')
+# write.table(Z, file=full_filename, row.names=FALSE, col.names=FALSE)
+# Z <- read.table(full_filename)
 
 # Plot parameters
 plot(abs(result$final_parameters$gamma_hat_final), ylim=c(0, 0.2))

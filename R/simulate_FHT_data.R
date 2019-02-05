@@ -17,10 +17,10 @@
 #' delta <- observations$delta
 #' # make
 
-simulate_FHT_data <- function(N=1000, setup_type='small_dense', add_noise=FALSE) {
+simulate_FHT_data <- function(N=1000, setup_type='small_dense', add_noise=FALSE, seed=2) {
   library(statmod)
-  set.seed(2)
-
+  set.seed(seed)
+  # seeds which are good: 2
   if (setup_type == 'small_dense') {
     # y0, beta, X
     beta_ <- c(2, 0.1, 0.2)
@@ -118,8 +118,8 @@ simulate_FHT_data <- function(N=1000, setup_type='small_dense', add_noise=FALSE)
     Z0 <- rep(1, N)
 
     num_groups <- 100
-    correlation_between_clinical_and_molecular <- rep(0.2, num_groups)
-    correlated <- generate_clinical(n.obs=N, n.clin=total_p, n.groups=num_groups, rho.g=0.2, rho.b = correlation_between_clinical_and_molecular)
+    correlation_between_clinical_and_molecular <- rep(0.7, num_groups)
+    correlated <- generate_clinical(n.obs=N, n.clin=total_p, n.groups=num_groups, rho.g=0.7, rho.b = correlation_between_clinical_and_molecular)
 
     Xrest <- scale(correlated$gene)
     X_design_matrix <- cbind(X0, Xrest)
@@ -146,11 +146,10 @@ simulate_FHT_data <- function(N=1000, setup_type='small_dense', add_noise=FALSE)
   lambda_IG <- y0^2/sigma_2
 
   # Draw survival times and censoring times
-  set.seed(2)
   survival_times_not_censored <- statmod::rinvgauss(N, mean=mu_IG, shape=lambda_IG)
 
-  censoring_times <- statmod::rinvgauss(N, mean=abs(mu_IG*2), shape=lambda_IG)
-  #censoring_times <- rexp(1, rate=exponential_rate) # 1 or N times?
+  #censoring_times <- statmod::rinvgauss(N, mean=abs(mu_IG*2), shape=lambda_IG)
+  censoring_times <- rexp(1, rate=exponential_rate) # 1 or N times?
 
   # plot(survival_times_not_censored)
   # points(censoring_times, col='red')
