@@ -20,7 +20,6 @@
 simulate_FHT_data <- function(N=1000, setup_type='small_dense', add_noise=FALSE, seed=2) {
   library(statmod)
   set.seed(seed)
-  # seeds which are good: 2
   if (setup_type == 'small_dense') {
     # y0, beta, X
     beta_ <- c(2, 0.1, 0.2)
@@ -103,7 +102,8 @@ simulate_FHT_data <- function(N=1000, setup_type='small_dense', add_noise=FALSE,
 
     Zrest <- scale(correlated$clin)
     Z_design_matrix <- cbind(Z0, Zrest)
-    exponential_rate <- 0.01
+    exponential_rate <- 0.03 # 20% censoring
+    exponential_rate <- 0.05 # 30% censoring
   } else if (setup_type == 'correlated') {
     huge_d <- 10000
     informative_d <- 35
@@ -149,7 +149,7 @@ simulate_FHT_data <- function(N=1000, setup_type='small_dense', add_noise=FALSE,
   survival_times_not_censored <- statmod::rinvgauss(N, mean=mu_IG, shape=lambda_IG)
 
   #censoring_times <- statmod::rinvgauss(N, mean=abs(mu_IG*2), shape=lambda_IG)
-  censoring_times <- rexp(1, rate=exponential_rate) # 1 or N times?
+  censoring_times <- rexp(N, rate=exponential_rate) # 1 or N times?
 
   # plot(survival_times_not_censored)
   # points(censoring_times, col='red')
