@@ -14,7 +14,7 @@ run_in_parallel <- TRUE
 number_of_data_sets <- 100
 
 #seeds <- 1:number_of_data_sets
-seeds <- c(1)
+#seeds <- c(1)
 
 no_cores <- detectCores() - 1
 registerDoParallel(cores=no_cores)
@@ -28,8 +28,7 @@ K <- 5
 K_fold_repetitions <- 5
 M <- 80
 TEST_SEED <- 9000
-
-formatC(100, width=4, flag="0")
+criterion <- 'deviance'
 
 make_filename <- function(directory, descriptor, seed) {
   seed_string <- formatC(seed, width=4, flag="0")
@@ -38,18 +37,26 @@ make_filename <- function(directory, descriptor, seed) {
   return(full_filename)
 }
 
-run_CV_and_write_to_file <- function(N, setup_type, add_noise, seed, K, K_fold_repetitions, directory, M) {
+run_CV_and_write_to_file <- function(N, setup_type, add_noise, seed, K, K_fold_repetitions, directory, M, criterion) {
   # simulate data (faster than reading...)
   simulated_data <- simulate_FHT_data(N=N, setup_type=setup_type, add_noise=add_noise, seed=seed)
   times <- simulated_data$observations$survival_times
   delta <- simulated_data$observations$delta
   X <- simulated_data$design_matrices$X
   Z <- simulated_data$design_matrices$Z
-  CV_result <- run_CV(M, K_fold_repetitions, K, X, Z, times, delta)
+  CV_result <- run_CV(M, K_fold_repetitions, K, X, Z, times, delta, criterion=criterion)
   CV_errors_K <- CV_result$CV_errors_K
 
+  if (should_plot) {
+    plot(rowMeans(CV_errors_K), typ='l', lty=1)
+    Ks <- dim(CV_errors_K)[2]
+    for (k in 1:Ks) {
+      lines(CV_errors_K[, k], lty=3)
+    }
+  }
   # Write to file
-  full_filename <- make_filename(directory, "cv", seed)
+  descriptor <- paste("cv", criterion, sep="_")
+  full_filename <- make_filename(directory, descriptor, seed)
   write.csv(CV_errors_K, file=full_filename, row.names=FALSE)
 }
 
