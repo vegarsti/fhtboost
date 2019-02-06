@@ -3,12 +3,10 @@ rm(list=ls())
 library(devtools)
 library(profvis) # pause
 library(foreach)
-#library(doParallel)
+library(readr)
 load_all()
 
-# Get simulated data
-# setup_type is one of 'small_dense', 'small_sparse', 'huge', 'huge_clinical', 'correlated'
-simulated_data <- simulate_FHT_data(N=500, setup_type='huge_clinical', add_noise=FALSE, seed=1)
+simulated_data <- simulate_FHT_data(N=500, setup_type='small_sparse', add_noise=FALSE, seed=1)
 times <- simulated_data$observations$survival_times
 delta <- simulated_data$observations$delta
 X <- simulated_data$design_matrices$X
@@ -20,32 +18,33 @@ gamma_true <- simulated_data$true_parameters$gamma
 non_para <- non_parametric_estimates(times, delta, continuous = TRUE)
 plot(non_para$times_sequence, non_para$kaplan_meiers, typ='s', xlab="Time", ylab="Kaplan-Meier estimated survival probability")
 
-# Dimensions
-d <- dim(X)[2]
-p <- dim(Z)[2]
-N <- dim(X)[1]
-
 # Cross validation
 do_CV <- TRUE
 
 if (do_CV) {
   # DIVIDE INTO K FOLDS
   K <- 5
-  K_fold_repetitions <- 1 # or 10
-  M <- 100 # should be guaranteed in over fitting space
+  K_fold_repetitions <- 5 # or 10
+  M <- 200 # should be guaranteed in over fitting space
   CV_result <- run_CV(M, K_fold_repetitions, K, X, Z, times, delta)
   CV_errors <- CV_result$CV_errors
-  CV_errors_k <- CV_result$CV_errors_k
+  CV_errors_K <- CV_result$CV_errors_K
   plot(CV_errors, typ='l')
   m_stop <- which.min(CV_errors)
   # plot CV results
   plot(CV_errors, typ='l', lty=1)
-  for (k in 1:K_fold_repetitions) {
-    lines(CV_errors_k[, k], lty=3)
+  Ks <- dim(CV_errors_K)[2]
+  for (k in 1:Ks) {
+    lines(CV_errors_K[, k], lty=3)
   }
 } else {
   m_stop <- 60 # or some other value; needs to be the minimizer (somewhat)
 }
+
+# Dimensions
+d <- dim(X)[2]
+p <- dim(Z)[2]
+N <- dim(X)[1]
 
 # Loglikelihood of the null model:
 best_intercepts <- maximum_likelihood_intercepts(times, delta)
@@ -55,8 +54,7 @@ null_y0 <- y0
 null_mu <- mu
 null_model_loglikelihood <- - sum(FHT_loglikelihood_with_y0_mu(y0, mu, times, delta))
 
-find_joint_maximum <- FALSE
-
+find_joint_maximum <- TRUE
 if (find_joint_maximum) {
   ### FIND MAX ###
   minus_FHT_loglikelihood <- data_to_optimizable_function(X, Z, times, delta)
@@ -75,10 +73,7 @@ if (find_joint_maximum) {
 }
 # DO BOOSTING
 
-tt <- Sys.time()
 result <- boosting_run(times, delta, X, Z, m_stop, boost_intercepts_continually=TRUE, should_print=FALSE, run_in_parallel=FALSE)
-cat('time: ', Sys.time() - tt)
-
 
 estimated_y0s <- exp(X %*% result$final_parameters$beta_hat_final)
 estimated_mus <- Z %*% result$final_parameters$gamma_hat_final
@@ -89,12 +84,12 @@ tt <- Sys.time()
 brier_result <- brier_score_on_censored_data(times, delta, estimated_y0s, estimated_mus)
 cat('time: ', Sys.time() - tt)
 plot(brier_result$brier_times, brier_result$brier_scores, typ='l')
-
-# Plot Brier R2
-tt <- Sys.time()
-r2_result <- brier_r2(times, delta, estimated_y0s, estimated_mus, null_y0 = y0, null_mu = mu)
-cat('time: ', Sys.time() - tt)
-plot(r2_result$r2_times, r2_result$r2, typ='l', ylim=c(0, 1))
+#
+# # Plot Brier R2
+# tt <- Sys.time()
+# r2_result <- brier_r2(times, delta, estimated_y0s, estimated_mus, null_y0 = y0, null_mu = mu)
+# cat('time: ', Sys.time() - tt)
+# plot(r2_result$r2_times, r2_result$r2, typ='l', ylim=c(0, 1))
 
 
 ### PLOTTING ###
@@ -107,7 +102,7 @@ ylabel <- 'Negative log likelihood'
 
 plot(result$loss, typ='l', lty=1, main=plot_title, xlab=xlabel, ylab=ylabel)#, ylim=ylim_vector)
 #lines(result_no_intercept_boosting$loss, lty=3)
-#abline(h=maximum_likelihood, col='red')
+abline(h=maximum_likelihood, col='red')
 
 y0_post <- exp(result$final_parameters$gamma_hat_final[1])
 mu_post <- result$final_parameters$beta_hat_final[1]
@@ -130,15 +125,6 @@ legend(
   lwd = lwd
 )
 
-# write.table(Z, file="../dataset/hei.txt", row.names=FALSE, col.names=FALSE)
-# formatC(2, width=3, flag="0")
-
-# Write to file
-# directory <- "../dataset/"
-# filename <- paste("Z", 1, sep="_")
-# full_filename <- paste(directory, filename, sep='')
-# write.table(Z, file=full_filename, row.names=FALSE, col.names=FALSE)
-# Z <- read.table(full_filename)
 
 # Plot parameters
 plot(abs(result$final_parameters$gamma_hat_final), ylim=c(0, 0.2))
