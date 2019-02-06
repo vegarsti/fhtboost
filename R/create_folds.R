@@ -11,6 +11,5 @@ create_folds <- function(to_divide, K) {
     end <- start + (entries-1)
     folds[[k]] <- indices[start:end]
   }
-  #folds <- matrix(indices, nrow = K)
   return(folds)
 }
