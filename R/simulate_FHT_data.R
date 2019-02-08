@@ -85,12 +85,14 @@ simulate_FHT_data <- function(N=1000, setup_type='small_dense', add_noise=FALSE,
   } else if (setup_type == 'huge_clinical') {
     huge_d <- 10000
     informative_d <- 35
+    #beta_ <- c(4, rep(0.2, informative_d), rep(0, huge_d-informative_d))
     beta_ <- c(2, rep(0.1, informative_d), rep(0, huge_d-informative_d))
     d <- length(beta_)
     X0 <- rep(1, N)
 
     informative_p <- 5
     total_p <- 15
+    #gamma_ <- c(-0.7, rep(-0.1, informative_p), rep(0, total_p-informative_p))
     gamma_ <- c(-1, rep(-0.1, informative_p), rep(0, total_p-informative_p))
     p <- length(gamma_)
     Z0 <- rep(1, N)
@@ -103,17 +105,17 @@ simulate_FHT_data <- function(N=1000, setup_type='small_dense', add_noise=FALSE,
     Zrest <- scale(correlated$clin)
     Z_design_matrix <- cbind(Z0, Zrest)
     exponential_rate <- 0.03 # 20% censoring
-    exponential_rate <- 0.05 # 30% censoring
+    #exponential_rate <- 0.05 # 30% censoring
   } else if (setup_type == 'correlated') {
     huge_d <- 10000
     informative_d <- 35
-    beta_ <- c(2, rep(0.1, informative_d), rep(0, huge_d-informative_d))
+    beta_ <- c(3, rep(0.1, informative_d), rep(0, huge_d-informative_d))
     d <- length(beta_)
     X0 <- rep(1, N)
 
     informative_p <- 5
     total_p <- 15
-    gamma_ <- c(-1, rep(-0.1, informative_p), rep(0, total_p-informative_p))
+    gamma_ <- c(-2, rep(-0.1, informative_p), rep(0, total_p-informative_p))
     p <- length(gamma_)
     Z0 <- rep(1, N)
 

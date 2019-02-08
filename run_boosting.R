@@ -6,7 +6,7 @@ library(foreach)
 library(readr)
 load_all()
 
-simulated_data <- simulate_FHT_data(N=500, setup_type='small_sparse', add_noise=FALSE, seed=1)
+simulated_data <- simulate_FHT_data(N=500, setup_type='huge_clinical', add_noise=FALSE, seed=1)
 times <- simulated_data$observations$survival_times
 delta <- simulated_data$observations$delta
 X <- simulated_data$design_matrices$X
@@ -24,19 +24,18 @@ do_CV <- TRUE
 if (do_CV) {
   # DIVIDE INTO K FOLDS
   K <- 5
-  K_fold_repetitions <- 5 # or 10
-  M <- 200 # should be guaranteed in over fitting space
+  K_fold_repetitions <- 1 # or 10
+  M <- 50 # should be guaranteed in over fitting space
   CV_result <- run_CV(M, K_fold_repetitions, K, X, Z, times, delta)
-  CV_errors <- CV_result$CV_errors
-  CV_errors_K <- CV_result$CV_errors_K
+  CV_errors <- CV_result$CV_errors_K_loglik
   plot(CV_errors, typ='l')
-  m_stop <- which.min(CV_errors)
   # plot CV results
   plot(CV_errors, typ='l', lty=1)
-  Ks <- dim(CV_errors_K)[2]
+  Ks <- dim(CV_errors)[2]
   for (k in 1:Ks) {
     lines(CV_errors_K[, k], lty=3)
   }
+  m_stop <- which.min(CV_errors)
 } else {
   m_stop <- 60 # or some other value; needs to be the minimizer (somewhat)
 }

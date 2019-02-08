@@ -93,26 +93,34 @@ boosting_iteration_both <- function(
 
   if (is.null(boosted_mu) || length(boosted_mu) == 0) {
     # print() should print some diagnostic message
-    cat("beta ", beta_loss, "\n")
-    cat("gamma ", gamma_loss, "\n")
-    print(iteration_number)
-    stop('boosted mu is NULL. something went wrong')
+    #cat("beta ", beta_loss, "\n")
+    #cat("gamma ", gamma_loss, "\n")
+    #print(iteration_number)
+    stop('updates are too large. gradient must have been really big!')
   }
 
-  if (boosted_mu) {
-    # mu; gamma
-    gamma_hat_addition <- nu*result_mu$parameter_updates
-    gamma_hat_m <- gamma_hat_m1 + gamma_hat_addition
-    beta_hat_addition <- 0
-    beta_hat_m <- beta_hat_m1
-  } else {
-    # y0; beta
-    beta_hat_addition <- nu*result_y0$parameter_updates
-    beta_hat_m <- beta_hat_m1 + beta_hat_addition
+  if (boosted_mu == 123) {
     gamma_hat_addition <- 0
+    beta_hat_addition <- 0
     gamma_hat_m <- gamma_hat_m1
+    beta_hat_m <- beta_hat_m1
   }
 
+  else {
+    if (boosted_mu) {
+      # mu; gamma
+      gamma_hat_addition <- nu*result_mu$parameter_updates
+      gamma_hat_m <- gamma_hat_m1 + gamma_hat_addition
+      beta_hat_addition <- 0
+      beta_hat_m <- beta_hat_m1
+    } else {
+      # y0; beta
+      beta_hat_addition <- nu*result_y0$parameter_updates
+      beta_hat_m <- beta_hat_m1 + beta_hat_addition
+      gamma_hat_addition <- 0
+      gamma_hat_m <- gamma_hat_m1
+    }
+  }
   if (should_print) {
     cat('gamma index: ', which(gamma_hat_addition != 0), '\n')
     cat('gamma hat addition: ', gamma_hat_addition[gamma_hat_addition != 0], '\n')
