@@ -1,6 +1,7 @@
 estimate_model_and_validate_and_write_to_file <- function(N, setup_type, add_noise, seed, directory) {
   criterion <- 'deviance'
-  full_filename <- make_filename(directory, "cv", criterion, seed)
+  descriptor <- paste("cv", criterion, sep='_')
+  full_filename <- make_filename(directory, descriptor, seed)
   CV_errors_K <- readr::read_csv(full_filename)
   CV_errors <- rowMeans(CV_errors_K)
   if (criterion == 'deviance') {
