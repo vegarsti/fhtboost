@@ -4,16 +4,16 @@
 \alias{data_to_optimizable_function}
 \title{Data to optimizable function}
 \usage{
-data_to_optimizable_function(X, Z, t, delta)
+data_to_optimizable_function(X, Z, times, delta)
 }
 \arguments{
 \item{X}{Design matrix for \code{ln y0 = beta^T * X}}
 
 \item{Z}{Design matrix for \code{   mu = gamma^T * Z}}
 
-\item{t}{Survival times (possibly censored)}
-
 \item{delta}{Vector of same length as \code{t}, indicating if observations are actually observed (1) or censored (0)}
+
+\item{t}{Survival times (possibly censored)}
 }
 \value{
 \code{optimizable_function} Function taking parameters as a vector (containing \code{beta}, \code{gamma}), to be optimized over.

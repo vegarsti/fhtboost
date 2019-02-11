@@ -4,7 +4,7 @@
 \alias{non_parametric_estimates}
 \title{Run optimization on simulated data}
 \usage{
-non_parametric_estimates(survival_times, observed)
+non_parametric_estimates(survival_times, observed, continuous = FALSE)
 }
 \description{
 Function doing the whole shebang.

@@ -4,7 +4,8 @@
 \alias{simulate_FHT_data}
 \title{Simulate FHT data}
 \usage{
-simulate_FHT_data()
+simulate_FHT_data(N = 1000, setup_type = "small_dense",
+  add_noise = FALSE, seed = 2)
 }
 \value{
 \code{observations} A list of \code{survival_times} and corresponding \code{delta}
