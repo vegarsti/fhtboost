@@ -14,5 +14,6 @@ RoxygenNote: 6.1.0
 Imports:
     statmod,
     foreach,
-    readr,
-    doParallel
+    doParallel,
+    mvtnorm,
+    corpcor

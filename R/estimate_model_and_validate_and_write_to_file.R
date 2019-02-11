@@ -4,7 +4,7 @@ estimate_model_and_validate_and_write_to_file <- function(N, setup_type, add_noi
   criterion <- 'deviance'
   descriptor <- paste("cv", criterion, sep='_')
   full_filename <- make_filename(directory, descriptor, seed)
-  CV_errors_K <- readr::read_csv(full_filename)
+  CV_errors_K <- read.csv(full_filename)
   CV_errors <- rowMeans(CV_errors_K)
   if (criterion == 'deviance') {
     m_stop <- which.max(CV_errors)
@@ -59,8 +59,6 @@ estimate_model_and_validate_and_write_to_file <- function(N, setup_type, add_noi
   # summary (deviance and m_stop)
   full_filename <- make_filename(directory, "summary", seed)
   write.csv(data.frame('deviance'=deviance, 'm_stop'=m_stop), file=full_filename, row.names=FALSE)
-  full_filename <- make_filename(directory, "m", seed)
-  write.csv(as.data.frame(m_stop), file=full_filename, row.names=FALSE)
 
   # Brier R2
   #brier_r2_result <- brier_r2(times_test, delta_test, estimated_y0s_test, estimated_mus_test, null_y0_test, null_mu_test, number_of_time_points=100)
