@@ -1,3 +1,5 @@
+#' @export
+
 simulate_normal_data <- function() {
   set.seed(2)
   N <- 100

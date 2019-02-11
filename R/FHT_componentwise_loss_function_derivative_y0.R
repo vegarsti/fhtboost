@@ -1,3 +1,5 @@
+#' @export
+
 FHT_componentwise_loss_function_derivative_y0 <- function(beta_, gamma_, X, Z, times, delta) {
   p <- dim(X)[2]
   d <- dim(Z)[2]

@@ -1,3 +1,5 @@
+#' @export
+
 brier_r2 <- function(times, delta, estimated_y0s, estimated_mus, null_y0, null_mu, number_of_time_points=100) {
   non_null <- brier_score_on_censored_data(times, delta, estimated_y0s, estimated_mus, number_of_time_points=number_of_time_points)
   null <- brier_score_on_censored_data(times, delta, null_y0, null_mu, number_of_time_points=number_of_time_points)

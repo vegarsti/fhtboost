@@ -1,3 +1,5 @@
+#' @export
+
 destandardize <- function(matrix_to_scale, column_wise_weights, means) {
   p <- dim(matrix_to_scale)[2]
   if (is.null(dim(matrix_to_scale))) {

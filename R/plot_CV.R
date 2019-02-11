@@ -1,3 +1,5 @@
+#' @export
+
 plot_CV <- function(CV_errors_K) {
   plot(rowMeans(CV_errors_K), typ='l', lty=1)
   Ks <- dim(CV_errors_K)[2]

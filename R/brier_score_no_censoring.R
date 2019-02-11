@@ -1,3 +1,5 @@
+#' @export
+
 brier_score_no_censoring <- function(current_time, times, y0s, mus) {
   estimated_probabilities <- FHT_parametric_survival(current_time, mus, y0s)
   earlier <- times[times < current_time]

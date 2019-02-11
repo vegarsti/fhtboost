@@ -1,3 +1,5 @@
+#' @export
+
 FHT_only_intercepts <- function(parameters, times, delta) {
   y0_baseline <- exp(parameters[1])
   mu_baseline <- parameters[2]

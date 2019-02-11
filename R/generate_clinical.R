@@ -1,3 +1,5 @@
+#' @export
+
 generate_clinical <- function(n.obs=200,tot.genes=10000,n.groups=100,n.clin=NULL,n.gene=NULL,mean.n.gene=15,
                         mu.g=6,sigma.g=0.65,mu.c=1,sigma.c=0.5,rho.c=0,rho.b=0,rho.g=0,phi=0.1,nu=10,tau=20) {
   # n.obs (integer) = number of observations

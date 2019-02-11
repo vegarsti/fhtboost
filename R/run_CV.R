@@ -1,3 +1,5 @@
+#' @export
+
 run_CV <- function(M, K_fold_repetitions, K, X, Z, times, delta) {
   CV_errors_K_deviance <- matrix(NA, nrow=M, ncol=K_fold_repetitions)
   CV_errors_K_loglik <- matrix(NA, nrow=M, ncol=K_fold_repetitions)

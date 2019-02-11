@@ -1,3 +1,4 @@
+#' @export
 
 plot_wiener_processes <- function() {
   set.seed(1)

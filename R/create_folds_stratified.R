@@ -1,3 +1,5 @@
+#' @export
+
 create_folds_stratified <- function(delta, K) {
   observed <- which(delta == 1)
   censored <- which(delta == 0)

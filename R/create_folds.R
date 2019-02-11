@@ -1,3 +1,5 @@
+#' @export
+
 create_folds <- function(to_divide, K) {
   N <- length(to_divide)
   indices <- sample(to_divide)

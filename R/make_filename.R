@@ -1,3 +1,5 @@
+#' @export
+
 make_filename <- function(directory, descriptor, seed) {
   seed_string <- formatC(seed, width=4, flag="0")
   filename <- paste(seed_string, descriptor, sep="_")

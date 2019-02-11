@@ -1,17 +1,16 @@
-rm(list=ls())
+#rm(list=ls())
 
 library(devtools)
-library(profvis) # pause
 library(foreach)
 library(readr)
 library(doParallel)
-load_all()
+load_all() # or library(fhtboost)
 
 # Configuration
 number_of_data_sets <- 100
 
 #seeds <- 1:number_of_data_sets
-seeds <- 2:10
+seeds <- 161:180
 
 no_cores <- detectCores() - 1
 registerDoParallel(cores=no_cores)

@@ -1,3 +1,5 @@
+#' @export
+
 FHT_componentwise_minus_loglikelihood_with_parameters <- function(beta_, gamma_, X, Z, times, delta) {
   p <- dim(X)[2]
   d <- dim(Z)[2]

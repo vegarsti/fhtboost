@@ -1,3 +1,5 @@
+#' @export
+
 boosting_run <- function(times, delta, X, Z, m_stop, boost_intercepts_continually, should_print=FALSE, run_in_parallel=FALSE) {
   N_X <- dim(X)[1]
   N_Z <- dim(Z)[1]

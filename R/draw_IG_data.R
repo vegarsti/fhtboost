@@ -1,3 +1,5 @@
+#' @export
+
 draw_IG_data <- function(y0, mu, N) {
   set.seed(2)
   sigma_2 <- 1

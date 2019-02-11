@@ -1,3 +1,5 @@
+#' @export
+
 plot_IG_times <- function() {
   y0 <- 100
   mu <- -1

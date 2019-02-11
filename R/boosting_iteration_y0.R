@@ -1,3 +1,5 @@
+#' @export
+
 boosting_iteration_y0 <- function(nu, X, Z, u, beta_hat_m1, gamma_hat_m1, d, ds, times, delta) {
   result <- best_least_squares_update(X, u, d, ds)
   beta_hat_addition <- nu*result$parameter_updates

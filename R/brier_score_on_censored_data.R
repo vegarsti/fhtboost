@@ -1,3 +1,5 @@
+#' @export
+
 brier_score_on_censored_data <- function(times, delta, estimated_y0s, estimated_mus, number_of_time_points=1000) {
   brier_times <- seq(from=0.1, to=max(times), length.out=number_of_time_points)
   brier_scores <- sapply(brier_times, function(time) {

@@ -1,3 +1,5 @@
+#' @export
+
 best_least_squares_update <- function(design_matrix, negative_gradient, number_of_predictors, predictors_to_consider) { #, is_y0, y0) {
   parameter_estimates <- rep(NA, number_of_predictors)
   LARGE_NUMBER <- 90000000

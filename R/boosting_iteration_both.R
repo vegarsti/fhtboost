@@ -1,3 +1,5 @@
+#' @export
+#'
 boosting_iteration_both <- function(
   nu, X, Z, u_y0, u_mu, beta_hat_m1, gamma_hat_m1, d, ds, p, ps, times, delta,
   X_scale_factors, Z_scale_factors, X_means, Z_means, should_print=FALSE, should_destandardize=TRUE, iteration_number=1000

@@ -1,3 +1,5 @@
+#' @export
+
 brier_score_on_uncensored_data <- function(times, delta, estimated_y0, estimated_mu) {
   max_time <- max(times)
   time_points <- 1000

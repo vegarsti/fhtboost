@@ -1,3 +1,5 @@
+#' @export
+
 estimate_model_and_validate_and_write_to_file <- function(N, setup_type, add_noise, seed, directory) {
   criterion <- 'deviance'
   descriptor <- paste("cv", criterion, sep='_')
