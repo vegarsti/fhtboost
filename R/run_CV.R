@@ -1,6 +1,6 @@
 #' @export
 
-run_CV <- function(M, K_fold_repetitions, K, X, Z, times, delta) {
+run_CV <- function(M, K_fold_repetitions, K, X, Z, times, delta, boost_intercepts_continually=boost_intercepts_continually) {
   CV_errors_K_deviance <- matrix(NA, nrow=M, ncol=K_fold_repetitions)
   CV_errors_K_loglik <- matrix(NA, nrow=M, ncol=K_fold_repetitions)
   all_CV_errors <- list()
@@ -20,7 +20,7 @@ run_CV <- function(M, K_fold_repetitions, K, X, Z, times, delta) {
       delta_without_k <- delta[subset_without_k]
       times_k <- times[subset_k]
       delta_k <- delta[subset_k]
-      result <- boosting_run(times_without_k, delta_without_k, X_without_k, Z_without_k, M, boost_intercepts_continually=TRUE)
+      result <- boosting_run(times_without_k, delta_without_k, X_without_k, Z_without_k, M, boost_intercepts_continually=boost_intercepts_continually)
       beta_hats <- result$parameters$beta_hats
       gamma_hats <- result$parameters$gamma_hats
       Ms <- 1:M

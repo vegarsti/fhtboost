@@ -1,6 +1,6 @@
 #' @export
 
-estimate_model_and_validate_and_write_to_file <- function(N, setup_type, add_noise, seed, directory) {
+estimate_model_and_validate_and_write_to_file <- function(N, setup_type, add_noise, seed, directory, boost_intercepts_continually) {
   criterion <- 'deviance'
   descriptor <- paste("cv", criterion, sep='_')
   full_filename <- make_filename(directory, descriptor, seed)
@@ -22,7 +22,7 @@ estimate_model_and_validate_and_write_to_file <- function(N, setup_type, add_noi
   null_y0 <- y0
   null_mu <- mu
   null_model_loglikelihood <- - sum(FHT_loglikelihood_with_y0_mu(y0, mu, times, delta))
-  result <- boosting_run(times, delta, X, Z, m_stop, boost_intercepts_continually=TRUE, should_print=FALSE, run_in_parallel=FALSE)
+  result <- boosting_run(times, delta, X, Z, m_stop, boost_intercepts_continually=boost_intercepts_continually, should_print=FALSE)
   simulated_data_test <- simulate_FHT_data(N=N_test, setup_type=setup_type, add_noise=add_noise, seed=TEST_SEED)
   times_test <- simulated_data_test$observations$survival_times
   delta_test <- simulated_data_test$observations$delta
