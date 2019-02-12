@@ -1,6 +1,6 @@
 #' @export
 
-run_CV_and_write_to_file <- function(N, setup_type, add_noise, seed, K, K_fold_repetitions, directory, M, criterion, boost_intercepts_continually) {
+run_CV_and_write_to_file <- function(N, setup_type, add_noise, seed, K, K_fold_repetitions, directory, M, boost_intercepts_continually) {
   # simulate data (faster than reading...)
   simulated_data <- simulate_FHT_data(N=N, setup_type=setup_type, add_noise=add_noise, seed=seed)
   times <- simulated_data$observations$survival_times
