@@ -85,19 +85,17 @@ simulate_FHT_data <- function(N=1000, setup_type='small_dense', add_noise=FALSE,
   } else if (setup_type == 'huge_clinical') {
     huge_d <- 10000
     informative_d <- 35
-    #beta_ <- c(4, rep(0.2, informative_d), rep(0, huge_d-informative_d))
     beta_ <- c(2, rep(0.1, informative_d), rep(0, huge_d-informative_d))
     d <- length(beta_)
     X0 <- rep(1, N)
 
     informative_p <- 5
     total_p <- 15
-    #gamma_ <- c(-0.7, rep(-0.1, informative_p), rep(0, total_p-informative_p))
     gamma_ <- c(-1, rep(-0.1, informative_p), rep(0, total_p-informative_p))
     p <- length(gamma_)
     Z0 <- rep(1, N)
 
-    correlated <- generate_clinical(n.obs=N, n.clin=total_p)
+    correlated <- generate_clinical(n.obs=N, n.clin=total_p, tot.genes=huge_d)
 
     Xrest <- scale(correlated$gene)
     X_design_matrix <- cbind(X0, Xrest)
@@ -105,37 +103,69 @@ simulate_FHT_data <- function(N=1000, setup_type='small_dense', add_noise=FALSE,
     Zrest <- scale(correlated$clin)
     Z_design_matrix <- cbind(Z0, Zrest)
     exponential_rate <- 0.03 # 20% censoring
-    #exponential_rate <- 0.05 # 30% censoring
   } else if (setup_type == 'correlated') {
-    huge_d <- 10000
-    informative_d <- 35
-    beta_ <- c(3, rep(0.1, informative_d), rep(0, huge_d-informative_d))
-    d <- length(beta_)
+    huge_d <- 10000 # number of genes
+    # 1000 blocks, 10 in each
+    number_of_blocks <- 10
+    correlation_in_gene <- rep(0.7, number_of_blocks)
+    correlation_in_clinical <- rep(0.7, number_of_blocks)
+    correlation_between_clinical_gene <- rep(0.7, number_of_blocks)
+    number_of_genes_in_block <- rep(10, number_of_blocks)
+    number_of_clinical_in_block <- c(rep(2, 5), rep(3, 5))
+    correlated <- generate_clinical(
+      n.obs=N, n.clin=number_of_clinical_in_block, n.gene=number_of_genes_in_block, n.groups=number_of_blocks,
+      tot.genes=huge_d, rho.g=correlation_in_gene, rho.b=correlation_between_clinical_gene,
+      rho.c=correlation_in_clinical
+    )
     X0 <- rep(1, N)
-
-    informative_p <- 5
-    total_p <- 15
-    gamma_ <- c(-2, rep(-0.1, informative_p), rep(0, total_p-informative_p))
-    p <- length(gamma_)
-    Z0 <- rep(1, N)
-
-    num_groups <- 100
-    correlation_between_clinical_and_molecular <- rep(0.7, num_groups)
-    correlated <- generate_clinical(n.obs=N, n.clin=total_p, n.groups=num_groups, rho.g=0.7, rho.b = correlation_between_clinical_and_molecular)
-
     Xrest <- scale(correlated$gene)
     X_design_matrix <- cbind(X0, Xrest)
-
+    Z0 <- rep(1, N)
     Zrest <- scale(correlated$clin)
     Z_design_matrix <- cbind(Z0, Zrest)
-    exponential_rate <- 0.01
+
+    # X (gene data)
+    informative_d <- 35
+    non_informative_d <- huge_d-informative_d
+    beta_size <- 0.1
+    beta_block_with_three_informative <- c(beta_size, beta_size, beta_size, rep(0, 7))
+    beta_block_with_four_informative <- c(beta_size, beta_size, beta_size, beta_size, rep(0, 6))
+    beta_ <- c(
+      2,
+      beta_block_with_three_informative,
+      beta_block_with_four_informative,
+      beta_block_with_three_informative,
+      beta_block_with_four_informative,
+      beta_block_with_three_informative,
+      beta_block_with_four_informative,
+      beta_block_with_three_informative,
+      beta_block_with_four_informative,
+      beta_block_with_three_informative,
+      beta_block_with_four_informative,
+      rep(0, 9900)
+    )
+
+    # Z (clinical)
+    informative_p <- 10
+    total_p <- 25
+    gamma_size <- -0.1
+    gamma_block_size_two <- c(gamma_size, 0)
+    gamma_block_size_three <- c(gamma_size, 0, 0)
+    gamma_ <- c(
+      -0.5,
+      rep(gamma_block_size_two, 5),
+      rep(gamma_block_size_three, 5)
+    )
+    p <- length(gamma_)
+
+    exponential_rate <- 0.03 # 20% censoring
   }
 
   noise1 <- rep(0, N)
   noise2 <- rep(0, N)
   if (add_noise) {
-    noise1 <- rnorm(N, mean=0, sd=0.05)
-    noise2 <- rnorm(N, mean=0, sd=0.1)
+    noise1 <- rnorm(N, mean=0, sd=0.1)
+    noise2 <- rnorm(N, mean=0, sd=0.3)
   }
   y0_pre_noise <- exp(X_design_matrix %*% beta_)
   y0 <- y0_pre_noise * exp(noise1)
