@@ -2,23 +2,22 @@ library(devtools)
 library(foreach)
 library(readr)
 library(doParallel)
+install_github("vegarsti/fhtboost")
 library(fhtboost)
 
-# Configuration
-#seeds <- 167:200
-seeds <- c(1, 13, 26, 27, 41, 45, 49, 85, 88, 94, 99, 121, 150, 159, 162, 165, 166, 172, 174, 195, 196, 208, 212, 224, 227, 240, 253, 260, 261, 263, 269, 271, 289, 291, 292, 293, 303, 310, 320, 322, 357, 367, 371, 375, 379, 399, 402, 405, 406, 407, 420, 433, 443, 445, 449, 457, 466, 495)
-
+#seeds <- c(4, 10, 13, 14, 32, 36, 69, 71, 76, 80, 88, 91, 98, 104, 107, 139, 151, 164, 179, 187, 214, 230, 236, 241, 256, 259, 261, 280, 284, 292, 296, 297, 298, 302, 306, 308, 309, 313, 323, 333, 347, 372, 388, 392, 403, 410, 412, 416, 418, 420, 422, 474, 495, 496)
+seeds <- 1:150
 no_cores <- detectCores() - 1
 registerDoParallel(cores=no_cores)
 cl <- makeCluster(no_cores)
-directory <- "./simulations-no-intercept/"
+directory <- "./correlated-no-intercept/"
 N <- 500
 N_test <- 1000
-setup_type <- 'huge_clinical'
+setup_type <- 'correlated'
 add_noise <- FALSE
 K <- 5
 K_fold_repetitions <- 5
-M <- 130
+M <- 150
 TEST_SEED <- 9000
 boost_intercepts_continually <- FALSE
 

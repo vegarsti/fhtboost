@@ -6,7 +6,9 @@ library(foreach)
 library(readr)
 load_all()
 
-simulated_data <- simulate_FHT_data(N=500, setup_type='huge_clinical', add_noise=FALSE, seed=1)
+seed <- 10
+#for (seed in 3:5) {
+simulated_data <- simulate_FHT_data(N=500, setup_type='correlated', add_noise=FALSE, seed=seed)
 times <- simulated_data$observations$survival_times
 delta <- simulated_data$observations$delta
 X <- simulated_data$design_matrices$X
@@ -20,25 +22,28 @@ plot(non_para$times_sequence, non_para$kaplan_meiers, typ='s', xlab="Time", ylab
 
 # Cross validation
 do_CV <- TRUE
-
+boost_intercepts_continually <- FALSE
 if (do_CV) {
   # DIVIDE INTO K FOLDS
   K <- 5
-  K_fold_repetitions <- 1 # or 10
-  M <- 50 # should be guaranteed in over fitting space
-  CV_result <- run_CV(M, K_fold_repetitions, K, X, Z, times, delta)
-  CV_errors <- CV_result$CV_errors_K_loglik
-  plot(CV_errors, typ='l')
+  K_fold_repetitions <- 2 # or 10
+  M <- 100 # should be guaranteed in over fitting space
+  CV_result <- run_CV(M, K_fold_repetitions, K, X, Z, times, delta, boost_intercepts_continually)
+  CV_errors_K <- CV_result$CV_errors_K_deviance
+  CV_errors <- rowMeans(CV_errors_K)
+  y_max <- max(apply(CV_errors_K, 1, max))
+  plot(CV_errors, typ='l', ylim=c(0, y_max))
   # plot CV results
-  plot(CV_errors, typ='l', lty=1)
-  Ks <- dim(CV_errors)[2]
+  Ks <- dim(CV_errors_K)[2]
   for (k in 1:Ks) {
     lines(CV_errors_K[, k], lty=3)
   }
-  m_stop <- which.min(CV_errors)
+  m_stop <- which.max(CV_errors)
 } else {
   m_stop <- 60 # or some other value; needs to be the minimizer (somewhat)
 }
+print(m_stop)
+#}
 
 # Dimensions
 d <- dim(X)[2]
@@ -72,17 +77,17 @@ if (find_joint_maximum) {
 }
 # DO BOOSTING
 
-result <- boosting_run(times, delta, X, Z, m_stop, boost_intercepts_continually=TRUE, should_print=FALSE, run_in_parallel=FALSE)
+result <- boosting_run(times, delta, X, Z, m_stop, boost_intercepts_continually=FALSE, should_print=FALSE)
 
 estimated_y0s <- exp(X %*% result$final_parameters$beta_hat_final)
 estimated_mus <- Z %*% result$final_parameters$gamma_hat_final
 #estimated_survival <- FHT_parametric_survival(times, mu, y0)
 
 # Plot Brier scores
-tt <- Sys.time()
-brier_result <- brier_score_on_censored_data(times, delta, estimated_y0s, estimated_mus)
-cat('time: ', Sys.time() - tt)
-plot(brier_result$brier_times, brier_result$brier_scores, typ='l')
+# tt <- Sys.time()
+# brier_result <- brier_score_on_censored_data(times, delta, estimated_y0s, estimated_mus)
+# cat('time: ', Sys.time() - tt)
+# plot(brier_result$brier_times, brier_result$brier_scores, typ='l')
 #
 # # Plot Brier R2
 # tt <- Sys.time()

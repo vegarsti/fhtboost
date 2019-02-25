@@ -10,10 +10,10 @@ seeds <- seeds[-not_seeds]
 B <- length(seeds)
 
 base_input_directory <- "../dataset/"
-algorithm <- 'non-cyclic-no-intercept'
+algorithm <- 'non-cyclic-intercept'
 scenario <- 'uncorrelated'
 input_directory <- paste(base_input_directory, algorithm, '/', sep='')
-output_directory <- '../simulation-results/'
+output_directory <- paste('../dataset/', algorithm, '-results/', sep='')
 
 informative_p <- 35
 p <- 10000
