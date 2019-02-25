@@ -6,8 +6,8 @@ generate_clinical <- function(n.obs=200,tot.genes=10000,n.groups=100,n.clin=NULL
   # tot.genes (integer) = number of molecular predictors
   # n.groups (integer) = number of pathways (molecular predictors correlated to each other)
   # n.clin (vector) = number of clinical predictors for each group (if NULL, no clinical predictors are generated)
-  # n.gene (vector) = number of molecular predictors for each group (if NULL, all the group sizes are generated randomly, if its length is smaller than n.groups the unspecified size are generated randomly as well)  # mean.n.gene (integer) = average sizes of the groups. Relevant only if n.gene is NULL or length(n.gene)<n.groups
-  # mean.n.gene (integer) = average sizes of moleuclar predictors for group. Relevant only if n.gene is NULL or length(n.gene)<n.groups
+  # n.gene (vector) = number of molecular predictors for each group (if NULL, all the group sizes are generated randomly, if its length is smaller than n.groups the unspecified size are generated randomly as well)
+  # mean.n.gene (integer) = average sizes of molecular predictors for group. Relevant only if n.gene is NULL or length(n.gene)<n.groups
   # mu.c (integer) = mean of the log-normal distribution of the clinical variables
   # sigma.c (integer) = standard deviation of the log-normal distribution of the clinical variables
   # mu.g (integer) = mean of the log-normal distribution of the genes
@@ -48,12 +48,12 @@ generate_clinical <- function(n.obs=200,tot.genes=10000,n.groups=100,n.clin=NULL
   # check for the clinical structure and complete the lists
   ifelse(is.null(n.clin),length.n.clin<-0,length.n.clin<-length(n.clin))
   # check if the number of clinical groups is reasonable
-  if(length.n.clin>n.groups)
-  {
+  if(length.n.clin>n.groups) {
     n.clin<-n.clin[1:n.groups]
     warnings(paste0('Number of clinical groups too large, only the first ',length.n.gene,' are used.\n'))
   }
-  n.clin[(length.n.clin+1):n.groups]<-0
+  #n.clin[(length.n.clin+1):n.groups]<-0
+  # this caused an error for me. it also set the last ones to zero
 
   # if correlation among clinical predictors is not specified (for all or only part of the groups) set it to 0
   if(length(rho.c)<n.groups) rho.c<-c(rho.c,rep(0,n.groups-length(rho.c)))
