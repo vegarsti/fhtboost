@@ -30,31 +30,8 @@ boosting_run <- function(times, delta, X, Z, m_stop, boost_intercepts_continuall
   # Nuisance parameter: shrinkage factor
   nu <- 0.1
 
-  # Scaling X and Z -- should rewrite! or hide in function
-  X_original <- X
-  Z_original <- Z
-  X_scale_factors <- as.numeric(apply(X, 2, sd))
-  Z_scale_factors <- as.numeric(apply(Z, 2, sd))
-  # X_means <- as.numeric(apply(X, 2, mean))
-  # Z_means <- as.numeric(apply(Z, 2, mean))
-  X_means <- rep(0, d)
-  Z_means <- rep(0, p)
-  X_scale_factors[1] <- 1
-  Z_scale_factors[1] <- 1
-  X_means[1] <- 0
-  Z_means[1] <- 0
-  for (j in 2:d) {
-    X[, j] <- (X[, j] - X_means[j])/X_scale_factors[j]
-    #X_means[1] <- X_means[1] + X_means[j]*X_scale_factors[j]
-  }
-  for (j in 2:p) {
-    Z[, j] <- (Z[, j] - Z_means[j])/Z_scale_factors[j]
-    #Z_means[1] <- Z_means[1] + Z_means[j]*Z_scale_factors[j]
-  }
-
   # "make" loss function after scaling Z
   minus_FHT_loglikelihood <- data_to_FHT_loss_function(X, Z, times, delta)
-  #minus_FHT_loglikelihood(list(beta=beta_true, gamma=gamma_true))
 
   # initialize with nlm
   optimize_beta_0 <- function(beta0, beta_, gamma_, X, Z, times, delta) {
@@ -68,6 +45,16 @@ boosting_run <- function(times, delta, X, Z, m_stop, boost_intercepts_continuall
   }
 
   nlm_result_estimate <- maximum_likelihood_intercepts(times, delta)
+  # result <- c()
+  # for (i in 1:100) {
+  #
+  #   result <- cbind(nlm_result_estimate, result)
+  # }
+
+  #nlm_result_estimate <- c(2, -1)
+
+  beta_0 <- nlm_result_estimate[1]
+  gamma_0 <- nlm_result_estimate[2]
 
   gamma_hat <- matrix(NA, nrow=m_stop, ncol=p)
   gamma_hat[1, ] <- rep(0, p)
@@ -76,9 +63,6 @@ boosting_run <- function(times, delta, X, Z, m_stop, boost_intercepts_continuall
   beta_hat <- matrix(NA, nrow=m_stop, ncol=d)
   beta_hat[1, ] <- rep(0, d)
   beta_hat_cumsum <- matrix(NA, nrow=m_stop, ncol=d)
-
-  beta_0 <- nlm_result_estimate[1]
-  gamma_0 <- nlm_result_estimate[2]
 
   # INITIALIZE
   gamma_hat[1, 1] <- gamma_0
@@ -105,7 +89,7 @@ boosting_run <- function(times, delta, X, Z, m_stop, boost_intercepts_continuall
     u_y0 <- negative_gradient_y0[m-1, ]
     u_mu <- negative_gradient_mu[m-1, ]
     result <- boosting_iteration_both(
-      nu, X, Z, u_y0, u_mu, beta_hat_cumsum[m-1, ], gamma_hat_cumsum[m-1, ], d, ds, p, ps, times, delta, X_scale_factors, Z_scale_factors, X_means, Z_means, should_print=should_print, should_destandardize=FALSE,
+      nu, X, Z, u_y0, u_mu, beta_hat_cumsum[m-1, ], gamma_hat_cumsum[m-1, ], d, ds, p, ps, times, delta, should_print=should_print,
       iteration_number=m
     )
     gamma_hat[m, ] <- result$gamma_hat_addition
@@ -136,8 +120,10 @@ boosting_run <- function(times, delta, X, Z, m_stop, boost_intercepts_continuall
 
   }
   # Scale back
-  gamma_hat_cumsum_scaled_back <- destandardize(gamma_hat_cumsum, Z_scale_factors, Z_means)
-  beta_hat_cumsum_scaled_back <- destandardize(beta_hat_cumsum, X_scale_factors, X_means)
+  gamma_hat_cumsum_scaled_back <- gamma_hat_cumsum
+  beta_hat_cumsum_scaled_back <- beta_hat_cumsum
+  # gamma_hat_cumsum_scaled_back <- destandardize(gamma_hat_cumsum, Z_scale_factors, Z_means)
+  # beta_hat_cumsum_scaled_back <- destandardize(beta_hat_cumsum, X_scale_factors, X_means)
   parameters <- list(
     gamma_hats=gamma_hat_cumsum_scaled_back, beta_hats=beta_hat_cumsum_scaled_back
   )

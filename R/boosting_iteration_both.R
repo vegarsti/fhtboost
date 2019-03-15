@@ -2,7 +2,7 @@
 #'
 boosting_iteration_both <- function(
   nu, X, Z, u_y0, u_mu, beta_hat_m1, gamma_hat_m1, d, ds, p, ps, times, delta,
-  X_scale_factors, Z_scale_factors, X_means, Z_means, should_print=FALSE, should_destandardize=TRUE, iteration_number=1000
+  should_print=FALSE, iteration_number=1000
 ) {
   # d corresponds to X, p to Z
   y0 <- exp(X %*% beta_hat_m1)
@@ -18,36 +18,17 @@ boosting_iteration_both <- function(
     best_rss <- which.min(rsses)
     boosted_mu <- best_rss == 2
   } else if (method == 'outer') { ### OUTER
-    # original matrices
-    if (should_destandardize) {
-      X_original <- destandardize(X, X_scale_factors, X_means)
-      Z_original <- destandardize(Z, Z_scale_factors, Z_means)
-    } else {
-      X_original <- X
-      Z_original <- Z
-    }
-
     gamma_hat_addition <- nu*result_mu$parameter_updates
     gamma_hat_m <- gamma_hat_m1 + gamma_hat_addition
     beta_hat_addition <- 0
     beta_hat_m <- beta_hat_m1
 
-    # scale back
-    if (should_destandardize) {
-      gamma_hat_m_scaled_back <- destandardize(gamma_hat_m, Z_scale_factors, Z_means)
-      beta_hat_m_scaled_back <- destandardize(beta_hat_m, X_scale_factors, X_means)
-    } else {
-      gamma_hat_m_scaled_back <- gamma_hat_m
-      beta_hat_m_scaled_back <- beta_hat_m
-    }
-
-
     # evaluate loss function
     gamma_loss <- FHT_minus_loglikelihood_with_all_parameters(
-      beta=beta_hat_m_scaled_back,
-      gamma=gamma_hat_m_scaled_back,
-      X=X_original,
-      Z=Z_original,
+      beta=beta_hat_m,
+      gamma=gamma_hat_m,
+      X=X,
+      Z=Z,
       times=times,
       delta=delta
     )
@@ -57,21 +38,12 @@ boosting_iteration_both <- function(
     gamma_hat_addition <- 0
     gamma_hat_m <- gamma_hat_m1
 
-    # scale back
-    if (should_destandardize) {
-      gamma_hat_m_scaled_back <- destandardize(gamma_hat_m, Z_scale_factors, Z_means)
-      beta_hat_m_scaled_back <- destandardize(beta_hat_m, X_scale_factors, X_means)
-    } else {
-      gamma_hat_m_scaled_back <- gamma_hat_m
-      beta_hat_m_scaled_back <- beta_hat_m
-    }
-
     # evaluate loss function
     beta_loss <- FHT_minus_loglikelihood_with_all_parameters(
-      beta=beta_hat_m_scaled_back,
-      gamma=gamma_hat_m_scaled_back,
-      X=X_original,
-      Z=Z_original,
+      beta=beta_hat_m,
+      gamma=gamma_hat_m,
+      X=X,
+      Z=Z,
       times=times,
       delta=delta
     )
