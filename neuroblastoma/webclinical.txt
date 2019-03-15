@@ -1,0 +1,753 @@
+Age	InitialTimePoint	DevelopmentalStage	Organism	Sex	OrganismPart	DiseaseState	EventFreeSurvival	OverallSurvivalTime	ClinicalHistory
+217 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	2306 (day)	2306 (day)	alive without event
+217 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	2306 (day)	2306 (day)	alive without event
+414 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	2094 (day)	2094 (day)	alive without event
+414 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	2094 (day)	2094 (day)	alive without event
+181 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	2365 (day)	2365 (day)	alive without event
+181 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	2365 (day)	2365 (day)	alive without event
+243 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	2167 (day)	2167 (day)	alive without event
+243 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	2167 (day)	2167 (day)	alive without event
+227 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	293 (day)	2326 (day)	alive with relapse/primary tumor
+227 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	293 (day)	2326 (day)	alive with relapse/primary tumor
+546 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	2426 (day)	2426 (day)	alive without event
+546 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	2426 (day)	2426 (day)	alive without event
+450 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	1785 (day)	1785 (day)	alive without event
+450 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	1785 (day)	1785 (day)	alive without event
+1808 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	2016 (day)	2195 (day)	alive with relapse/primary tumor
+1808 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	2016 (day)	2195 (day)	alive with relapse/primary tumor
+108 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	1942 (day)	1942 (day)	alive without event
+108 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	1942 (day)	1942 (day)	alive without event
+79 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	2150 (day)	2150 (day)	alive without event
+79 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	2150 (day)	2150 (day)	alive without event
+0 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	9 (day)	9 (day)	deceased
+0 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	9 (day)	9 (day)	deceased
+0 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	1867 (day)	1867 (day)	alive without event
+0 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	1867 (day)	1867 (day)	alive without event
+121 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	1467 (day)	1467 (day)	alive without event
+121 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	1467 (day)	1467 (day)	alive without event
+1424 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	705 (day)	2234 (day)	alive with relapse/primary tumor
+1424 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	705 (day)	2234 (day)	alive with relapse/primary tumor
+521 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	206 (day)	2120 (day)	alive with relapse/primary tumor
+521 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	206 (day)	2120 (day)	alive with relapse/primary tumor
+1221 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	970 (day)	1401 (day)	deceased
+1221 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	970 (day)	1401 (day)	deceased
+465 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	2037 (day)	2037 (day)	alive without event
+465 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	2037 (day)	2037 (day)	alive without event
+374 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	134 (day)	1075 (day)	alive with relapse/primary tumor
+374 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	134 (day)	1075 (day)	alive with relapse/primary tumor
+453 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	651 (day)	2230 (day)	alive with relapse/primary tumor
+453 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	651 (day)	2230 (day)	alive with relapse/primary tumor
+0 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	2167 (day)	2167 (day)	alive without event
+0 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	2167 (day)	2167 (day)	alive without event
+272 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	2177 (day)	2177 (day)	alive without event
+272 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	2177 (day)	2177 (day)	alive without event
+456 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	1961 (day)	1961 (day)	alive without event
+456 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	1961 (day)	1961 (day)	alive without event
+425 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	1998 (day)	1998 (day)	alive without event
+425 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	1998 (day)	1998 (day)	alive without event
+460 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	2009 (day)	2009 (day)	alive without event
+460 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	2009 (day)	2009 (day)	alive without event
+163 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	1843 (day)	1843 (day)	alive without event
+163 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	1843 (day)	1843 (day)	alive without event
+207 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	674 (day)	1820 (day)	deceased
+207 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	674 (day)	1820 (day)	deceased
+359 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	1752 (day)	1864 (day)	alive with relapse/primary tumor
+359 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	1752 (day)	1864 (day)	alive with relapse/primary tumor
+429 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	1919 (day)	1919 (day)	alive without event
+429 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	1919 (day)	1919 (day)	alive without event
+4785 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	414 (day)	1327 (day)	alive with relapse/primary tumor
+4785 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	414 (day)	1327 (day)	alive with relapse/primary tumor
+449 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	1774 (day)	1774 (day)	alive without event
+449 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	1774 (day)	1774 (day)	alive without event
+4394 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	486 (day)	1293 (day)	deceased
+4394 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	486 (day)	1293 (day)	deceased
+1012 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	1568 (day)	1568 (day)	alive without event
+1012 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	1568 (day)	1568 (day)	alive without event
+52 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	1694 (day)	1694 (day)	alive without event
+52 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	1694 (day)	1694 (day)	alive without event
+724 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	475 (day)	601 (day)	deceased
+724 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	475 (day)	601 (day)	deceased
+666 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	56 (day)	522 (day)	deceased
+666 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	56 (day)	522 (day)	deceased
+121 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	326 (day)	391 (day)	deceased
+121 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	326 (day)	391 (day)	deceased
+1085 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	1898 (day)	1898 (day)	alive without event
+1085 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	1898 (day)	1898 (day)	alive without event
+1363 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	196 (day)	1014 (day)	deceased
+1363 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	196 (day)	1014 (day)	deceased
+426 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	1945 (day)	1945 (day)	alive without event
+426 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	1945 (day)	1945 (day)	alive without event
+1904 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	201 (day)	207 (day)	deceased
+1904 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	201 (day)	207 (day)	deceased
+97 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	1307 (day)	1307 (day)	alive without event
+97 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	1307 (day)	1307 (day)	alive without event
+202 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	5680 (day)	5680 (day)	alive without event
+202 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	5680 (day)	5680 (day)	alive without event
+82 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	1402 (day)	1402 (day)	alive without event
+82 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	1402 (day)	1402 (day)	alive without event
+497 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	1620 (day)	1620 (day)	alive without event
+497 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	1620 (day)	1620 (day)	alive without event
+49 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	1330 (day)	1330 (day)	alive without event
+49 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	1330 (day)	1330 (day)	alive without event
+165 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	318 (day)	2907 (day)	alive with relapse/primary tumor
+165 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	318 (day)	2907 (day)	alive with relapse/primary tumor
+427 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	883 (day)	883 (day)	alive without event
+427 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	883 (day)	883 (day)	alive without event
+367 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	1175 (day)	1175 (day)	alive without event
+367 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	1175 (day)	1175 (day)	alive without event
+10 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	1670 (day)	1670 (day)	alive without event
+10 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	1670 (day)	1670 (day)	alive without event
+465 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	1866 (day)	1866 (day)	alive without event
+465 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	1866 (day)	1866 (day)	alive without event
+8278 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	214 (day)	360 (day)	deceased
+8278 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	214 (day)	360 (day)	deceased
+1000 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	402 (day)	416 (day)	deceased
+1000 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	402 (day)	416 (day)	deceased
+366 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	1464 (day)	1464 (day)	alive without event
+366 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	1464 (day)	1464 (day)	alive without event
+982 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	518 (day)	602 (day)	deceased
+982 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	518 (day)	602 (day)	deceased
+3842 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	363 (day)	499 (day)	deceased
+3842 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	363 (day)	499 (day)	deceased
+480 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	1866 (day)	1866 (day)	alive without event
+480 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	1866 (day)	1866 (day)	alive without event
+262 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	33 (day)	1694 (day)	alive with relapse/primary tumor
+262 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	33 (day)	1694 (day)	alive with relapse/primary tumor
+107 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	1884 (day)	1884 (day)	alive without event
+107 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	1884 (day)	1884 (day)	alive without event
+625 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	840 (day)	1191 (day)	deceased
+625 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	840 (day)	1191 (day)	deceased
+395 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	1294 (day)	1294 (day)	alive without event
+395 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	1294 (day)	1294 (day)	alive without event
+589 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	305 (day)	375 (day)	deceased
+589 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	305 (day)	375 (day)	deceased
+4131 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	524 (day)	592 (day)	deceased
+4131 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	524 (day)	592 (day)	deceased
+381 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	1447 (day)	1447 (day)	alive without event
+381 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	1447 (day)	1447 (day)	alive without event
+867 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	1074 (day)	1074 (day)	alive without event
+867 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	1074 (day)	1074 (day)	alive without event
+0 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	1513 (day)	1513 (day)	alive without event
+0 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	1513 (day)	1513 (day)	alive without event
+1652 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	1585 (day)	1585 (day)	alive without event
+1652 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	1585 (day)	1585 (day)	alive without event
+507 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	1733 (day)	1733 (day)	alive without event
+507 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	1733 (day)	1733 (day)	alive without event
+91 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	1809 (day)	1809 (day)	alive without event
+91 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	1809 (day)	1809 (day)	alive without event
+11 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	1567 (day)	1688 (day)	alive with relapse/primary tumor
+11 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	1567 (day)	1688 (day)	alive with relapse/primary tumor
+638 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	1730 (day)	1730 (day)	alive without event
+638 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	1730 (day)	1730 (day)	alive without event
+2831 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	685 (day)	1826 (day)	alive with relapse/primary tumor
+2831 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	685 (day)	1826 (day)	alive with relapse/primary tumor
+528 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	1388 (day)	1388 (day)	alive without event
+528 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	1388 (day)	1388 (day)	alive without event
+94 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	516 (day)	516 (day)	alive without event
+94 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	516 (day)	516 (day)	alive without event
+978 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	1197 (day)	1695 (day)	deceased
+978 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	1197 (day)	1695 (day)	deceased
+887 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	1471 (day)	1471 (day)	alive without event
+887 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	1471 (day)	1471 (day)	alive without event
+544 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	1063 (day)	1063 (day)	alive without event
+544 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	1063 (day)	1063 (day)	alive without event
+971 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	1428 (day)	1428 (day)	alive without event
+971 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	1428 (day)	1428 (day)	alive without event
+0 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	1784 (day)	1784 (day)	alive without event
+0 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	1784 (day)	1784 (day)	alive without event
+66 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	1408 (day)	1408 (day)	alive without event
+66 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	1408 (day)	1408 (day)	alive without event
+1468 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	1664 (day)	1664 (day)	alive without event
+1468 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	1664 (day)	1664 (day)	alive without event
+2429 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	1480 (day)	1668 (day)	alive with relapse/primary tumor
+2429 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	1480 (day)	1668 (day)	alive with relapse/primary tumor
+218 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	1565 (day)	1565 (day)	alive without event
+218 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	1565 (day)	1565 (day)	alive without event
+118 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	1067 (day)	1067 (day)	alive without event
+118 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	1067 (day)	1067 (day)	alive without event
+987 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	593 (day)	1362 (day)	deceased
+987 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	593 (day)	1362 (day)	deceased
+206 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	132 (day)	1489 (day)	alive with relapse/primary tumor
+206 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	132 (day)	1489 (day)	alive with relapse/primary tumor
+356 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	591 (day)	591 (day)	alive without event
+356 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	591 (day)	591 (day)	alive without event
+349 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	1323 (day)	1323 (day)	alive without event
+349 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	1323 (day)	1323 (day)	alive without event
+1126 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	1246 (day)	1463 (day)	alive with relapse/primary tumor
+1126 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	1246 (day)	1463 (day)	alive with relapse/primary tumor
+344 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	1291 (day)	1291 (day)	alive without event
+344 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	1291 (day)	1291 (day)	alive without event
+502 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	1406 (day)	1406 (day)	alive without event
+502 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	1406 (day)	1406 (day)	alive without event
+1029 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	1267 (day)	1267 (day)	alive without event
+1029 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	1267 (day)	1267 (day)	alive without event
+583 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	946 (day)	1375 (day)	deceased
+583 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	946 (day)	1375 (day)	deceased
+564 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	1374 (day)	1374 (day)	alive without event
+564 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	1374 (day)	1374 (day)	alive without event
+215 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	1399 (day)	1540 (day)	alive with relapse/primary tumor
+215 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	1399 (day)	1540 (day)	alive with relapse/primary tumor
+379 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	1610 (day)	1610 (day)	alive without event
+379 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	1610 (day)	1610 (day)	alive without event
+151 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	1476 (day)	1476 (day)	alive without event
+151 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	1476 (day)	1476 (day)	alive without event
+47 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	1128 (day)	1408 (day)	alive with relapse/primary tumor
+47 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	1128 (day)	1408 (day)	alive with relapse/primary tumor
+63 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	1187 (day)	1187 (day)	alive without event
+63 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	1187 (day)	1187 (day)	alive without event
+4562 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	759 (day)	1441 (day)	alive with relapse/primary tumor
+4562 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	759 (day)	1441 (day)	alive with relapse/primary tumor
+9 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	1261 (day)	1261 (day)	alive without event
+9 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	1261 (day)	1261 (day)	alive without event
+193 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	1365 (day)	1365 (day)	alive without event
+193 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	1365 (day)	1365 (day)	alive without event
+823 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	1275 (day)	1275 (day)	alive without event
+823 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	1275 (day)	1275 (day)	alive without event
+114 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	1183 (day)	1183 (day)	alive without event
+114 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	1183 (day)	1183 (day)	alive without event
+6 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	192 (day)	1126 (day)	alive with relapse/primary tumor
+6 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	192 (day)	1126 (day)	alive with relapse/primary tumor
+147 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	1055 (day)	1055 (day)	alive without event
+147 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	1055 (day)	1055 (day)	alive without event
+1733 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	1331 (day)	1331 (day)	alive without event
+1733 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	1331 (day)	1331 (day)	alive without event
+515 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	1155 (day)	1155 (day)	alive without event
+515 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	1155 (day)	1155 (day)	alive without event
+35 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	1047 (day)	1047 (day)	alive without event
+35 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	1047 (day)	1047 (day)	alive without event
+303 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	1362 (day)	1362 (day)	alive without event
+303 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	1362 (day)	1362 (day)	alive without event
+734 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	1098 (day)	1098 (day)	alive without event
+734 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	1098 (day)	1098 (day)	alive without event
+228 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	1206 (day)	1206 (day)	alive without event
+228 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	1206 (day)	1206 (day)	alive without event
+942 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	562 (day)	1242 (day)	alive with relapse/primary tumor
+942 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	562 (day)	1242 (day)	alive with relapse/primary tumor
+848 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	1181 (day)	1181 (day)	alive without event
+848 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	1181 (day)	1181 (day)	alive without event
+49 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	862 (day)	862 (day)	alive without event
+49 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	862 (day)	862 (day)	alive without event
+1381 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	1160 (day)	1160 (day)	alive without event
+1381 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	1160 (day)	1160 (day)	alive without event
+2737 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	1066 (day)	1066 (day)	alive without event
+2737 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	1066 (day)	1066 (day)	alive without event
+0 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	1219 (day)	1219 (day)	alive without event
+0 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	1219 (day)	1219 (day)	alive without event
+1308 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	1052 (day)	1052 (day)	alive without event
+1308 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	1052 (day)	1052 (day)	alive without event
+222 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	1167 (day)	1167 (day)	alive without event
+222 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	1167 (day)	1167 (day)	alive without event
+7 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	889 (day)	889 (day)	alive without event
+7 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	889 (day)	889 (day)	alive without event
+240 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	54 (day)	929 (day)	alive with relapse/primary tumor
+240 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	54 (day)	929 (day)	alive with relapse/primary tumor
+335 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	940 (day)	940 (day)	alive without event
+335 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	940 (day)	940 (day)	alive without event
+824 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	983 (day)	983 (day)	alive without event
+824 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	983 (day)	983 (day)	alive without event
+337 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	937 (day)	937 (day)	alive without event
+337 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	937 (day)	937 (day)	alive without event
+16 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	873 (day)	873 (day)	alive without event
+16 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	873 (day)	873 (day)	alive without event
+1931 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	631 (day)	1212 (day)	alive with relapse/primary tumor
+1931 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	631 (day)	1212 (day)	alive with relapse/primary tumor
+279 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	482 (day)	879 (day)	deceased
+279 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	482 (day)	879 (day)	deceased
+123 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	932 (day)	961 (day)	alive with relapse/primary tumor
+123 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	932 (day)	961 (day)	alive with relapse/primary tumor
+1858 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	421 (day)	638 (day)	deceased
+1858 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	421 (day)	638 (day)	deceased
+10 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	296 (day)	876 (day)	alive with relapse/primary tumor
+10 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	296 (day)	876 (day)	alive with relapse/primary tumor
+371 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	763 (day)	763 (day)	alive without event
+371 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	763 (day)	763 (day)	alive without event
+8983 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	645 (day)	899 (day)	deceased
+8983 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	645 (day)	899 (day)	deceased
+2 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	310 (day)	310 (day)	alive without event
+2 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	310 (day)	310 (day)	alive without event
+5 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	579 (day)	579 (day)	alive without event
+5 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	579 (day)	579 (day)	alive without event
+619 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	933 (day)	933 (day)	alive without event
+619 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	933 (day)	933 (day)	alive without event
+1585 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	483 (day)	795 (day)	alive with relapse/primary tumor
+1585 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	483 (day)	795 (day)	alive with relapse/primary tumor
+2105 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	443 (day)	701 (day)	alive with relapse/primary tumor
+2105 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	443 (day)	701 (day)	alive with relapse/primary tumor
+530 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	734 (day)	734 (day)	alive without event
+530 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	734 (day)	734 (day)	alive without event
+128 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	768 (day)	768 (day)	alive without event
+128 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	768 (day)	768 (day)	alive without event
+571 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	656 (day)	656 (day)	alive without event
+571 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	656 (day)	656 (day)	alive without event
+1602 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	585 (day)	585 (day)	alive without event
+1602 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	585 (day)	585 (day)	alive without event
+1644 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	566 (day)	566 (day)	alive without event
+1644 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	566 (day)	566 (day)	alive without event
+517 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	433 (day)	711 (day)	deceased
+517 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	433 (day)	711 (day)	deceased
+93 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	385 (day)	385 (day)	alive without event
+93 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	385 (day)	385 (day)	alive without event
+1640 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	572 (day)	572 (day)	alive without event
+1640 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	572 (day)	572 (day)	alive without event
+13 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	737 (day)	737 (day)	alive without event
+13 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	737 (day)	737 (day)	alive without event
+765 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	448 (day)	448 (day)	alive without event
+765 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	448 (day)	448 (day)	alive without event
+1141 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	551 (day)	551 (day)	alive without event
+1141 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	551 (day)	551 (day)	alive without event
+386 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	602 (day)	602 (day)	alive without event
+386 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	602 (day)	602 (day)	alive without event
+758 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	363 (day)	720 (day)	alive with relapse/primary tumor
+758 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	363 (day)	720 (day)	alive with relapse/primary tumor
+50 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	658 (day)	658 (day)	alive without event
+50 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	658 (day)	658 (day)	alive without event
+0 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	617 (day)	617 (day)	alive without event
+0 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	617 (day)	617 (day)	alive without event
+536 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	212 (day)	220 (day)	deceased
+536 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	212 (day)	220 (day)	deceased
+46 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	484 (day)	484 (day)	alive without event
+46 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	484 (day)	484 (day)	alive without event
+32 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	654 (day)	654 (day)	alive without event
+32 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	654 (day)	654 (day)	alive without event
+256 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	306 (day)	306 (day)	alive without event
+256 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	306 (day)	306 (day)	alive without event
+301 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	587 (day)	587 (day)	alive without event
+301 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	587 (day)	587 (day)	alive without event
+139 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	639 (day)	639 (day)	alive without event
+139 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	639 (day)	639 (day)	alive without event
+769 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	646 (day)	646 (day)	alive without event
+769 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	646 (day)	646 (day)	alive without event
+0 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	207 (day)	683 (day)	alive with relapse/primary tumor
+0 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	207 (day)	683 (day)	alive with relapse/primary tumor
+2041 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	402 (day)	402 (day)	alive without event
+2041 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	402 (day)	402 (day)	alive without event
+21 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	584 (day)	584 (day)	alive without event
+21 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	584 (day)	584 (day)	alive without event
+1017 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	250 (day)	364 (day)	deceased
+1017 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	250 (day)	364 (day)	deceased
+121 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	583 (day)	583 (day)	alive without event
+121 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	583 (day)	583 (day)	alive without event
+658 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	580 (day)	580 (day)	alive without event
+658 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	580 (day)	580 (day)	alive without event
+1701 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	507 (day)	507 (day)	alive without event
+1701 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	507 (day)	507 (day)	alive without event
+134 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	519 (day)	519 (day)	alive without event
+134 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	519 (day)	519 (day)	alive without event
+1909 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	553 (day)	553 (day)	alive without event
+1909 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	553 (day)	553 (day)	alive without event
+1570 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	518 (day)	518 (day)	alive without event
+1570 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	518 (day)	518 (day)	alive without event
+1964 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	441 (day)	478 (day)	deceased
+1964 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	441 (day)	478 (day)	deceased
+526 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	295 (day)	429 (day)	deceased
+526 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	295 (day)	429 (day)	deceased
+2111 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	759 (day)	759 (day)	
+2111 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	759 (day)	759 (day)	
+59 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	882 (day)	882 (day)	alive without event
+59 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	882 (day)	882 (day)	alive without event
+0 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	70 (day)	1049 (day)	alive with relapse/primary tumor
+0 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	70 (day)	1049 (day)	alive with relapse/primary tumor
+385 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	954 (day)	954 (day)	
+385 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	954 (day)	954 (day)	
+890 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	986 (day)	986 (day)	
+890 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	986 (day)	986 (day)	
+1004 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	886 (day)	1034 (day)	
+1004 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	886 (day)	1034 (day)	
+217 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	936 (day)	936 (day)	alive without event
+217 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	936 (day)	936 (day)	alive without event
+313 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	810 (day)	810 (day)	alive without event
+313 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	810 (day)	810 (day)	alive without event
+1529 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	532 (day)	937 (day)	alive with relapse/primary tumor
+1529 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	532 (day)	937 (day)	alive with relapse/primary tumor
+1683 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	767 (day)	767 (day)	
+1683 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	767 (day)	767 (day)	
+1016 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	4294 (day)	4294 (day)	alive without event
+1016 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	4294 (day)	4294 (day)	alive without event
+85 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	806 (day)	806 (day)	alive without event
+85 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	806 (day)	806 (day)	alive without event
+552 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	344 (day)	369 (day)	deceased
+552 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	344 (day)	369 (day)	deceased
+1798 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	933 (day)	933 (day)	alive without event
+1798 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	933 (day)	933 (day)	alive without event
+443 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	672 (day)	672 (day)	alive without event
+443 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	672 (day)	672 (day)	alive without event
+300 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	845 (day)	845 (day)	alive without event
+300 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	845 (day)	845 (day)	alive without event
+1590 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	918 (day)	918 (day)	
+1590 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	918 (day)	918 (day)	
+267 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	790 (day)	790 (day)	alive without event
+267 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	790 (day)	790 (day)	alive without event
+217 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	698 (day)	698 (day)	alive without event
+217 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	698 (day)	698 (day)	alive without event
+90 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	609 (day)	609 (day)	alive without event
+90 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	609 (day)	609 (day)	alive without event
+0 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	776 (day)	776 (day)	alive without event
+0 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	776 (day)	776 (day)	alive without event
+23 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	546 (day)	546 (day)	alive without event
+23 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	546 (day)	546 (day)	alive without event
+219 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	546 (day)	546 (day)	
+219 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	546 (day)	546 (day)	
+116 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	742 (day)	742 (day)	alive without event
+116 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	742 (day)	742 (day)	alive without event
+1278 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	597 (day)	770 (day)	deceased
+1278 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	597 (day)	770 (day)	deceased
+85 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	161 (day)	201 (day)	
+85 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	161 (day)	201 (day)	
+880 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	577 (day)	577 (day)	alive without event
+880 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	577 (day)	577 (day)	alive without event
+3749 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	469 (day)	469 (day)	
+3749 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	469 (day)	469 (day)	
+144 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	4447 (day)	4447 (day)	alive without event
+144 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	4447 (day)	4447 (day)	alive without event
+56 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	3952 (day)	3952 (day)	alive without event
+56 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	3952 (day)	3952 (day)	alive without event
+660 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	4090 (day)	4090 (day)	alive without event
+660 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	4090 (day)	4090 (day)	alive without event
+1081 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	347 (day)	360 (day)	deceased
+1081 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	347 (day)	360 (day)	deceased
+463 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	1372 (day)	1372 (day)	alive without event
+463 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	1372 (day)	1372 (day)	alive without event
+132 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	105 (day)	3953 (day)	alive with relapse/primary tumor
+132 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	105 (day)	3953 (day)	alive with relapse/primary tumor
+5465 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	555 (day)	763 (day)	deceased
+5465 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	555 (day)	763 (day)	deceased
+1841 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	532 (day)	626 (day)	deceased
+1841 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	532 (day)	626 (day)	deceased
+304 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	98 (day)	2596 (day)	alive with relapse/primary tumor
+304 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	98 (day)	2596 (day)	alive with relapse/primary tumor
+467 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	2689 (day)	2689 (day)	alive without event
+467 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	2689 (day)	2689 (day)	alive without event
+1262 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	2677 (day)	2677 (day)	alive without event
+1262 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	2677 (day)	2677 (day)	alive without event
+403 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	3402 (day)	3402 (day)	alive without event
+403 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	3402 (day)	3402 (day)	alive without event
+3394 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	357 (day)	479 (day)	deceased
+3394 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	357 (day)	479 (day)	deceased
+476 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	2452 (day)	2452 (day)	alive without event
+476 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	2452 (day)	2452 (day)	alive without event
+417 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	2617 (day)	2617 (day)	alive without event
+417 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	2617 (day)	2617 (day)	alive without event
+452 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	3354 (day)	3354 (day)	alive without event
+452 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	3354 (day)	3354 (day)	alive without event
+12 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	3163 (day)	3163 (day)	alive without event
+12 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	3163 (day)	3163 (day)	alive without event
+405 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	3472 (day)	3472 (day)	alive without event
+405 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	3472 (day)	3472 (day)	alive without event
+401 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	3440 (day)	3440 (day)	alive without event
+401 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	3440 (day)	3440 (day)	alive without event
+933 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	497 (day)	1445 (day)	deceased
+933 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	497 (day)	1445 (day)	deceased
+0 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	3084 (day)	3084 (day)	alive without event
+0 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	3084 (day)	3084 (day)	alive without event
+529 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	3276 (day)	3276 (day)	alive without event
+529 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	3276 (day)	3276 (day)	alive without event
+41 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	2856 (day)	2856 (day)	alive without event
+41 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	2856 (day)	2856 (day)	alive without event
+92 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	2364 (day)	2364 (day)	alive without event
+92 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	2364 (day)	2364 (day)	alive without event
+190 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	3298 (day)	3298 (day)	alive without event
+190 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	3298 (day)	3298 (day)	alive without event
+479 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	2812 (day)	2812 (day)	alive without event
+479 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	2812 (day)	2812 (day)	alive without event
+498 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	2343 (day)	2343 (day)	alive without event
+498 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	2343 (day)	2343 (day)	alive without event
+440 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	2660 (day)	2660 (day)	alive without event
+440 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	2660 (day)	2660 (day)	alive without event
+488 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	707 (day)	707 (day)	alive without event
+488 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	707 (day)	707 (day)	alive without event
+466 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	3306 (day)	3306 (day)	alive without event
+466 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	3306 (day)	3306 (day)	alive without event
+496 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	2101 (day)	2101 (day)	alive without event
+496 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	2101 (day)	2101 (day)	alive without event
+495 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	2896 (day)	2896 (day)	alive without event
+495 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	2896 (day)	2896 (day)	alive without event
+400 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	3135 (day)	3135 (day)	alive without event
+400 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	3135 (day)	3135 (day)	alive without event
+743 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	2583 (day)	2583 (day)	alive without event
+743 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	2583 (day)	2583 (day)	alive without event
+379 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	620 (day)	1081 (day)	deceased
+379 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	620 (day)	1081 (day)	deceased
+472 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	2920 (day)	2920 (day)	alive without event
+472 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	2920 (day)	2920 (day)	alive without event
+1429 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	922 (day)	1247 (day)	deceased
+1429 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	922 (day)	1247 (day)	deceased
+546 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	2639 (day)	2639 (day)	alive without event
+546 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	2639 (day)	2639 (day)	alive without event
+2003 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	3045 (day)	3045 (day)	alive without event
+2003 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	3045 (day)	3045 (day)	alive without event
+744 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	3124 (day)	3124 (day)	alive without event
+744 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	3124 (day)	3124 (day)	alive without event
+541 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	2954 (day)	2954 (day)	alive without event
+541 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	2954 (day)	2954 (day)	alive without event
+526 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	3065 (day)	3065 (day)	alive without event
+526 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	3065 (day)	3065 (day)	alive without event
+194 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	3819 (day)	3819 (day)	alive without event
+194 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	3819 (day)	3819 (day)	alive without event
+0 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	2920 (day)	2920 (day)	alive without event
+0 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	2920 (day)	2920 (day)	alive without event
+408 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	3168 (day)	3168 (day)	alive without event
+408 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	3168 (day)	3168 (day)	alive without event
+239 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	2661 (day)	2661 (day)	alive without event
+239 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	2661 (day)	2661 (day)	alive without event
+975 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	2591 (day)	2591 (day)	alive without event
+975 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	2591 (day)	2591 (day)	alive without event
+932 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	838 (day)	1549 (day)	deceased
+932 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	838 (day)	1549 (day)	deceased
+379 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	1861 (day)	1861 (day)	alive without event
+379 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	1861 (day)	1861 (day)	alive without event
+420 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	2372 (day)	2372 (day)	alive without event
+420 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	2372 (day)	2372 (day)	alive without event
+1486 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	2401 (day)	2401 (day)	alive without event
+1486 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	2401 (day)	2401 (day)	alive without event
+1679 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	522 (day)	1655 (day)	deceased
+1679 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	522 (day)	1655 (day)	deceased
+446 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	2123 (day)	2123 (day)	alive without event
+446 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	2123 (day)	2123 (day)	alive without event
+461 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	994 (day)	994 (day)	alive without event
+461 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	994 (day)	994 (day)	alive without event
+181 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	1408 (day)	1408 (day)	alive without event
+181 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	1408 (day)	1408 (day)	alive without event
+321 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	2934 (day)	2934 (day)	alive without event
+321 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	2934 (day)	2934 (day)	alive without event
+442 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	2469 (day)	2469 (day)	alive without event
+442 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	2469 (day)	2469 (day)	alive without event
+144 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	399 (day)	419 (day)	deceased
+144 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	399 (day)	419 (day)	deceased
+173 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	2610 (day)	2610 (day)	alive without event
+173 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	2610 (day)	2610 (day)	alive without event
+398 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	2970 (day)	2970 (day)	alive without event
+398 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	2970 (day)	2970 (day)	alive without event
+2264 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	622 (day)	2132 (day)	deceased
+2264 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	622 (day)	2132 (day)	deceased
+1071 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	2520 (day)	2520 (day)	alive without event
+1071 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	2520 (day)	2520 (day)	alive without event
+380 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	1799 (day)	1799 (day)	alive without event
+380 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	1799 (day)	1799 (day)	alive without event
+468 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	2425 (day)	2425 (day)	alive without event
+468 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	2425 (day)	2425 (day)	alive without event
+705 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	2638 (day)	2638 (day)	alive without event
+705 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	2638 (day)	2638 (day)	alive without event
+715 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	1924 (day)	1924 (day)	alive without event
+715 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	1924 (day)	1924 (day)	alive without event
+431 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	1693 (day)	1693 (day)	alive without event
+431 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	1693 (day)	1693 (day)	alive without event
+545 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	2920 (day)	2920 (day)	alive without event
+545 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	2920 (day)	2920 (day)	alive without event
+470 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	2343 (day)	2343 (day)	alive without event
+470 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	2343 (day)	2343 (day)	alive without event
+498 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	2576 (day)	2576 (day)	alive without event
+498 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	2576 (day)	2576 (day)	alive without event
+458 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	1589 (day)	1589 (day)	alive without event
+458 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	1589 (day)	1589 (day)	alive without event
+352 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	493 (day)	2410 (day)	alive with relapse/primary tumor
+352 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	493 (day)	2410 (day)	alive with relapse/primary tumor
+494 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	2700 (day)	2700 (day)	alive without event
+494 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	2700 (day)	2700 (day)	alive without event
+451 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	2429 (day)	2429 (day)	alive without event
+451 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	2429 (day)	2429 (day)	alive without event
+417 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	1211 (day)	1211 (day)	alive without event
+417 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	1211 (day)	1211 (day)	alive without event
+101 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	168 (day)	2367 (day)	alive with relapse/primary tumor
+101 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	168 (day)	2367 (day)	alive with relapse/primary tumor
+499 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	2407 (day)	2407 (day)	alive without event
+499 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	2407 (day)	2407 (day)	alive without event
+1491 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	491 (day)	530 (day)	deceased
+1491 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	491 (day)	530 (day)	deceased
+202 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	286 (day)	483 (day)	alive with relapse/primary tumor
+202 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	286 (day)	483 (day)	alive with relapse/primary tumor
+66 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	2593 (day)	2593 (day)	alive without event
+66 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	2593 (day)	2593 (day)	alive without event
+37 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	2044 (day)	2044 (day)	alive without event
+37 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	2044 (day)	2044 (day)	alive without event
+472 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	485 (day)	2484 (day)	alive with relapse/primary tumor
+472 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	485 (day)	2484 (day)	alive with relapse/primary tumor
+2544 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	812 (day)	1454 (day)	deceased
+2544 (day)	beginning_of_stage	birth	Homo sapiens	female	neural crest	neuroblastoma	812 (day)	1454 (day)	deceased
+3 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	2330 (day)	2330 (day)	alive without event
+3 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	2330 (day)	2330 (day)	alive without event
+228 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	2315 (day)	2315 (day)	alive without event
+228 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	2315 (day)	2315 (day)	alive without event
+451 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	112 (day)	2425 (day)	alive with relapse/primary tumor
+451 (day)	beginning_of_stage	birth	Homo sapiens	male	neural crest	neuroblastoma	112 (day)	2425 (day)	alive with relapse/primary tumor
+1833 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	3070 (day)	3070 (day)	
+1833 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	3070 (day)	3070 (day)	
+387 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	4669 (day)	4669 (day)	
+387 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	4669 (day)	4669 (day)	
+1200 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	1170 (day)	2010 (day)	
+1200 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	1170 (day)	2010 (day)	
+30 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	1290 (day)	1290 (day)	
+30 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	1290 (day)	1290 (day)	
+215 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	1008 (day)	1008 (day)	
+215 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	1008 (day)	1008 (day)	
+2130 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	584 (day)	2030 (day)	
+2130 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	584 (day)	2030 (day)	
+291 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	2762 (day)	2762 (day)	
+291 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	2762 (day)	2762 (day)	
+114 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	70 (day)	1606 (day)	
+114 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	70 (day)	1606 (day)	
+300 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	810 (day)	810 (day)	
+300 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	810 (day)	810 (day)	
+60 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	1080 (day)	1080 (day)	
+60 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	1080 (day)	1080 (day)	
+120 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	1740 (day)	1740 (day)	
+120 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	1740 (day)	1740 (day)	
+3240 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	90 (day)	90 (day)	
+3240 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	90 (day)	90 (day)	
+1560 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	300 (day)	330 (day)	
+1560 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	300 (day)	330 (day)	
+300 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	1140 (day)	1140 (day)	
+300 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	1140 (day)	1140 (day)	
+360 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	1110 (day)	1110 (day)	
+360 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	1110 (day)	1110 (day)	
+300 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	150 (day)	150 (day)	
+300 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	150 (day)	150 (day)	
+240 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	1470 (day)	1470 (day)	
+240 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	1470 (day)	1470 (day)	
+750 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	120 (day)	1440 (day)	
+750 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	120 (day)	1440 (day)	
+210 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	1410 (day)	1410 (day)	
+210 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	1410 (day)	1410 (day)	
+1545 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	602 (day)	1229 (day)	
+1545 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	602 (day)	1229 (day)	
+432 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	2135 (day)	2135 (day)	
+432 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	2135 (day)	2135 (day)	
+633 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	314 (day)	345 (day)	
+633 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	314 (day)	345 (day)	
+1764 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	349 (day)	1341 (day)	
+1764 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	349 (day)	1341 (day)	
+924 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	218 (day)	364 (day)	
+924 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	218 (day)	364 (day)	
+1067 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	837 (day)	2051 (day)	
+1067 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	837 (day)	2051 (day)	
+1488 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	262 (day)	541 (day)	
+1488 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	262 (day)	541 (day)	
+516 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	2947 (day)	2947 (day)	
+516 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	2947 (day)	2947 (day)	
+1676 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	576 (day)	1049 (day)	
+1676 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	576 (day)	1049 (day)	
+1968 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	112 (day)	239 (day)	
+1968 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	112 (day)	239 (day)	
+1413 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	2432 (day)	2432 (day)	
+1413 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	2432 (day)	2432 (day)	
+1071 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	227 (day)	498 (day)	
+1071 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	227 (day)	498 (day)	
+1437 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	1455 (day)	2324 (day)	
+1437 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	1455 (day)	2324 (day)	
+1647 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	233 (day)	1167 (day)	
+1647 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	233 (day)	1167 (day)	
+1081 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	200 (day)	331 (day)	
+1081 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	200 (day)	331 (day)	
+690 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	570 (day)	720 (day)	
+690 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	570 (day)	720 (day)	
+715 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	269 (day)	269 (day)	
+715 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	269 (day)	269 (day)	
+3072 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	245 (day)	415 (day)	
+3072 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	245 (day)	415 (day)	
+180 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	3948 (day)	3948 (day)	
+180 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	3948 (day)	3948 (day)	
+75 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	4469 (day)	4469 (day)	
+75 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	4469 (day)	4469 (day)	
+1053 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	665 (day)	884 (day)	
+1053 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	665 (day)	884 (day)	
+921 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	2313 (day)	2313 (day)	
+921 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	2313 (day)	2313 (day)	
+801 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	2247 (day)	2247 (day)	
+801 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	2247 (day)	2247 (day)	
+180 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	3417 (day)	3417 (day)	
+180 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	3417 (day)	3417 (day)	
+318 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	2254 (day)	2254 (day)	
+318 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	2254 (day)	2254 (day)	
+1290 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	6600 (day)	6600 (day)	
+1290 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	6600 (day)	6600 (day)	
+1830 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	420 (day)	960 (day)	
+1830 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	420 (day)	960 (day)	
+261 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	3283 (day)	3283 (day)	
+261 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	3283 (day)	3283 (day)	
+81 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	2813 (day)	2813 (day)	
+81 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	2813 (day)	2813 (day)	
+342 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	2621 (day)	2621 (day)	
+342 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	2621 (day)	2621 (day)	
+567 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	4713 (day)	4713 (day)	
+567 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	4713 (day)	4713 (day)	
+381 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	2122 (day)	2122 (day)	
+381 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	2122 (day)	2122 (day)	
+112 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	1843 (day)	1843 (day)	
+112 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	1843 (day)	1843 (day)	
+2885 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	374 (day)	1185 (day)	
+2885 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	374 (day)	1185 (day)	
+192 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	2468 (day)	2468 (day)	
+192 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	2468 (day)	2468 (day)	
+30 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	5494 (day)	5494 (day)	
+30 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	5494 (day)	5494 (day)	
+24 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	1149 (day)	1149 (day)	
+24 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	1149 (day)	1149 (day)	
+3 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	2433 (day)	2433 (day)	
+3 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	2433 (day)	2433 (day)	
+33 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	1536 (day)	1536 (day)	
+33 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	1536 (day)	1536 (day)	
+30 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	3240 (day)	3240 (day)	
+30 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	3240 (day)	3240 (day)	
+150 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	3600 (day)	3600 (day)	
+150 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	3600 (day)	3600 (day)	
+1113 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	375 (day)	735 (day)	
+1113 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	375 (day)	735 (day)	
+36 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	3117 (day)	3117 (day)	
+36 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	3117 (day)	3117 (day)	
+120 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	4690 (day)	4690 (day)	
+120 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	4690 (day)	4690 (day)	
+102 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	2736 (day)	2736 (day)	
+102 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	2736 (day)	2736 (day)	
+30 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	1871 (day)	1871 (day)	
+30 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	1871 (day)	1871 (day)	
+3 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	2974 (day)	2974 (day)	
+3 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	2974 (day)	2974 (day)	
+3 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	764 (day)	764 (day)	
+3 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	764 (day)	764 (day)	
+267 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	354 (day)	442 (day)	
+267 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	354 (day)	442 (day)	
+1611 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	324 (day)	488 (day)	
+1611 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	324 (day)	488 (day)	
+450 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	212 (day)	420 (day)	
+450 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	212 (day)	420 (day)	
+870 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	182 (day)	758 (day)	
+870 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	182 (day)	758 (day)	
+180 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	1800 (day)	1800 (day)	
+180 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	1800 (day)	1800 (day)	
+30 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	1320 (day)	1320 (day)	
+30 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	1320 (day)	1320 (day)	
+540 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	1650 (day)	1650 (day)	
+540 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	1650 (day)	1650 (day)	
+216 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	1757 (day)	1757 (day)	
+216 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	1757 (day)	1757 (day)	
+32 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	36 (day)	36 (day)	
+32 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	36 (day)	36 (day)	
+438 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	874 (day)	874 (day)	
+438 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	874 (day)	874 (day)	
+841 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	886 (day)	963 (day)	
+841 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	886 (day)	963 (day)	
+3062 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	586 (day)	586 (day)	
+3062 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	586 (day)	586 (day)	
+1305 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	718 (day)	1261 (day)	
+1305 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	718 (day)	1261 (day)	
+780 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	684 (day)	760 (day)	
+780 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	684 (day)	760 (day)	
+1017 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	1493 (day)	1493 (day)	
+1017 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	1493 (day)	1493 (day)	
+1116 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	634 (day)	727 (day)	
+1116 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	634 (day)	727 (day)	
+357 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	286 (day)	412 (day)	
+357 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	286 (day)	412 (day)	
+450 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	2880 (day)	2880 (day)	
+450 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	2880 (day)	2880 (day)	
+1185 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	214 (day)	300 (day)	
+1185 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	214 (day)	300 (day)	
+270 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	2762 (day)	2762 (day)	
+270 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	2762 (day)	2762 (day)	
+159 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	1873 (day)	1873 (day)	
+159 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	1873 (day)	1873 (day)	
+58 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	2786 (day)	2786 (day)	
+58 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	2786 (day)	2786 (day)	
+660 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	5070 (day)	5070 (day)	
+660 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	5070 (day)	5070 (day)	
+1560 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	519 (day)	535 (day)	
+1560 (day)	beginning_of_stage	birth	Homo sapiens	unknown_sex	neural crest	neuroblastoma	519 (day)	535 (day)	
