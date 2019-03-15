@@ -4,16 +4,16 @@ load_all()
 
 # Configuration
 seeds <- 1:500
-not_seeds <- c(15, 17, 24, 30, 57, 58, 63, 68, 70, 78, 79, 90, 93, 95, 103, 110, 113, 123, 140, 141, 144, 149, 160, 170, 171, 179, 181, 183, 184, 189, 193, 200, 201, 206, 213, 217, 218, 236, 238, 241, 244, 247, 248, 249, 250, 251, 256, 276, 278, 308, 314, 316, 317, 325, 337, 338, 344, 349, 361, 366, 376, 381, 382, 391, 394, 396, 404, 421, 427, 428, 435, 459, 461, 463, 464, 467, 472, 490, 491, 492, 494, 500)
+not_seeds <- c(15, 17, 18, 24, 30, 57, 58, 63, 68, 70, 78, 79, 90, 93, 95, 103, 110, 113, 123, 140, 141, 144, 149, 160, 170, 171, 179, 181, 183, 184, 189, 193, 200, 201, 206, 213, 217, 218, 236, 238, 241, 244, 247, 248, 249, 250, 251, 256, 276, 278, 308, 314, 316, 317, 325, 337, 338, 344, 349, 361, 366, 376, 381, 382, 391, 394, 396, 404, 421, 427, 428, 435, 459, 461, 463, 464, 467, 472, 490, 491, 492, 493, 494, 500)
 seeds <- seeds[-not_seeds]
 
 B <- length(seeds)
 
-base_input_directory <- "../dataset/"
+base_input_directory <- "../dataset/scenario-"
 algorithm <- 'non-cyclic-intercept'
-scenario <- 'uncorrelated'
-input_directory <- paste(base_input_directory, algorithm, '/', sep='')
-output_directory <- paste('../dataset/', algorithm, '-results/', sep='')
+scenario <- 'non-correlated'
+input_directory <- paste0(base_input_directory, scenario, '/', algorithm, '/')
+output_directory <- paste0('../dataset/scenario-', scenario, '/', algorithm, '-results/')
 
 informative_p <- 35
 p <- 10000
@@ -42,15 +42,19 @@ total_summary <- summary
 
 # run on datasets
 for (seed in seeds[-1]) {
-  filename <- make_filename(input_directory, "beta", seed)
-  beta <- read.csv(filename)
-  filename <- make_filename(input_directory, "gamma", seed)
-  gamma <- read.csv(filename)
-  filename <- make_filename(input_directory, "summary", seed)
-  summary <- read.csv(filename)
-  total_beta <- cbind(total_beta, beta$x)
-  total_gamma <- cbind(total_gamma, gamma$x)
-  total_summary <- rbind(total_summary, summary)
+  result <- tryCatch({
+    filename <- make_filename(input_directory, "beta", seed)
+    beta <- read.csv(filename)
+    filename <- make_filename(input_directory, "gamma", seed)
+    gamma <- read.csv(filename)
+    filename <- make_filename(input_directory, "summary", seed)
+    summary <- read.csv(filename)
+    total_beta <- cbind(total_beta, beta$x)
+    total_gamma <- cbind(total_gamma, gamma$x)
+    total_summary <- rbind(total_summary, summary)
+  }, warning = function(w) {}, error = function(e) {
+    cat(seed, '\n')
+  }, finally = { })
 }
 total_beta <- total_beta[-1, ]
 total_gamma <- total_gamma[-1, ]
@@ -116,3 +120,16 @@ summary <- as.data.frame(summary)
 filename <- paste(algorithm, scenario, 'summary', sep='_')
 full_filename <- paste(output_directory, filename, '.csv', sep='')
 write.csv(summary, full_filename)
+
+filename <- paste(algorithm, scenario, 'total_summary', sep='_')
+full_filename <- paste(output_directory, filename, '.csv', sep='')
+write.csv(total_summary, full_filename)
+
+loglik_ylim <- c(min(min(total_summary$null_loglik), min(total_summary$loglik)), max(max(total_summary$null_loglik), max(total_summary$loglik)))
+
+# Plot log likelihood and null likelihoods
+plot(total_summary$loglik, ylim=loglik_ylim)
+points(total_summary$null_loglik, pch='+', col='red')
+
+# Plot deviance
+plot(total_summary$deviance, ylim=c(min(total_summary$deviance), max(total_summary$deviance)))

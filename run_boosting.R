@@ -8,7 +8,9 @@ load_all()
 
 seed <- 10
 #for (seed in 3:5) {
-simulated_data <- simulate_FHT_data(N=500, setup_type='correlated', add_noise=FALSE, seed=seed)
+#simulated_data <- simulate_FHT_data(N=500, setup_type='correlated', add_noise=FALSE, seed=seed)
+
+simulated_data <- simulate_FHT_data(N=500, setup_type='small_dense', add_noise=FALSE, seed=seed)
 times <- simulated_data$observations$survival_times
 delta <- simulated_data$observations$delta
 X <- simulated_data$design_matrices$X
@@ -78,9 +80,9 @@ if (find_joint_maximum) {
 # DO BOOSTING
 
 result <- boosting_run(times, delta, X, Z, m_stop, boost_intercepts_continually=FALSE, should_print=FALSE)
-
-estimated_y0s <- exp(X %*% result$final_parameters$beta_hat_final)
-estimated_mus <- Z %*% result$final_parameters$gamma_hat_final
+result_continually <- boosting_run(times, delta, X, Z, m_stop, boost_intercepts_continually=TRUE, should_print=FALSE)
+#estimated_y0s <- exp(X %*% result$final_parameters$beta_hat_final)
+#estimated_mus <- Z %*% result$final_parameters$gamma_hat_final
 #estimated_survival <- FHT_parametric_survival(times, mu, y0)
 
 # Plot Brier scores
@@ -103,9 +105,10 @@ ylim_vector <- c(min(result$loss, maximum_likelihood - 100), result$loss[1] + 10
 plot_title <- ''
 xlabel <- 'Iteration'
 ylabel <- 'Negative log likelihood'
+ylim_vector <- c(maximum_likelihood-40, max(result$loss))
 
-plot(result$loss, typ='l', lty=1, main=plot_title, xlab=xlabel, ylab=ylabel)#, ylim=ylim_vector)
-#lines(result_no_intercept_boosting$loss, lty=3)
+plot(result$loss, typ='l', lty=1, main=plot_title, xlab=xlabel, ylab=ylabel, ylim=ylim_vector)
+lines(result_continually$loss, lty=3)
 abline(h=maximum_likelihood, col='red')
 
 y0_post <- exp(result$final_parameters$gamma_hat_final[1])

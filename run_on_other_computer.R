@@ -23,7 +23,7 @@ boost_intercepts_continually <- FALSE
 
 foreach(seed=seeds) %dopar% {
   run_CV_and_write_to_file(N, setup_type, add_noise, seed, K, K_fold_repetitions, directory, M, boost_intercepts_continually)
-  estimate_model_and_validate_and_write_to_file(N, setup_type, add_noise, seed, directory, boost_intercepts_continually)
+  estimate_model_and_validate_and_write_to_file(N, N_test, setup_type, add_noise, seed, directory, boost_intercepts_continually)
 }
 stopCluster(cl)
 

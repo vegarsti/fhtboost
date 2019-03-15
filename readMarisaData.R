@@ -75,6 +75,14 @@ times_train <- time[train_indices]
 delta_train <- status[train_indices]
 
 
+
+### INITIAL ANALYSIS
+
+non_para <- non_parametric_estimates(times, delta, continuous = TRUE)
+plot(non_para$times_sequence, non_para$kaplan_meiers, typ='s', xlab="Time", ylab="Kaplan-Meier estimated survival probability")
+
+
+
 ### RUN FHTBOOST
 library(devtools)
 load_all()

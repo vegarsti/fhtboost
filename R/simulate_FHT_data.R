@@ -21,6 +21,7 @@ simulate_FHT_data <- function(N=1000, setup_type='small_dense', add_noise=FALSE,
   library(statmod)
   set.seed(seed)
   if (setup_type == 'small_dense') {
+    N <- 1000
     # y0, beta, X
     beta_ <- c(2, 0.1, 0.2)
     #beta_ <- c(4.6, 0.1, 0.05)

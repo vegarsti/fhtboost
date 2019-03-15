@@ -1,6 +1,6 @@
 #' @export
 
-estimate_model_and_validate_and_write_to_file <- function(N, setup_type, add_noise, seed, directory, boost_intercepts_continually) {
+estimate_model_and_validate_and_write_to_file <- function(N, N_test, setup_type, add_noise, seed, directory, boost_intercepts_continually) {
   criterion <- 'deviance'
   descriptor <- paste("cv", criterion, sep='_')
   full_filename <- make_filename(directory, descriptor, seed)
@@ -30,7 +30,7 @@ estimate_model_and_validate_and_write_to_file <- function(N, setup_type, add_noi
   Z_test <- simulated_data_test$design_matrices$Z
   estimated_y0s_test <- exp(X_test %*% result$final_parameters$beta_hat_final)
   estimated_mus_test <- Z_test %*% result$final_parameters$gamma_hat_final
-  best_intercepts_test <- maximum_likelihood_intercepts(times_test, delta_test)
+  best_intercepts_test <- maximum_likelihood_intercepts(times_test, delta_test) # ???!!!!
   null_y0_test <- best_intercepts[1]
   null_mu_test <- best_intercepts[2]
 
@@ -56,9 +56,8 @@ estimate_model_and_validate_and_write_to_file <- function(N, setup_type, add_noi
   null_model_loglikelihood <- - FHT_minus_loglikelihood_with_all_parameters(beta_null, gamma_null, X_test, Z_test, times_test, delta_test)
   full_model_loglikelihood <- - FHT_minus_loglikelihood_with_all_parameters(result$final_parameters$beta_hat_final, result$final_parameters$gamma_hat_final, X_test, Z_test, times_test, delta_test)
   deviance <- 2 * (full_model_loglikelihood - null_model_loglikelihood)
-  # summary (deviance and m_stop)
   full_filename <- make_filename(directory, "summary", seed)
-  write.csv(data.frame('deviance'=deviance, 'm_stop'=m_stop), file=full_filename, row.names=FALSE)
+  write.csv(data.frame('deviance'=deviance, 'm_stop'=m_stop, 'loglik'=full_model_loglikelihood,'null_loglik'=null_model_loglikelihood), file=full_filename, row.names=FALSE)
 
   # Brier R2
   #brier_r2_result <- brier_r2(times_test, delta_test, estimated_y0s_test, estimated_mus_test, null_y0_test, null_mu_test, number_of_time_points=100)
