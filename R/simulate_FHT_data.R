@@ -160,6 +160,8 @@ simulate_FHT_data <- function(N=1000, setup_type='small_dense', add_noise=FALSE,
     p <- length(gamma_)
 
     exponential_rate <- 0.03 # 20% censoring
+  } else {
+    stop("Nonexistant setup type!")
   }
 
   noise1 <- rep(0, N)

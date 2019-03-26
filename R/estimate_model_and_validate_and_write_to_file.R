@@ -30,7 +30,7 @@ estimate_model_and_validate_and_write_to_file <- function(N, N_test, setup_type,
   Z_test <- simulated_data_test$design_matrices$Z
   estimated_y0s_test <- exp(X_test %*% result$final_parameters$beta_hat_final)
   estimated_mus_test <- Z_test %*% result$final_parameters$gamma_hat_final
-  best_intercepts_test <- maximum_likelihood_intercepts(times_test, delta_test) # ???!!!!
+  best_intercepts <- maximum_likelihood_intercepts(times_test, delta_test) # ???!!!!
   null_y0_test <- best_intercepts[1]
   null_mu_test <- best_intercepts[2]
 

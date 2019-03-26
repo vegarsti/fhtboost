@@ -70,7 +70,7 @@ boosting_iteration_both <- function(
     #cat("beta ", beta_loss, "\n")
     #cat("gamma ", gamma_loss, "\n")
     #print(iteration_number)
-    stop('updates are too large. gradient must have been really big!')
+    stop('updates are too large OR something is NAN!')
   }
 
   if (boosted_mu == 123) {

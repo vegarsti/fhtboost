@@ -25,7 +25,7 @@ non_parametric_estimates <- function(survival_times, observed, continuous=FALSE)
   jump_prods <- rep(1, N)
   sigma_2_hat_jumps <- rep(0, N)
   for (i in 2:N) {
-    num_events <- sum((times_sequence[i-1] < sorted_t_vector & sorted_t_vector <= times_sequence[i]) * sorted_observed)
+    num_events <- sum(((times_sequence[i-1] < sorted_t_vector) & (sorted_t_vector <= times_sequence[i])) * sorted_observed)
     jumps[i] <- num_events/at_risk[i]
     jump_prods[i] <- (1 - num_events/at_risk[i])
     if (num_events > 0) {

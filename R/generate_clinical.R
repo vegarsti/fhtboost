@@ -52,8 +52,8 @@ generate_clinical <- function(n.obs=200,tot.genes=10000,n.groups=100,n.clin=NULL
     n.clin<-n.clin[1:n.groups]
     warnings(paste0('Number of clinical groups too large, only the first ',length.n.gene,' are used.\n'))
   }
-  # n.clin[(length.n.clin+1):n.groups]<-0
-  # this caused an error for me. it also set the last ones to zero
+  n.clin[(length.n.clin+1):n.groups]<-0
+  # this caused an error for me when making correlated data. it also set the last ones to zero
 
   # if correlation among clinical predictors is not specified (for all or only part of the groups) set it to 0
   if(length(rho.c)<n.groups) rho.c<-c(rho.c,rep(0,n.groups-length(rho.c)))
