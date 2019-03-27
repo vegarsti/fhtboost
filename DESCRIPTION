@@ -10,7 +10,7 @@ License: MIT
 Encoding: UTF-8
 VignetteBuilder: knitr
 Suggests: knitr, BiocStyle
-RoxygenNote: 6.1.0
+RoxygenNote: 6.1.1
 Imports:
     statmod,
     foreach,
