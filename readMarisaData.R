@@ -27,13 +27,6 @@ time <- time[nona]
 status <- status[nona]
 clin <- clin[nona, ]
 label <- label[nona]
-# in case of time equal to 0, add an arbitrarily small value to avoid computational issues
-# time[time == 0] <- 1e-9
-# time[time == 0] <- 0.1
-# time[time == 0] <- 0.01 # causes differences in parameters!!
-# # time[time == 0] <- 1
-zero_time_indices <- which(time == 0)
-time[zero_time_indices] <- 0.1
 # transform sex in a dummy variable
 clin[clin[ , 1] == 'female', 1] <- -1
 clin[clin[ , 1] == 'male', 1] <- 1
@@ -69,26 +62,23 @@ system('rm -r E-GEOD-39582')
 marisa_filename <- 'preproc_Marisa_data.Rdata'
 load(marisa_filename)
 
+zero_time_indices <- which(time == 0)
+# 0.1 is earliest to work
+time[zero_time_indices] <- 0.1
 
 ### HERE STARTS MY PART
 test_indices <- which(!label)
 train_indices <- which(label)
-
-early_times <- which(time < 0.1)
-# remove "NA" age observations
-indices_to_remove_train <- c()
-for (i in 1:length(train_indices)) {
-  if (any(train_indices[i] == early_times)) {
-    indices_to_remove_train <- c(indices_to_remove_train, i)
-  }
-}
-train_indices <- train_indices[-indices_to_remove_train]
-
+zero_time_indices
+which(time[label] == 0.1)
+train_indices <- train_indices[-zero_time_indices[label]]
 
 # TRAINING SET
 ones <- rep(1, length(train_indices))
-X_train <- cbind(ones, scale(gene)[train_indices, ])
-Z_train <- cbind(ones, scale(clin)[train_indices, ])
+X <- scale(gene)
+Z <- scale(clin)
+X_train <- cbind(ones, X[train_indices, ])
+Z_train <- cbind(ones, Z[train_indices, ])
 times_train <- time[train_indices]
 delta_train <- status[train_indices]
 
@@ -105,35 +95,46 @@ nlm_result <- maximum_likelihood_intercepts(times_train, delta_train)
 library(devtools)
 load_all()
 non_para <- non_parametric_estimates(times_train, delta_train, continuous = TRUE)
-plot(non_para$times_sequence, non_para$kaplan_meiers, typ='s', xlab="Time", ylab="Kaplan-Meier estimated survival probability")
+plot(non_para$times_sequence, non_para$kaplan_meiers, typ='s', xlab="Time", ylab="Kaplan-Meier estimated survival probability", ylim=c(0, 1))
 
-parametric_times <- seq(0.1, max(times_train), by=0.01)
-nlm_result <- maximum_likelihood_intercepts(times_train, delta_train)
-cat(nlm_result)
-y0 <- exp(nlm_result[1])
-mu <- nlm_result[2]
-parametric_S <- FHT_parametric_survival(parametric_times, mu, y0)
-lines(parametric_times, parametric_S, col='red')
+# parametric_times <- seq(0.1, max(times_train), by=0.01)
+# nlm_result <- maximum_likelihood_intercepts(times_train, delta_train)
+# cat(nlm_result)
+# y0 <- exp(nlm_result[1])
+# mu <- nlm_result[2]
+# parametric_S <- FHT_parametric_survival(parametric_times, mu, y0)
+# lines(parametric_times, parametric_S, col='red')
 
-beta_null <- 1
-mus <- seq(-2, 0, by=0.01)
-logliks <- rep(0, length(mus))
-
-for (i in 1:length(mus)) {
-  mu <- mus[i]
-  parameters <- c(beta_null, mu)
-  logliks[i] <- FHT_only_intercepts(parameters, times_train, delta_train)
-}
-plot(mus, logliks, typ='l', main=beta_null, ylim=c(0, 50000))
-cat(beta_null, min(logliks))
+# beta_null <- 1
+# mus <- seq(-2, 0, by=0.01)
+# logliks <- rep(0, length(mus))
+#
+# for (i in 1:length(mus)) {
+#   mu <- mus[i]
+#   parameters <- c(beta_null, mu)
+#   logliks[i] <- FHT_only_intercepts(parameters, times_train, delta_train)
+# }
+# plot(mus, logliks, typ='l', main=beta_null, ylim=c(0, 50000))
+# cat(beta_null, min(logliks))
 
 ### RUN FHTBOOST
-load_all()
-
-M <- 30 # ??
-K_fold_repetitions <- 10
-K <- 10
+M <- 50 # ??
+K_fold_repetitions <- 5
+K <- 5
 boost_intercepts_continually <- FALSE
+
+
+CV_result <- run_CV(
+  M, K_fold_repetitions, K, X_train, Z_train, times_train, delta_train,
+  boost_intercepts_continually=boost_intercepts_continually
+)
+plot(rowMeans(CV_result$CV_errors_K_loglik), typ='l')
+
+
+
+
+
+
 
 result2 <- boosting_run(
   times=times_train,

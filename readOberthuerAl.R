@@ -44,26 +44,29 @@ colnames(clinicalData) <- c('time', 'status', 'risk', 'age')
 molecularData <- boev[, -c(1:3)]
 colnames(molecularData) <- paste('X', 1:9978, sep = '')
 
-rm(tmp, boev, i, j, medianAge, supp)
+#rm(tmp, boev, i, j, medianAge, supp)
 
 oberthur_filename <- 'preproc_Oberthur_data.Rdata'
 save(molecularData, clinicalData, file=oberthur_filename)
 
 ### HERE MY WORK STARTS (data prep)
 library(devtools)
-install_github("vegarsti/fhtboost")
-library(fhtboost) # load_all()
+load_all()
 oberthur_filename <- 'preproc_Oberthur_data.Rdata'
 load(oberthur_filename)
-has_age_observations <- which(!is.na(clinicalData[, 4]))
 
-X <- as.matrix(scale(molecularData[has_age_observations, ]))
-Z <- as.matrix(scale(clinicalData[has_age_observations, c(3, 4)]))
-times <- clinicalData$time[has_age_observations]
-delta <- clinicalData$status[has_age_observations]
+# FIRST SCALE
+# has_age_observations <- which(!is.na(clinicalData[, 4]))
+# X <- as.matrix(scale(molecularData[has_age_observations, ]))
+# Z <- as.matrix(scale(clinicalData[has_age_observations, c(3, 4)]))
+# times <- clinicalData$time[has_age_observations]
+# delta <- clinicalData$status[has_age_observations]
+
+# SCALE LAST
+delta <- clinicalData$status
 
 # Divide into train and test
-seed <- 2
+seed <- 1
 set.seed(seed)
 # Divide into test and train. test approx 1/3
 K <- 3
@@ -71,50 +74,55 @@ folds <- create_folds_stratified(delta, K)
 test_indices <- sort(folds[[1]])
 train_indices <- sort(c(folds[[2]], folds[[3]]))
 
+
+## FIRST SCALE
+
 ## TRAIN
-ones_train <- rep(1, length(train_indices))
-times_train <- times[train_indices]
-delta_train <- delta[train_indices]
-X_train_rest <- X[train_indices, ]
-X_train <- as.matrix(cbind(ones_train, X_train_rest))
-Z_train_rest <- Z[train_indices, ]
-Z_train <- as.matrix(cbind(ones_train, Z_train_rest))
+# ones_train <- rep(1, length(train_indices))
+# times_train <- times[train_indices]
+# delta_train <- delta[train_indices]
+# X_train_rest <- X[train_indices, ]
+# X_train <- as.matrix(cbind(ones_train, X_train_rest))
+# Z_train_rest <- Z[train_indices, ]
+# Z_train <- as.matrix(cbind(ones_train, Z_train_rest))
 
-## TEST
-ones_test <- rep(1, length(test_indices))
-times_test <- times[test_indices]
-delta_test <- delta[test_indices]
-X_test_rest <- X[test_indices, ]
-X_test <- as.matrix(cbind(ones_test, X_test_rest))
-Z_test_rest <- Z[test_indices, ]
-Z_test <- as.matrix(cbind(ones_test, Z_test_rest))
-
+## SCALE AFTER DIVIDING
 
 # remove "NA" age observations
-# na_age_observations <- which(is.na(clinicalData[, 4]))
-# indices_to_remove_train <- c()
-# indices_to_remove_test <- c()
-# for (i in 1:length(train_indices)) {
-#   if (any(train_indices[i] == na_age_observations)) {
-#     indices_to_remove_train <- c(indices_to_remove_train, i)
-#   }
-# }
-# for (i in 1:length(test_indices)) {
-#   if (any(test_indices[i] == na_age_observations)) {
-#     indices_to_remove_test <- c(indices_to_remove_test, i)
-#   }
-# }
-# train_indices <- train_indices[-indices_to_remove_train]
-# test_indices <- test_indices[-indices_to_remove_test]
+na_age_observations <- which(is.na(clinicalData[, 4]))
+indices_to_remove_train <- c()
+indices_to_remove_test <- c()
+for (i in 1:length(train_indices)) {
+  if (any(train_indices[i] == na_age_observations)) {
+    indices_to_remove_train <- c(indices_to_remove_train, i)
+  }
+}
+for (i in 1:length(test_indices)) {
+  if (any(test_indices[i] == na_age_observations)) {
+    indices_to_remove_test <- c(indices_to_remove_test, i)
+  }
+}
+train_indices <- train_indices[-indices_to_remove_train]
+test_indices <- test_indices[-indices_to_remove_test]
 
-# ones <- rep(1, length(train_indices))
-#
-# times_train <- clinicalData$time[train_indices]
-# delta_train <- clinicalData$status[train_indices]
-# X_train_rest <- scale(molecularData[train_indices, ])
-# X_train <- cbind(ones, X_train_rest)
-# Z_train_rest <- as.matrix(scale(clinicalData[, c(3, 4)])[train_indices, ])
-# Z_train <- as.matrix(cbind(ones, Z_train_rest))
+ones <- rep(1, length(train_indices))
+
+times_train <- clinicalData$time[train_indices]
+delta_train <- clinicalData$status[train_indices]
+X_train_rest <- scale(molecularData[train_indices, ])
+X_train <- cbind(ones, X_train_rest)
+Z_train_rest <- as.matrix(scale(clinicalData[, c(3, 4)])[train_indices, ])
+Z_train <- as.matrix(cbind(ones, Z_train_rest))
+
+# TEST
+ones_test <- rep(1, length(test_indices))
+times_test <- clinicalData$time[test_indices]
+delta_test <- clinicalData$status[test_indices]
+X_test_rest <- scale(molecularData[test_indices, ])
+X_test <- cbind(ones_test, X_test_rest)
+Z_test_rest <- as.matrix(scale(clinicalData[, c(3, 4)])[test_indices, ])
+Z_test <- as.matrix(cbind(ones_test, Z_test_rest))
+
 
 ### INITIAL ANALYSIS
 
