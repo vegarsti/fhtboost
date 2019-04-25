@@ -1,7 +1,7 @@
 #' @export
 
 kaplan_meier_estimate_of_censoring <- function(time, times, delta) {
-  indexes_to_look_at <- times <= time
+  indexes_to_look_at <- which(times <= time)
   if (sum(indexes_to_look_at) == 0) {
     return(1)
   } else {
