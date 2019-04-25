@@ -10,7 +10,7 @@ seeds <- seeds[-not_seeds]
 B <- length(seeds)
 
 base_input_directory <- "../dataset/scenario-correlated/"
-algorithm <- 'non-cyclic-no-intercept'
+algorithm <- 'non-cyclic-intercept'
 scenario <- 'correlated'
 input_directory <- paste0(base_input_directory, algorithm, '/')
 output_directory <- paste0(base_input_directory, algorithm, '-results/')
@@ -84,136 +84,199 @@ summarize_variable_selection <- function(all_parameter_results, p, informative_p
   result$accuracy <- (result$TN+result$TP)/(N+P) # TNR
   result$FPR <- result$FP/N # false positive rate
   result$FNR <- result$FN/P # false negative rate
-  #result_beta$FDR <- result_beta$FP/(result_beta$FP+result_beta$TP) # false discovery rate
+  result$FDR <- result$FP/(result$FP+result$TP) # false discovery rate
   result$FOR <- result$FN/(result$FN+result$TN) # false omission rate
   result$NPV <- result$TN/(result$FN+result$TN) # false omission rate
 
+  nan_indices <- which(is.nan(result$FDR))
+  result <- result[-nan_indices,]
+
+
   result_mean <- as.data.frame(colMeans(result))
+  result_median <- as.data.frame(apply(result, 2, median))
   result_sd <- as.data.frame(apply(result, 2, sd))
-  result_summary <- as.data.frame(cbind(result_mean, result_sd))
-  colnames(result_summary) <- c("mean", "sd")
-  result_summary$rownames <- c("TP", "FP", "FN", "TN", "sensitivity", "specificity", "accuracy", "FPR", "FNR", "FOR", "NPV")
-  result_summary <- result_summary[-c(1:4), ]
-  return(result_summary)
+  result_summary <- as.data.frame(cbind(result_mean, result_median, result_sd))
+  colnames(result_summary) <- c("mean", "median", "sd")
+  result_summary$rownames <- c("TP", "FP", "FN", "TN", "sensitivity", "specificity", "accuracy", "FPR", "FNR", "FDR", "FOR", "NPV")
+  return(list(summary=result_summary, whole=result))
 }
 
 informative_p_vector <- c(2, 3, 4, 12, 13, 14, 15, 22, 23, 24, 32, 33, 34, 35, 42, 43, 44, 52,
     53, 54, 55, 62, 63, 64, 72, 73, 74, 75, 82, 83, 84, 92, 93, 94, 95) - 1 # to adjust for removal of the intercept
 
 result_beta_summary <- summarize_variable_selection(total_beta, p, informative_p_vector)
+result_beta_whole <- result_beta_summary$whole
+result_beta_summary <- result_beta_summary$summary
 filename <- paste(algorithm, scenario, 'beta', sep='_')
 full_filename <- paste(output_directory, filename, '.csv', sep='')
-write.csv(result_beta_summary[, -3], full_filename, row.names=result_beta_summary$rownames)
+write.csv(result_beta_summary[, -4], full_filename, row.names=result_beta_summary$rownames)
+filename <- paste(algorithm, scenario, 'beta_whole', sep='_')
+full_filename <- paste(output_directory, filename, '.csv', sep='')
+write.csv(result_beta_whole, full_filename)
 
+# write pdf
+# filename <- "beta_variable_selection_boxplot.pdf"
+# full_filename <- paste0(output_directory, filename)
+# pdf(full_filename, width=12, height=6)
+# par(oma=c(0,1,0,0))
+# boxplot(as.numeric(result_beta_whole$FDR), as.numeric(result_beta_whole$sensitivity),
+#         as.numeric(result_beta_whole$specificity), horizontal=TRUE, axes=FALSE,
+#         main="Variable selection metrics for beta (correlated scenario, with intercept)")
+# axis(1)
+# axis(2, labels=c("FDR", "Sensitivity", "Specificity"), at=1:3, las=2)
+# box()
+# par(oma=c(0,0,0,0))
+# dev.off()
 
 # GAMMA
 informative_d_vector <- c(2, 4, 6, 8, 10, 12, 15, 18, 21, 24) - 1 # to adjust for the intercept
 result_gamma_summary <- summarize_variable_selection(total_gamma, d, informative_d_vector)
+result_gamma_whole <- result_gamma_summary$whole
+result_gamma_summary <- result_gamma_summary$summary
 filename <- paste(algorithm, scenario, 'gamma', sep='_')
 full_filename <- paste(output_directory, filename, '.csv', sep='')
-write.csv(result_gamma_summary[, -3], full_filename, row.names=result_gamma_summary$rownames)
+write.csv(result_gamma_summary[, -4], full_filename, row.names=result_gamma_summary$rownames)
+filename <- paste(algorithm, scenario, 'gamma_whole', sep='_')
+full_filename <- paste(output_directory, filename, '.csv', sep='')
+write.csv(result_gamma_whole, full_filename)
+
+#
+#
+# filename <- "gamma_variable_selection_boxplot.pdf"
+# full_filename <- paste0(output_directory, filename)
+# pdf(full_filename, width=12, height=6)
+# par(oma=c(0,1,0,0))
+# boxplot(as.numeric(result_gamma_whole$FDR), as.numeric(result_gamma_whole$sensitivity),
+#         as.numeric(result_gamma_whole$specificity), horizontal=TRUE, axes=FALSE,
+#         main="Variable selection metrics for gamma (correlated scenario, with intercept)")
+# axis(1)
+# axis(2, labels=c("FDR", "Sensitivity", "Specificity"), at=1:3, las=2)
+# box()
+# par(oma=c(0,1,0,0))
+# dev.off()
+
+
+
+
+
 
 
 ## ALL (results from each run)
-summary_means <- colMeans(total_summary)
-summary_sd <- apply(total_summary, 2, sd)
-summary_min <- apply(total_summary, 2, min)
-summary_max <- apply(total_summary, 2, max)
-summary <- cbind(summary_means, summary_sd, summary_min, summary_max)
-colnames(summary) <- c("mean", "sd", "min", "max")
-summary <- as.data.frame(summary)
 
-plot_file <- function(seed) {
-  seed_string <- formatC(seed, width=4, flag="0")
-  filename <- paste0('../dataset/scenario-correlated/non-cyclic-no-intercept/', seed_string, '_cv_loglik.csv')
-  df <- read.csv(filename)
-  plot(rowMeans(df), typ='l', ylim=c(min(apply(df, 2, min)), max(apply(df, 2, max))))
-  for (k in 1:5) { lines(df[, k], lty=3) }
-  return(rowMeans(df))
-}
+  summary_means <- colMeans(total_summary)
+  summary_sd <- apply(total_summary, 2, sd)
+  summary_min <- apply(total_summary, 2, min)
+  summary_max <- apply(total_summary, 2, max)
+  summary_median <- apply(total_summary, 2, median)
+  summary <- cbind(summary_means, summary_median, summary_sd, summary_min, summary_max)
+  colnames(summary) <- c("mean", "median", "sd", "min", "max")
+  summary <- as.data.frame(summary)
 
-lol <- FALSE
-if (lol) {
-  base_input_directory <- "../dataset/scenario-correlated/"
-  algorithm_no <- 'non-cyclic-no-intercept'
-  scenario <- 'correlated'
-  input_directory_no <- paste0(base_input_directory, algorithm_no, '/')
-  algorithm_yes <- 'non-cyclic-intercept'
-  input_directory_yes <- paste0(base_input_directory, algorithm_yes, '/')
-
-  errs_loglik_no <- c()
-  errs_dev_no <- c()
-  errs_loglik_yes <- c()
-  errs_dev_yes <- c()
-  for (seed in seeds) {
+  plot_file <- function(seed) {
     seed_string <- formatC(seed, width=4, flag="0")
-
-    # no intercept
-    filename <- paste0(input_directory_no, seed_string, '_cv_loglik.csv')
+    filename <- paste0('../dataset/scenario-correlated/non-cyclic-no-intercept/', seed_string, '_cv_loglik.csv')
     df <- read.csv(filename)
-    errs_loglik_no <- cbind(rowMeans(df), errs_loglik_no)
-    filename <- paste0(input_directory_no, seed_string, '_cv_deviance.csv')
-    df <- read.csv(filename)
-    errs_dev_no <- cbind(rowMeans(df), errs_dev_no)
-
-    # intercept
-    filename <- paste0(input_directory_yes, seed_string, '_cv_loglik.csv')
-    df <- read.csv(filename)
-    errs_loglik_yes <- cbind(rowMeans(df), errs_loglik_yes)
-    filename <- paste0(input_directory_yes, seed_string, '_cv_deviance.csv')
-    df <- read.csv(filename)
-    errs_dev_yes <- cbind(rowMeans(df), errs_dev_yes)
+    plot(rowMeans(df), typ='l', ylim=c(min(apply(df, 2, min)), max(apply(df, 2, max))))
+    for (k in 1:5) { lines(df[, k], lty=3) }
+    return(rowMeans(df))
   }
-  #pdf(paste0(paste(scenario, "cv", "loglik", sep='_'), '.pdf'), width=12, height=6)
-  errs_loglik_yes_sd <- apply(errs_loglik_yes, 1, sd)
-  errs_loglik_yes <- rowMeans(errs_loglik_yes)
-  errs_loglik_no_sd <- apply(errs_loglik_no, 1, sd)
-  errs_loglik_no <- rowMeans(errs_loglik_no)
-  errs_dev_yes_sd <- apply(errs_dev_yes, 1, sd)
-  errs_dev_yes <- rowMeans(errs_dev_yes)
-  errs_dev_no_sd <- apply(errs_dev_no, 1, sd)
-  errs_dev_no <- rowMeans(errs_dev_no)
-  ylim_loglik <- c(min(min(errs_loglik_yes), min(errs_loglik_no)), max(max(errs_loglik_yes), max(errs_loglik_no)))
-  ylim_loglik <- c(1100, 1300)
-  plot(errs_loglik_yes, typ='l', ylab="Log-likelihood", xlab="Iteration", ylim=ylim_loglik, xlim=c(2, 120))
-  lines(errs_loglik_no, typ='l', col='red')
-  #dev.off()
-  #pdf(paste0(paste(scenario, "cv", "deviance", sep='_'), '.pdf'), width=12, height=6)
-  ylim_dev <- c(min(min(errs_dev_yes), min(errs_dev_no)), max(max(errs_dev_yes), max(errs_dev_no)))
-  ylim_dev <- c(-200, 200)
-  plot(errs_dev_yes, typ='l', ylab="Deviance", xlab="Iteration", ylim=ylim_dev, xlim=c(2, 120))
-  lines(errs_dev_yes - 1.96*errs_dev_yes_sd)
-  lines(errs_dev_yes + 1.96*errs_dev_yes_sd)
-  lines(errs_dev_no, typ='l', col='red')
-  lines(errs_dev_no - 1.96*errs_dev_no_sd, col='red')
-  lines(errs_dev_no + 1.96*errs_dev_no_sd, col='red')
-  #dev.off()
-}
-filename <- paste(algorithm, scenario, 'summary', sep='_')
-full_filename <- paste(output_directory, filename, '.csv', sep='')
-write.csv(summary, full_filename)
 
-filename <- paste(algorithm, scenario, 'total_summary', sep='_')
-full_filename <- paste(output_directory, filename, '.csv', sep='')
-write.csv(total_summary, full_filename)
+  lol <- FALSE
+  if (lol) {
+    base_input_directory <- "../dataset/scenario-correlated/"
+    algorithm_no <- 'non-cyclic-no-intercept'
+    scenario <- 'correlated'
+    input_directory_no <- paste0(base_input_directory, algorithm_no, '/')
+    algorithm_yes <- 'non-cyclic-intercept'
+    input_directory_yes <- paste0(base_input_directory, algorithm_yes, '/')
+
+    errs_loglik_no <- c()
+    errs_dev_no <- c()
+    errs_loglik_yes <- c()
+    errs_dev_yes <- c()
+    for (seed in seeds) {
+      seed_string <- formatC(seed, width=4, flag="0")
+
+      # no intercept
+      filename <- paste0(input_directory_no, seed_string, '_cv_loglik.csv')
+      df <- read.csv(filename)
+      errs_loglik_no <- cbind(rowMeans(df), errs_loglik_no)
+      filename <- paste0(input_directory_no, seed_string, '_cv_deviance.csv')
+      df <- read.csv(filename)
+      errs_dev_no <- cbind(rowMeans(df), errs_dev_no)
+
+      # intercept
+      filename <- paste0(input_directory_yes, seed_string, '_cv_loglik.csv')
+      df <- read.csv(filename)
+      errs_loglik_yes <- cbind(rowMeans(df), errs_loglik_yes)
+      filename <- paste0(input_directory_yes, seed_string, '_cv_deviance.csv')
+      df <- read.csv(filename)
+      errs_dev_yes <- cbind(rowMeans(df), errs_dev_yes)
+    }
+    #pdf(paste0(paste(scenario, "cv", "loglik", sep='_'), '.pdf'), width=12, height=6)
+    errs_loglik_yes_sd <- apply(errs_loglik_yes, 1, sd)
+    errs_loglik_yes <- rowMeans(errs_loglik_yes)
+    errs_loglik_no_sd <- apply(errs_loglik_no, 1, sd)
+    errs_loglik_no <- rowMeans(errs_loglik_no)
+    errs_dev_yes_sd <- apply(errs_dev_yes, 1, sd)
+    errs_dev_yes <- rowMeans(errs_dev_yes)
+    errs_dev_no_sd <- apply(errs_dev_no, 1, sd)
+    errs_dev_no <- rowMeans(errs_dev_no)
+    ylim_loglik <- c(min(min(errs_loglik_yes), min(errs_loglik_no)), max(max(errs_loglik_yes), max(errs_loglik_no)))
+    ylim_loglik <- c(1100, 1300)
+    plot(errs_loglik_yes, typ='l', ylab="Log-likelihood", xlab="Iteration", ylim=ylim_loglik, xlim=c(2, 120))
+    lines(errs_loglik_no, typ='l', col='red')
+    #dev.off()
+    #pdf(paste0(paste(scenario, "cv", "deviance", sep='_'), '.pdf'), width=12, height=6)
+    ylim_dev <- c(min(min(errs_dev_yes), min(errs_dev_no)), max(max(errs_dev_yes), max(errs_dev_no)))
+    ylim_dev <- c(-200, 200)
+    plot(errs_dev_yes, typ='l', ylab="Deviance", xlab="Iteration", ylim=ylim_dev, xlim=c(2, 120))
+    lines(errs_dev_yes - 1.96*errs_dev_yes_sd)
+    lines(errs_dev_yes + 1.96*errs_dev_yes_sd)
+    lines(errs_dev_no, typ='l', col='red')
+    lines(errs_dev_no - 1.96*errs_dev_no_sd, col='red')
+    lines(errs_dev_no + 1.96*errs_dev_no_sd, col='red')
+    #dev.off()
+  }
+  filename <- paste(algorithm, scenario, 'summary', sep='_')
+  full_filename <- paste(output_directory, filename, '.csv', sep='')
+  write.csv(summary, full_filename)
+
+  filename <- paste(algorithm, scenario, 'total_summary', sep='_')
+  full_filename <- paste(output_directory, filename, '.csv', sep='')
+  write.csv(total_summary, full_filename)
 
 
-loglik_ylim <- c(min(min(total_summary$null_loglik), min(total_summary$loglik)), max(max(total_summary$null_loglik), max(total_summary$loglik)))
+  loglik_ylim <- c(min(min(total_summary$null_loglik), min(total_summary$loglik)), max(max(total_summary$null_loglik), max(total_summary$loglik)))
 
-# Plot log likelihood and null likelihoods
-plot(total_summary$loglik, ylim=loglik_ylim)
-points(total_summary$null_loglik, pch='+', col='red')
+  # Plot log likelihood and null likelihoods
+  plot(total_summary$loglik, ylim=loglik_ylim)
+  points(total_summary$null_loglik, pch='+', col='red')
 
-total_summary_no <- read.csv('../dataset/scenario-correlated/non-cyclic-no-intercept-results/non-cyclic-no-intercept_correlated_total_summary.csv')
-total_summary_yes <- read.csv('../dataset/scenario-correlated/non-cyclic-intercept-results/non-cyclic-intercept_correlated_total_summary.csv')
+  total_summary_no <- read.csv('../dataset/scenario-correlated/non-cyclic-no-intercept-results/non-cyclic-no-intercept_correlated_total_summary.csv')
+  total_summary_yes <- read.csv('../dataset/scenario-correlated/non-cyclic-intercept-results/non-cyclic-intercept_correlated_total_summary.csv')
 
-# Plot deviance
-#ylim_deviance <- c(min(total_summary$deviance), max(total_summary$deviance))
-filename <- paste0(paste(scenario, algorithm, "cv", "deviance", sep='_'), '.pdf')
-filename <- paste0('../../text/figures/', filename)
-#pdf(filename, width=12, height=6)
-#plot(total_summary$deviance, ylim=ylim_deviance, xlab="Seed", ylab="Deviance")
-#hist(total_summary_yes$deviance, ylim=c(0, 40), col=rgb(red=1,green=0,blue=0, alpha=0.2), breaks=seq(-100, 250, 10), xlab="Deviance", main="Deviances on test set")
-#hist(total_summary_no$deviance, ylim=c(0, 40), col=rgb(red=0,green=0,blue=1, alpha=0.2), breaks=seq(-100, 250, 10), xlab="Deviance", main="Deviances on test set", add=T)
-abline(v=0, col='red', lwd=3)
-#dev.off()
+  # # Plot deviance
+  # ylim_deviance <- c(min(total_summary$deviance), max(total_summary$deviance))
+  # filename <- paste0(paste(scenario, algorithm, "cv", "deviance", sep='_'), '.pdf')
+  # filename <- paste0('../../text/figures/', filename)
+  # pdf(filename, width=12, height=6)
+  # plot(total_summary$deviance, ylim=ylim_deviance, xlab="Seed", ylab="Deviance")
+  # hist(total_summary_yes$deviance, ylim=c(0, 40), col=rgb(red=1,green=0,blue=0, alpha=0.2), breaks=seq(-100, 250, 10), xlab="Deviance", main="Deviances on test set")
+  # hist(total_summary_no$deviance, ylim=c(0, 40), col=rgb(red=0,green=0,blue=1, alpha=0.2), breaks=seq(-100, 250, 10), xlab="Deviance", main="Deviances on test set", add=T)
+  # abline(v=0, col='red', lwd=3)
+  # dev.off()
+
+
+
+  # deviance_no_intercept <- -total_summary_no$deviance
+  # deviance_intercept <- -total_summary_yes$deviance
+
+
+
+  # full_filename <- paste0(base_input_directory, 'correlated_deviance_both_boxplot_no_title.pdf')
+  # pdf(full_filename, width=12, height=6)
+  # boxplot(deviance_intercept, deviance_no_intercept, xlab='Difference in deviance', horizontal=TRUE)
+  # axis(2, labels=c("With", "Without"), at=1:2, las=2)
+  # abline(v=0, lty=3)
+  # dev.off()

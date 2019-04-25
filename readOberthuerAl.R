@@ -36,10 +36,15 @@ supp <- tmp[c(288:329, 331, 332, 335, 338, 339, 341, 343:353, 355:369, 371:376),
 clinicalData[283:362, 4] <- as.numeric(supp > medianAge) # the last observations are in order
 for (i in 1:282)
   for (j in 1:287)
-    if ((trunc(boev[i, 1] * 365) == tmp[j, 4]) & boev[i, 2] == tmp[j, 5])
+    if ((trunc(boev[i, 1] * 365) == tmp[j, 4]) & boev[i, 2] == tmp[j, 5]) {
+      clinicalData[i, 5] <- tmp[j, 1]
       clinicalData[i, 4] <- as.numeric(tmp[j, 1] > medianAge)
+    }
 # survival time and censoring status are unique key. Only possible issue: observation 247.
-colnames(clinicalData) <- c('time', 'status', 'risk', 'age')
+colnames(clinicalData) <- c('time', 'status', 'risk', 'age_above_median', 'age')
+
+clinicalData_with_median_age_indicator <- clinicalData
+clinicalData <- clinicalData[, -4]
 
 molecularData <- boev[, -c(1:3)]
 colnames(molecularData) <- paste('X', 1:9978, sep = '')
