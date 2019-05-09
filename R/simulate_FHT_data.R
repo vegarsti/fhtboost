@@ -27,8 +27,8 @@ simulate_FHT_data <- function(N=1000, setup_type='small_dense', add_noise=FALSE,
     #beta_ <- c(4.6, 0.1, 0.05)
     d <- length(beta_)
     X0 <- rep(1, N)
-    X1 <- cbind(c(rep(1, 300), rep(2, 300), rep(-0.5, 400)))
-    X1 <- scale(X1)
+    #X1 <- cbind(c(rep(1, 300), rep(2, 300), rep(-0.5, 400)))
+    X1 <- scale(rnorm(N))
     X2 <- scale(rnorm(N))
     X_design_matrix <- cbind(X0, X1, X2)
 

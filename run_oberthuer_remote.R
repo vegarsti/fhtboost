@@ -77,9 +77,9 @@ for (i in 1:3) {
 
 
       ## READ CV RESULT FROM FILE
-      full_filename <- paste0(directory, seed_string, boosting_type, "_", "loglik.csv")
+      full_filename <- paste0(directory, seed_string, '_', boosting_type, "_", "loglik.csv")
       logliks <- read.csv(full_filename)
-      full_filename <- paste0(directory, seed_string, boosting_type, "_", "deviance.csv")
+      full_filename <- paste0(directory, seed_string, '_', boosting_type, "_", "deviance.csv")
       deviances <- read.csv(full_filename)
 
       ### POST PROCESSING AND PLOTTING

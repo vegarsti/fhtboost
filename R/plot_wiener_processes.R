@@ -1,7 +1,6 @@
 #' @export
 
 plot_wiener_processes <- function(y0, mu) {
-  set.seed(1)
   N <- 100
   time_increment <- 0.01
   times <- seq(0, 40, by=time_increment)

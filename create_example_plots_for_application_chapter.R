@@ -40,9 +40,9 @@ y0 <- 2.00
 mu <- 0.077
 wiener_seed <- 6
 set.seed(wiener_seed)
-N <- 10
+N <- 10000
 time_increment <- 0.01
-time_end <- 40
+time_end <- 12
 times <- seq(0, time_end, by=time_increment)
 increments <- matrix(
   rnorm(
@@ -60,11 +60,11 @@ colors <- rep(rgb(0, 0, 0, alpha = 1), N)
 colors[red_colors] <- rgb(1, 0, 0, alpha = 0.6)
 full_filename <- paste0(tex_figures_directory, "example_wieners", wiener_seed, ".pdf")
 pdf(full_filename, width=12, height=6)
-matplot(times, w, type='l', ylab="Health Y(t)", xlab="Time t", ylim=c(0, 20), xlim=c(0, time_end), col=colors)
+matplot(times, w, type='l', ylab="Health Y(t)", xlab="Time t", ylim=c(0, 10), xlim=c(0, time_end), col=colors)
 abline(h=0, lty=3)
 legend(
   'topleft',
-  legend=c("Processes still alive at t = 40", "Processes dead by t = 40"),
+  legend=c("Processes still alive at t = 12", "Processes dead by t = 12"),
   col=c("Black", rgb(1, 0, 0, alpha = 0.6)),
   lty=c(1, 1)
 )
@@ -126,12 +126,14 @@ dev.off()
 
 
 # Plot Brier scores
+directory <- "../dataset/oberthuer/oberthur_all/"
 boosting_types <- c("both", "clinical", "genetic", "cox", "cox_mandatory")
 get_brier_scores <- function(seed, boosting_type) {
   seed_string <- formatC(seed, width=3, flag="0")
   brier_df <- read.csv(paste0(directory, seed_string, '_', boosting_type, '_', "brier_data.csv"))
   return(brier_df)
 }
+
 seed <- 30
 both_brier <- get_brier_scores(seed, "both")
 clinical_brier <- get_brier_scores(seed, "clinical")
@@ -139,10 +141,134 @@ genetic_brier <- get_brier_scores(seed, "genetic")
 cox_brier <- get_brier_scores(seed, "cox")
 cox_m_brier <- get_brier_scores(seed, "cox_mandatory")
 
+# merge all brier to one df
+# brier_df
+brier_df <- data.frame(
+  times=both_brier$times,
+  both=both_brier$brier_scores_model,
+  clinical=clinical_brier$brier_scores_model,
+  genetic=genetic_brier$brier_scores_model,
+  cox=cox_brier$brier_scores_model,
+  cox_m=cox_m_brier$brier_scores_model,
+  FHT_null=both_brier$brier_scores_null
+)
+plot(brier_df$times, brier_df$both, typ='s', ylim=c(0, 0.3))
+abline(h=0, lty=3)
+lines(brier_df$times, brier_df$FHT_null, col='red', typ='s')
+lines(brier_df$times, brier_df$cox, col='blue', typ='s')
+
+numerical_brier_integrated <- function(times, briers) {
+  time_steps <- diff(times)
+  N <- length(briers)
+  brier_score_until_last <- briers[1:(N-1)]
+  sum(time_steps * brier_score_until_last)
+}
+
+numerical_brier_integrated_div_time <- function(times, briers) {
+  time_steps <- diff(times)
+  N <- length(briers)
+  brier_score_until_last <- briers[1:(N-1)]
+  time_length <- times[length(times)] - times[1]
+  sum(time_steps * brier_score_until_last) / time_length
+}
+
+all_integrated_brier <- c()
+all_integrated_brier_div_time <- c()
+for (seed in 1:100) {
+  both_brier <- get_brier_scores(seed, "both")
+  clinical_brier <- get_brier_scores(seed, "clinical")
+  genetic_brier <- get_brier_scores(seed, "genetic")
+  cox_brier <- get_brier_scores(seed, "cox")
+  cox_m_brier <- get_brier_scores(seed, "cox_mandatory")
+
+  # merge all brier to one df
+  # brier_df
+  brier_df <- data.frame(
+    times=both_brier$times,
+    both=both_brier$brier_scores_model,
+    clinical=clinical_brier$brier_scores_model,
+    genetic=genetic_brier$brier_scores_model,
+    cox=cox_brier$brier_scores_model,
+    cox_m=cox_m_brier$brier_scores_model,
+    FHT_null=both_brier$brier_scores_null
+  )
+
+  # start_index <- min(which(both_brier$times > 1))
+  # end_index <- max(which(both_brier$times < 8))
+  # indices <- start_index:end_index
+  indices <- 1:length(brier_df$times)
+
+  integrated_brier_score_both <- numerical_brier_integrated(brier_df$times[indices], brier_df$both[indices])
+  integrated_brier_score_clinical <- numerical_brier_integrated(brier_df$times[indices], brier_df$clinical[indices])
+  integrated_brier_score_genetic <- numerical_brier_integrated(brier_df$times[indices], brier_df$genetic[indices])
+  integrated_brier_score_cox <- numerical_brier_integrated(brier_df$times[indices], brier_df$cox[indices])
+  integrated_brier_score_cox_mandatory <- numerical_brier_integrated(brier_df$times[indices], brier_df$cox_m[indices])
+  integrated_brier_score_FHT_null <- numerical_brier_integrated(brier_df$times[indices], brier_df$FHT_null[indices])
+  integrated_brier_scores <- data.frame(
+    "both"=integrated_brier_score_both,
+    "clinical"=integrated_brier_score_clinical,
+    "genetic"=integrated_brier_score_genetic,
+    "cox"=integrated_brier_score_cox,
+    "cox_mandatory"=integrated_brier_score_cox_mandatory,
+    "FHT_null"=integrated_brier_score_FHT_null
+  )
+  all_integrated_brier <- rbind(all_integrated_brier, integrated_brier_scores)
+
+  # Write to file
+  seed_string <- formatC(seed, width=2, flag="0")
+  full_filename <- paste0(directory, seed_string, '_', "integrated_brier_scores.csv")
+  write.csv(integrated_brier_scores, full_filename, row.names = FALSE)
+
+  integrated_brier_score_both <- numerical_brier_integrated_div_time(brier_df$times[indices], brier_df$both[indices])
+  integrated_brier_score_clinical <- numerical_brier_integrated_div_time(brier_df$times[indices], brier_df$clinical[indices])
+  integrated_brier_score_genetic <- numerical_brier_integrated_div_time(brier_df$times[indices], brier_df$genetic[indices])
+  integrated_brier_score_cox <- numerical_brier_integrated_div_time(brier_df$times[indices], brier_df$cox[indices])
+  integrated_brier_score_cox_mandatory <- numerical_brier_integrated_div_time(brier_df$times[indices], brier_df$cox_m[indices])
+  integrated_brier_score_FHT_null <- numerical_brier_integrated_div_time(brier_df$times[indices], brier_df$FHT_null[indices])
+  integrated_brier_scores_div_time <- data.frame(
+    "both"=integrated_brier_score_both,
+    "clinical"=integrated_brier_score_clinical,
+    "genetic"=integrated_brier_score_genetic,
+    "cox"=integrated_brier_score_cox,
+    "cox_mandatory"=integrated_brier_score_cox_mandatory,
+    "FHT_null"=integrated_brier_score_FHT_null
+  )
+  all_integrated_brier_div_time <- rbind(all_integrated_brier_div_time, integrated_brier_scores_div_time)
+  full_filename <- paste0(directory, seed_string, '_', "integrated_brier_scores_div_time.csv")
+  write.csv(integrated_brier_scores_div_time, full_filename, row.names = FALSE)
+}
+full_filename <- paste0(directory, "all_integrated_brier_scores.csv")
+write.csv(all_integrated_brier, full_filename, row.names=FALSE)
+full_filename <- paste0(directory, "all_integrated_brier_scores_div_time.csv")
+write.csv(all_integrated_brier_div_time, full_filename, row.names=FALSE)
+
+
+full_filename <- paste0(tex_figures_directory, "integrated_brier_boxplot.pdf")
+pdf(full_filename, width=12, height=6)
+par(oma=c(0,4,0,0))
+boxplot(
+  all_integrated_brier_div_time,
+  xlab="Integrated Brier scores",
+  horizontal=TRUE,
+  yaxt='n',
+  ylim=c(0, 0.3)
+)
+labels <- c("FHT (Full)", "FHT (Clinical)", "FHT (Genomic)", "CoxBoost", "CoxBoost (mand.)", "FHT (Null)")
+axis(2, labels=labels, at=1:length(labels), las=2)
+abline(v=0, lty=3)
+par(oma=c(0,0,0,0))
+dev.off()
+
+
+
+
 # BRIER: Both vs Cox
 full_filename <- paste0(tex_figures_directory, "brier_cox_both.pdf")
 pdf(full_filename, width=12, height=6)
-plot(cox_brier$times, cox_brier$brier_scores_model, typ='s', xlab="Time", ylab="Brier score", col="black")
+par(oma=c(0,1.5,0,0))
+plot(cox_brier$times, cox_brier$brier_scores_model, typ='s', xlab="Time", ylab="", col="black", ylim=c(0, 0.3), las=1, yaxt="n")
+mtext(expression("Brier score"),side=2,las=1,line=1)
+axis(2, labels=c("0.0", "0.1", "0.2", "0.3"), at=c(0.0, 0.1, 0.2, 0.3), las=2)
 lines(both_brier$times, both_brier$brier_scores_model, typ='s', col='red', lty=5)
 #lines(genetic_brier$times, genetic_brier$brier_scores_model, typ='s', col='blue')
 abline(h=0, lty=3)
@@ -153,12 +279,16 @@ legend(
   col=c("Black", "Red")
 )
 dev.off()
+par(oma=c(0,0,0,0))
 
 # BRIER FHT
 full_filename <- paste0(tex_figures_directory, "brier_FHT.pdf")
 pdf(full_filename, width=12, height=6)
-plot(both_brier$times, both_brier$brier_scores_model, typ='s', xlab="Time", ylab="Brier score", ylim=c(0,
-  max(genetic_brier$brier_scores_model)), lty=5)
+par(oma=c(0,1.5,0,0))
+plot(both_brier$times, both_brier$brier_scores_model, typ='s', xlab="Time", ylab="", lty=5,
+     ylim=c(0, 0.3), las=1, yaxt="n")
+mtext(expression("Brier score"),side=2,las=1,line=1)
+axis(2, labels=c("0.0", "0.1", "0.2", "0.3"), at=c(0.0, 0.1, 0.2, 0.3), las=2)
 lines(clinical_brier$times, clinical_brier$brier_scores_model, typ='s', col='red', lty=1)
 lines(genetic_brier$times, genetic_brier$brier_scores_model, typ='s', col='blue', lty=3)
 abline(h=0, lty=3)
@@ -169,11 +299,15 @@ legend(
   col=c("Black", "Red", "Blue")
 )
 dev.off()
+par(oma=c(0,0,0,0))
 
 # BRIER: COX AND GENETIC
 full_filename <- paste0(tex_figures_directory, "brier_cox_genetic.pdf")
 pdf(full_filename, width=12, height=6)
-plot(cox_brier$times, cox_brier$brier_scores_model, typ='s', xlab="Time", ylab="Brier score", lty=1)
+par(oma=c(0,1.5,0,0))
+plot(cox_brier$times, cox_brier$brier_scores_model, typ='s', xlab="Time", ylab="", lty=1, las=1, ylim=c(0, 0.3), yaxt="n")
+mtext(expression("Brier score"),side=2,las=1,line=1)
+axis(2, labels=c("0.0", "0.1", "0.2", "0.3"), at=c(0.0, 0.1, 0.2, 0.3), las=2)
 lines(genetic_brier$times, genetic_brier$brier_scores_model, typ='s', col='red', lty=5)
 abline(h=0, lty=3)
 legend(
@@ -182,6 +316,7 @@ legend(
   lty=c(1, 5),
   col=c("Black", "Red")
 )
+par(oma=c(0,0,0,0))
 dev.off()
 
 
@@ -189,7 +324,10 @@ dev.off()
 # BRIER: COX MANDTORY
 full_filename <- paste0(tex_figures_directory, "brier_cox_mandatory.pdf")
 pdf(full_filename, width=12, height=6)
-plot(cox_brier$times, cox_brier$brier_scores_model, typ='s', xlab="Time", ylab="Brier score", lty=1)
+par(oma=c(0,1.5,0,0))
+plot(cox_brier$times, cox_brier$brier_scores_model, typ='s', xlab="Time", ylab="", lty=1, ylim=c(0, 0.3), las=1, yaxt='n')
+mtext(expression("Brier score"),side=2,las=1,line=1)
+axis(2, labels=c("0.0", "0.1", "0.2", "0.3"), at=c(0.0, 0.1, 0.2, 0.3), las=2)
 lines(cox_m_brier$times, cox_m_brier$brier_scores_model, typ='s', col="red", lty=5)
 abline(h=0, lty=3)
 legend(
@@ -198,6 +336,7 @@ legend(
   lty=c(1, 5),
   col=c("Black", "Red")
 )
+par(oma=c(0,0,0,0))
 dev.off()
 
 
@@ -349,16 +488,6 @@ dev.off()
 
 
 
-
-
-
-
-numerical_brier_integrated <- function(times, briers) {
-  time_steps <- diff(times)
-  N <- length(briers)
-  brier_score_until_last <- briers[1:(N-1)]
-  sum(time_steps * brier_score_until_last)
-}
 
 directory <- "../dataset/oberthuer/oberthur_all/"
 seeds <- 1:100

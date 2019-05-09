@@ -21,20 +21,21 @@ rm(molecularData, clinicalData)
 
 # OPTIONS
 K_fold_repetitions <- 10
-# K <- 5
-# boost_intercepts_continually <- FALSE
+K <- 5
+boost_intercepts_continually <- FALSE
 
 # directory <- "oberthur/"
 directory <- "../dataset/oberthuer/oberthur_all/"
 
-boost_intercepts_continually <- FALSE
+# boost_intercepts_continually <- FALSE
+# boost_intercepts_continually <- TRUE
 
 # Set up parallel things
 no_cores <- detectCores() - 1
 registerDoParallel(cores=no_cores)
 cl <- makeCluster(no_cores)
 
-seeds <- 83:100
+seeds <- 1:100
 foreach(seed=seeds) %dopar% {
   set.seed(seed)
   seed_string <- formatC(seed, width=3, flag="0")
@@ -72,15 +73,15 @@ foreach(seed=seeds) %dopar% {
   # Both
   boosting_type <- "both"
 
-    # M <- m_stop <- 600 # ??
-    # CV_result <- run_CV(
-    #   M, K_fold_repetitions, K, X_train, Z_train, times_train, delta_train,
-    #   boost_intercepts_continually=boost_intercepts_continually
-    # )
-    #
+    M <- m_stop <- 200
+    CV_result <- run_CV(
+      M, K_fold_repetitions, K, X_train, Z_train, times_train, delta_train,
+      boost_intercepts_continually=boost_intercepts_continually
+    )
+
     full_filename <- paste0(directory, seed_string, "_", boosting_type, "_", "loglik.csv")
     # write.csv(CV_result$CV_errors_K_loglik, file=full_filename, row.names=FALSE)
-    # full_filename <- paste0(directory, seed_string, "_", boosting_type, "_", "deviance.csv")
+    #full_filename <- paste0(directory, seed_string, "_", boosting_type, "_", "deviance.csv")
     # write.csv(CV_result$CV_errors_K_deviance, file=full_filename, row.names=FALSE)
     # logliks <- CV_result$CV_errors_K_loglik
 
@@ -173,8 +174,8 @@ foreach(seed=seeds) %dopar% {
       brier_scores_null=brier_null$brier_scores,
       brier_scores_model=brier_score_df$brier_scores
     )
-    full_filename <- paste0(directory, seed_string, "_", boosting_type, "_", "brier_data.csv")
-    write.csv(brier_df_both, file=full_filename, row.names=FALSE)
+    #full_filename <- paste0(directory, seed_string, "_", boosting_type, "_", "brier_data.csv")
+    #write.csv(brier_df_both, file=full_filename, row.names=FALSE)
 
     # Plot Brier
     # full_filename <- paste0(directory, seed_string, "_", boosting_type, "_", "brier_r2_s.pdf")

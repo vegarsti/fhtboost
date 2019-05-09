@@ -1,9 +1,9 @@
 rm(list=ls())
 
 library(devtools)
-library(profvis) # pause
-library(foreach)
-library(readr)
+#library(profvis) # pause
+#library(foreach)
+#library(readr)
 load_all()
 
 seed <- 10
@@ -70,8 +70,8 @@ if (find_joint_maximum) {
 
   # Run optimization
   initial_parameters <- runif(p+d, min=-0.5, max=0.5) # may need to adjust to get a viable initial value
-  initial_parameters <- rep(0, p+d)
-  nlm_result <- nlm(minus_FHT_loglikelihood, initial_parameters)
+  #initial_parameters <- rep(0, p+d)
+  nlm_result <- nlm(minus_FHT_loglikelihood, c(c(2, 0.1, 0.2), c(-1, -0.1, 0.1))) #truth
   optimized_parameters <- nlm_result$estimate
   maximum_likelihood <- nlm_result$minimum
 } else {
@@ -101,9 +101,14 @@ result_continually <- boosting_run(times, delta, X, Z, m_stop, boost_intercepts_
 ### PLOTTING ###
 
 # settings / meta data
-ylim_vector <- c(min(result$loss, maximum_likelihood - 100), result$loss[1] + 100)
+#ylim_vector <- c(min(result$loss, maximum_likelihood - 100), max(result$loss)[1] + 100)
+
+tex_figures_directory <- "../../text/figures/"
+filename <- paste0(tex_figures_directory, "small_example.pdf")
+pdf(filename, width=12, height=6)
+ylim_vector <- c(maximum_likelihood - 100, max(result_continually$loss))
 plot_title <- ''
-xlabel <- 'Iteration'
+xlabel <- 'Iteration m'
 ylabel <- 'Negative log likelihood'
 ylim_vector <- c(maximum_likelihood-40, max(result$loss))
 
@@ -111,14 +116,52 @@ plot(result$loss, typ='l', lty=1, main=plot_title, xlab=xlabel, ylab=ylabel, yli
 lines(result_continually$loss, lty=3)
 abline(h=maximum_likelihood, col='red')
 
-y0_post <- exp(result$final_parameters$gamma_hat_final[1])
-mu_post <- result$final_parameters$beta_hat_final[1]
+colors <- c('black', 'black', 'red')
+ltypes <- c(1, 3, 1)
+legend(
+  x='topright',
+  legend=c('FHTBoost with fixed intercept', 'FHTBoost with changing intercept', 'Value for maximum likelihood model'),
+  col=colors,
+  lty = ltypes
+)
+dev.off()
+
+y0_post_cont <- exp(result_continually$final_parameters$beta_hat_final[1])
+mu_post_cont <- result_continually$final_parameters$gamma_hat_final[1]
+
+y0_post <- exp(result$final_parameters$beta_hat_final[1])
+mu_post <- result$final_parameters$gamma_hat_final[1]
 #null_model_loglikelihood_post <- - sum(FHT_loglikelihood_with_y0_mu(y0_post, mu, times, delta))
 # doesn't work because NaNs produced?
 
-colors <- c('black', 'black', 'red', 'red')
-ltypes <- c(2, 3, 1, 1)
-lwd <- c(1, 1, 1, 3)
+filename <- paste0(tex_figures_directory, "kaplan_meier_small.pdf")
+pdf(filename, width=12, height=6)
+non_para <- non_parametric_estimates(times, delta, continuous = TRUE)
+plot(non_para$times_sequence, non_para$kaplan_meiers, typ='s',
+     xlab="Time",
+     ylab="Survival probability"
+)
+ts <- seq(0.1, max(non_para$times_sequence), by=0.01)
+s_hat <- FHT_parametric_survival(time=ts, mu=mu_post, y0=y0_post)
+s_hat_cont <- FHT_parametric_survival(time=ts, mu=mu_post_cont, y0=y0_post_cont)
+lines(ts, s_hat, col='red')
+lines(ts, s_hat_cont, col='blue', lty=3)
+legend(
+  x='topright',
+  legend=c('Kaplan-Meier estimate', 'Estimated survival with FHTBoost fixed intercepts', 'Estimated survival with FHTBoost changing intercepts'),
+  col=c("black", "red", "blue"),
+  lty=c(1, 1, 3)
+)
+dev.off()
+
+
+
+
+
+
+colors <- c('black', 'black', 'red')
+ltypes <- c(1, 3, 1)
+lwd <- c(1, 1, 1)
 ylim_vector <- c(min(result_more_steps$loss, maximum_likelihood - 100), result$loss[1] + 100)
 plot(result_more_steps$loss, typ='l', lty=2, main=plot_title, xlab=xlabel, ylab=ylabel, ylim=ylim_vector)
 lines(result_no_intercept_boosting$loss, lty=3)
