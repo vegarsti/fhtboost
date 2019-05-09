@@ -24,5 +24,6 @@ loss_function_derivative_y0 <- function(y0, mu, sigma2, times, delta) {
   S <- survival_censored(y0, mu, sigma2, times)
   log_S <- (log_S1 + log_S2 + log_S3)/S
   total <- ifelse(delta, log_f, log_S)
+  #total <- exp(y0) * total
   return(total)
 }

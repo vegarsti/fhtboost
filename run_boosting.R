@@ -105,7 +105,7 @@ result_continually <- boosting_run(times, delta, X, Z, m_stop, boost_intercepts_
 
 tex_figures_directory <- "../../text/figures/"
 filename <- paste0(tex_figures_directory, "small_example.pdf")
-pdf(filename, width=12, height=6)
+#pdf(filename, width=12, height=6)
 ylim_vector <- c(maximum_likelihood - 100, max(result_continually$loss))
 plot_title <- ''
 xlabel <- 'Iteration m'

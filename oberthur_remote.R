@@ -2,8 +2,14 @@ library(devtools)
 # install_github("vegarsti/fhtboost")
 library(foreach)
 library(doParallel)
+
+# CHECK IF LOCAL OR UIO
+# directory <- "oberthur/"
 # library(fhtboost)
 load_all()
+directory <- "../dataset/oberthuer/oberthur_all/"
+
+
 oberthur_filename <- 'preproc_Oberthur_data.Rdata'
 load(oberthur_filename)
 has_age_observations <- which(!is.na(clinicalData[, 4]))
@@ -24,8 +30,6 @@ K_fold_repetitions <- 10
 K <- 5
 boost_intercepts_continually <- FALSE
 
-# directory <- "oberthur/"
-directory <- "../dataset/oberthuer/oberthur_all/"
 
 # boost_intercepts_continually <- FALSE
 # boost_intercepts_continually <- TRUE
@@ -80,17 +84,16 @@ foreach(seed=seeds) %dopar% {
     )
 
     full_filename <- paste0(directory, seed_string, "_", boosting_type, "_", "loglik.csv")
-    # write.csv(CV_result$CV_errors_K_loglik, file=full_filename, row.names=FALSE)
-    #full_filename <- paste0(directory, seed_string, "_", boosting_type, "_", "deviance.csv")
-    # write.csv(CV_result$CV_errors_K_deviance, file=full_filename, row.names=FALSE)
-    # logliks <- CV_result$CV_errors_K_loglik
-
-    logliks <- read.csv(full_filename)
-
+    write.csv(CV_result$CV_errors_K_loglik, file=full_filename, row.names=FALSE)
+    full_filename <- paste0(directory, seed_string, "_", boosting_type, "_", "deviance.csv")
+    write.csv(CV_result$CV_errors_K_deviance, file=full_filename, row.names=FALSE)
+    logliks <- CV_result$CV_errors_K_loglik
+    m_stop_from_CV <- which.min(rowMeans(logliks))
+    #m_stop_from_CV <- which.max(rowMeans(deviances))
 
     ### POST PROCESSING AND PLOTTING
-    ylims <- c(min(apply(logliks, 2, min)), max(apply(logliks, 2, max)))
-    m_stop_from_CV <- which.min(rowMeans(logliks))
+    #ylims <- c(min(apply(logliks, 2, min)), max(apply(logliks, 2, max)))
+    #m_stop_from_CV <- which.min(rowMeans(logliks))
     #m_stop_from_CV <- which.max(rowMeans(deviances))
     # full_filename <- paste0(directory, seed_string, "_", boosting_type, "_", "loglik.pdf")
     # full_filename <- paste0(tex_figures_directory, "example_cv_loglik.pdf")
@@ -124,15 +127,14 @@ foreach(seed=seeds) %dopar% {
     y0_hat <- exp(X_train %*% beta_hat)
     mu_hat <- Z_train %*% gamma_hat
 
-    # betas <- data.frame(cbind(non_null_parameters(beta_hat) - 1, beta_hat[non_null_parameters(beta_hat)]))
-    # names(betas) <- c("j", "beta_j")
-    # full_filename <- paste0(directory, seed_string, "_", boosting_type, "_", "beta.csv")
-    # write.csv(betas, file=full_filename, row.names=FALSE)
-    # gammas <- data.frame(cbind((1:length(gamma_hat)) - 1, gamma_hat))
-    # names(gammas) <- c("j", "gamma_j")
-    # full_filename <- paste0(directory, seed_string, "_", boosting_type, "_", "gamma.csv")
-    # write.csv(gammas, file=full_filename, row.names=FALSE)
-
+    betas <- data.frame(cbind(non_null_parameters(beta_hat) - 1, beta_hat[non_null_parameters(beta_hat)]))
+    names(betas) <- c("j", "beta_j")
+    full_filename <- paste0(directory, seed_string, "_", boosting_type, "_", "beta.csv")
+    write.csv(betas, file=full_filename, row.names=FALSE)
+    gammas <- data.frame(cbind((1:length(gamma_hat)) - 1, gamma_hat))
+    names(gammas) <- c("j", "gamma_j")
+    full_filename <- paste0(directory, seed_string, "_", boosting_type, "_", "gamma.csv")
+    write.csv(gammas, file=full_filename, row.names=FALSE)
 
 
     # Run on test set
@@ -174,8 +176,8 @@ foreach(seed=seeds) %dopar% {
       brier_scores_null=brier_null$brier_scores,
       brier_scores_model=brier_score_df$brier_scores
     )
-    #full_filename <- paste0(directory, seed_string, "_", boosting_type, "_", "brier_data.csv")
-    #write.csv(brier_df_both, file=full_filename, row.names=FALSE)
+    full_filename <- paste0(directory, seed_string, "_", boosting_type, "_", "brier_data.csv")
+    write.csv(brier_df_both, file=full_filename, row.names=FALSE)
 
     # Plot Brier
     # full_filename <- paste0(directory, seed_string, "_", boosting_type, "_", "brier_r2_s.pdf")
@@ -191,13 +193,13 @@ foreach(seed=seeds) %dopar% {
     # dev.off()
     #
     #
-    # loglikelihood_df <- data.frame(
-    #   null_loglikelihood=test_null_loglikelihood,
-    #   loglikelihood=test_loglikelihood,
-    #   deviance=test_difference_of_deviance
-    # )
-    # full_filename <- paste0(directory, seed_string, "_", boosting_type, "_", "test_result.csv")
-    # write.csv(loglikelihood_df, file=full_filename, row.names=FALSE)
+    loglikelihood_df <- data.frame(
+      null_loglikelihood=test_null_loglikelihood,
+      loglikelihood=test_loglikelihood,
+      deviance=test_difference_of_deviance
+    )
+    full_filename <- paste0(directory, seed_string, "_", boosting_type, "_", "test_result.csv")
+    write.csv(loglikelihood_df, file=full_filename, row.names=FALSE)
 
 
 
@@ -210,17 +212,17 @@ foreach(seed=seeds) %dopar% {
 
     boosting_type <- "clinical"
     # Clinical
-    # M_clinical <- 10
-    # CV_result_clinical <- run_CV_clinical(
-    #   M_clinical, K_fold_repetitions, K, X_train, Z_train, times_train, delta_train,
-    #   boost_intercepts_continually=boost_intercepts_continually
-    # )
-    #
+    M_clinical <- 40
+    CV_result_clinical <- run_CV_clinical(
+      M_clinical, K_fold_repetitions, K, X_train, Z_train, times_train, delta_train,
+      boost_intercepts_continually=boost_intercepts_continually
+    )
+
     # ### WRITE CV RESULT TO FILE
-    # full_filename <- paste0(directory, seed_string, "_", boosting_type, "_", "loglik.csv")
-    # write.csv(CV_result_clinical$CV_errors_K_loglik, file=full_filename, row.names=FALSE)
-    # full_filename <- paste0(directory, seed_string, "_", boosting_type, "_", "deviance.csv")
-    # write.csv(CV_result_clinical$CV_errors_K_deviance, file=full_filename, row.names=FALSE)
+    full_filename <- paste0(directory, seed_string, "_", boosting_type, "_", "loglik.csv")
+    write.csv(CV_result_clinical$CV_errors_K_loglik, file=full_filename, row.names=FALSE)
+    full_filename <- paste0(directory, seed_string, "_", boosting_type, "_", "deviance.csv")
+    write.csv(CV_result_clinical$CV_errors_K_deviance, file=full_filename, row.names=FALSE)
 
 
     ## READ CV RESULT FROM FILE
@@ -341,25 +343,25 @@ foreach(seed=seeds) %dopar% {
     #   loglikelihood=test_loglikelihood,
     #   deviance=test_difference_of_deviance
     # )
-    # full_filename <- paste0(directory, seed_string, "_", boosting_type, "_", "test_result.csv")
-    # write.csv(loglikelihood_df, file=full_filename, row.names=FALSE)
+    full_filename <- paste0(directory, seed_string, "_", boosting_type, "_", "test_result.csv")
+    write.csv(loglikelihood_df, file=full_filename, row.names=FALSE)
 
 
 
     boosting_type <- "genetic"
     # Genetic
-    # M_genetic <- 50
-    # CV_result_genetic <- run_CV_genetic(
-    #   M_genetic, K_fold_repetitions, K, X_train, Z_train, times_train, delta_train,
-    #   boost_intercepts_continually=boost_intercepts_continually
-    # )
+    M_genetic <- 70
+    CV_result_genetic <- run_CV_genetic(
+      M_genetic, K_fold_repetitions, K, X_train, Z_train, times_train, delta_train,
+      boost_intercepts_continually=boost_intercepts_continually
+    )
     #
     #
     # ### WRITE CV RESULT TO FILE
-    # full_filename <- paste0(directory, seed_string, "_", boosting_type, "_", "loglik.csv")
-    # write.csv(CV_result_genetic$CV_errors_K_loglik, file=full_filename, row.names=FALSE)
-    # full_filename <- paste0(directory, seed_string, "_", boosting_type, "_", "deviance.csv")
-    # write.csv(CV_result_genetic$CV_errors_K_deviance, file=full_filename, row.names=FALSE)
+    full_filename <- paste0(directory, seed_string, "_", boosting_type, "_", "loglik.csv")
+    write.csv(CV_result_genetic$CV_errors_K_loglik, file=full_filename, row.names=FALSE)
+    full_filename <- paste0(directory, seed_string, "_", boosting_type, "_", "deviance.csv")
+    write.csv(CV_result_genetic$CV_errors_K_deviance, file=full_filename, row.names=FALSE)
 
 
     ## READ CV RESULT FROM FILE
@@ -482,8 +484,8 @@ foreach(seed=seeds) %dopar% {
     #   deviance=test_difference_of_deviance,
     #   average_brier_r2=average_brier_r2
     # )
-    # full_filename <- paste0(directory, seed_string, "_", boosting_type, "_", "test_result.csv")
-    # write.csv(loglikelihood_df, file=full_filename, row.names=FALSE)
+    full_filename <- paste0(directory, seed_string, "_", boosting_type, "_", "test_result.csv")
+    write.csv(loglikelihood_df, file=full_filename, row.names=FALSE)
 
 
 
@@ -540,7 +542,7 @@ foreach(seed=seeds) %dopar% {
 
 
 
-
+  if (1 == 0) {
 
     library(CoxBoost)
     library(pec)
@@ -713,7 +715,7 @@ foreach(seed=seeds) %dopar% {
 
     # plot(brier_df_cox$times, brier_df_cox$brier_scores_model, typ='s')
     # lines(brier_df_cox_mandatory$times, brier_df_cox_mandatory$brier_scores_model, typ='s', col='red')
-
+  }
 
 
 
