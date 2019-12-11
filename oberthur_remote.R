@@ -77,7 +77,7 @@ foreach(seed=seeds) %dopar% {
   # Both
   boosting_type <- "both"
 
-    M <- m_stop <- 200
+    M <- m_stop <- 100
     CV_result <- run_CV(
       M, K_fold_repetitions, K, X_train, Z_train, times_train, delta_train,
       boost_intercepts_continually=boost_intercepts_continually
@@ -338,11 +338,11 @@ foreach(seed=seeds) %dopar% {
     #
     #
     #
-    # loglikelihood_df <- data.frame(
-    #   null_loglikelihood=test_null_loglikelihood,
-    #   loglikelihood=test_loglikelihood,
-    #   deviance=test_difference_of_deviance
-    # )
+    loglikelihood_df <- data.frame(
+      null_loglikelihood=test_null_loglikelihood,
+      loglikelihood=test_loglikelihood,
+      deviance=test_difference_of_deviance
+    )
     full_filename <- paste0(directory, seed_string, "_", boosting_type, "_", "test_result.csv")
     write.csv(loglikelihood_df, file=full_filename, row.names=FALSE)
 
@@ -478,12 +478,12 @@ foreach(seed=seeds) %dopar% {
     #
     #
     #
-    # loglikelihood_df <- data.frame(
-    #   null_loglikelihood=test_null_loglikelihood,
-    #   loglikelihood=test_loglikelihood,
-    #   deviance=test_difference_of_deviance,
-    #   average_brier_r2=average_brier_r2
-    # )
+    loglikelihood_df <- data.frame(
+      null_loglikelihood=test_null_loglikelihood,
+      loglikelihood=test_loglikelihood,
+      deviance=test_difference_of_deviance,
+      average_brier_r2=average_brier_r2
+    )
     full_filename <- paste0(directory, seed_string, "_", boosting_type, "_", "test_result.csv")
     write.csv(loglikelihood_df, file=full_filename, row.names=FALSE)
 
@@ -757,6 +757,18 @@ abline(v=0, lty=3)
 seed <- 30
 
 
+filename <- paste0(tex_figures_directory, "gene_correlations.pdf")
+pdf(filename, width=12, height=6)
+par(
+  mfrow=(c(2, 1)),
+  mar = c(5,4,2,1) + 0.1
+)
+#dev.off()
+#par(mfrow=c(2, 1))
+plot(as.numeric(X[, 3191]), as.numeric(Z[, 1]), xlab="Size of gene 3191 (standardized)", ylab="Risk")
+plot(as.numeric(X[, 5307]), as.numeric(Z[, 1]), xlab="Size of gene 5307 (standardized)", ylab="Risk")
+dev.off()
+par(mfrow=(c(1, 1)))
 
 seed <- 30
 seed_string <- formatC(seed, width=3, flag="0")
